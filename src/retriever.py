@@ -41,6 +41,7 @@ class Retriever:
         initial_results = collection.query(
             query_embeddings=query_embedding,
             n_results=top_k
+            
         )
 
         documents = initial_results['documents'][0]
