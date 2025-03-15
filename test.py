@@ -6,7 +6,7 @@ from openai import OpenAI
 import chromadb
 from chromadb.config import Settings
 from chromadb.utils import embedding_functions
-
+from src.config import OPENAI_API_KEY
 
 # Configure logging
 logging.basicConfig(
@@ -20,11 +20,11 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Replace with your API key (consider moving to .env file in production)
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY_IS = OPENAI_API_KEY
 INPUT_FILE = "combined_data_with_metadata.json"  # Adjust path as needed
 
 # Initialize OpenAI client
-client = OpenAI(api_key=OPENAI_API_KEY)
+client = OpenAI(api_key=OPENAI_API_KEY_IS)
 
 # Initialize ChromaDB HTTP client
 chroma_client = chromadb.HttpClient(
