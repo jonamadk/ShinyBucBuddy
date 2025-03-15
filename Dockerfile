@@ -1,24 +1,32 @@
-# Use the official Python image from the Docker Hub
-FROM python:3.10-slim
+# Use the official Python 3.11 slim image as the base
+FROM python:3.11-slim
 
-# Set the working directory in the container
+# Set working directory inside the container
 WORKDIR /app
 
-# Copy the requirements file into the container
+# Install system dependencies required for Python packages
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libssl-dev \
+    libffi-dev \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements.txt to install dependencies
 COPY requirements.txt .
 
-# Install the dependencies
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application code into the container
-COPY . .
+# No need to COPY src/, .env, or logs/ since docker-compose.yml mounts ./:/app/
+# (These would be overwritten anyway)
 
-# Set environment variables
-ENV FLASK_APP=src/app.py
-ENV FLASK_RUN_HOST=0.0.0.0
-
-# Expose the port the app runs on
+# Expose the port the Flask app will run on
 EXPOSE 8000
 
-# Run the application
-CMD ["flask", "run", "--host=0.0.0.0", "--port=8000"]
+# Set environment variables
+ENV TOKENIZERS_PARALLELISM=false
+ENV FLASK_ENV=production
+
+# Command to run the Flask app, assuming app.py is in src/
+CMD ["python", "src/app.py"]

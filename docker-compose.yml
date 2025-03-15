@@ -1,13 +1,37 @@
-version: '3.8'
-
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: my-flask-container
     ports:
-      - "8000:8000"
+      - "8000:8000"  # App runs on 8000, externally accessible
     volumes:
-      - .:/app
+      - ./:/app/      # Mounts local dir to /app/, preserving src/app.py
+      - ./logs:/app/logs  # Redundant but kept for explicitness
+      - ./.env:/app/.env  # Redundant but kept for explicitness
     environment:
       - FLASK_ENV=production
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-     
+      - TOKENIZERS_PARALLELISM=false
+    depends_on:
+      - chroma
+    networks:
+      - net
+ # Override CMD to ensure it runs from src/
+
+  chroma:
+    image: server # Use the working custom image
+    volumes:
+      - index_data:/chroma/.chroma/index  # Align with the working setup
+    ports:
+      - "8001:8000"  # Chroma runs on 8000 internally, mapped to 8001 externally
+    networks:
+      - net
+
+volumes:
+  index_data:
+    driver: local
+
+networks:
+  net:
+    driver: bridge

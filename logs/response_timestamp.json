@@ -248,5 +248,45 @@
         "Token Count": 777,
         "TimeStamp": 0.8603448867797852,
         "Model": "GPT 4o Mini"
+    },
+    {
+        "Token Count": 0,
+        "TimeStamp": 1.350067138671875,
+        "Model": "GPT 4o Mini"
+    },
+    {
+        "Token Count": 0,
+        "TimeStamp": 1.0518317222595215,
+        "Model": "GPT 4o Mini"
+    },
+    {
+        "Token Count": 0,
+        "TimeStamp": 1.0060033798217773,
+        "Model": "GPT 4o Mini"
+    },
+    {
+        "Token Count": 0,
+        "TimeStamp": 0.7582299709320068,
+        "Model": "GPT 4o Mini"
+    },
+    {
+        "Token Count": 0,
+        "TimeStamp": 1.0354013442993164,
+        "Model": "GPT 4o Mini"
+    },
+    {
+        "Token Count": 0,
+        "TimeStamp": 0.7467985153198242,
+        "Model": "GPT 4o Mini"
+    },
+    {
+        "Token Count": 0,
+        "TimeStamp": 1.0828936100006104,
+        "Model": "GPT 4o Mini"
+    },
+    {
+        "Token Count": 0,
+        "TimeStamp": 0.9632003307342529,
+        "Model": "GPT 4o Mini"
     }
 ]

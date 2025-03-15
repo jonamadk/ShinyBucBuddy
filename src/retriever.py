@@ -1,21 +1,32 @@
 import os
+import logging
 from sentence_transformers import CrossEncoder
 import chromadb
 from chromadb.utils import embedding_functions
+from chromadb.config import Settings
 from config import OPENAI_API_KEY, DATASET_PATH, COLLECTION_NAME, RERANKER_MODEL, EMBEDDING_MODEL_NAME
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler('/app/logs/debug.log')
+    ]
+)
+logger = logging.getLogger(__name__)
 
 class Retriever:
     def __init__(self):
         # Set environment variable to prevent tokenizers parallelism warning
         os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-        # Set up the dataset path and initialize the ChromaDB client
-        os.makedirs(DATASET_PATH, exist_ok=True)
+        self.client = chromadb.HttpClient(
+            host="chroma",
+            port = 8000,
+            settings=Settings(allow_reset=True, anonymized_telemetry=False))
 
-        self.client = chromadb.PersistentClient(
-            path=DATASET_PATH,
-            settings=chromadb.config.Settings(allow_reset=True)
-        )
 
         # Load the cross-encoder reranker model
         self.reranker = CrossEncoder(RERANKER_MODEL)
@@ -31,22 +42,43 @@ class Retriever:
         Retrieves the top K documents based on cosine similarity to the query and
         reranks them using a cross-encoder for improved relevance.
         """
-        # Load the specified collection from ChromaDB
-        collection = self.client.get_collection(COLLECTION_NAME)
+      
 
-        # Generate embedding for the user query
-        query_embedding = self.openai_ef([query])
+            # Try to get the collection
+        collection = self.client.get_collection(COLLECTION_NAME)
+        logger.debug("Collection %s retrieved, total documents: %d", COLLECTION_NAME, collection.count())
+       
+        try:
+            query_embedding = self.openai_ef([query])
+            logger.debug("Query: %s, Embedding: %s", query, query_embedding)
+        except Exception as e:
+            logger.error("Failed to generate query embedding: %s", str(e))
+            return [], [], []
 
         # Retrieve top-K initial results from ChromaDB
-        initial_results = collection.query(
-            query_embeddings=query_embedding,
-            n_results=top_k
-            
-        )
+        try:
+            initial_results = collection.query(
+                query_embeddings=query_embedding,
+                n_results=top_k
+            )
+            logger.debug("ChromaDB Query Results: %s", initial_results)
+        except Exception as e:
+            logger.error("ChromaDB query failed: %s", str(e))
+            return [], [], []
+
+        # Check if results are empty
+        if not initial_results['documents'] or not initial_results['documents'][0]:
+            logger.warning("No documents found for query: %s", query)
+            return [], [], []  # Return empty lists for top_n_results, citation_data, context_data
 
         documents = initial_results['documents'][0]
         ids = initial_results['ids'][0]
-        metadata = initial_results.get('metadatas', [])[0]
+        metadata = initial_results.get('metadatas', [[]])[0] or [{}] * len(documents)
+
+        # Debug: Log the extracted data
+        logger.debug("Documents: %s", documents)
+        logger.debug("IDs: %s", ids)
+        logger.debug("Metadata: %s", metadata)
 
         # Prepare pairs for reranking using document content
         pairs = [(query, doc) for doc in documents]
@@ -54,8 +86,8 @@ class Retriever:
         # Perform reranking using the cross-encoder
         rerank_scores = self.reranker.predict(pairs)
         reranked_docs = sorted(
-            zip(documents, metadata, rerank_scores),  # Include metadata in sorting
-            key=lambda x: x[2],  # Sort by rerank score
+            zip(documents, metadata, rerank_scores),
+            key=lambda x: x[2],
             reverse=True
         )
 
