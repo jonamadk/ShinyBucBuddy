@@ -798,5 +798,53 @@
         ],
         "response": "Hello! Dr. K. Joseph Shrestha's email is shresthak@etsu.edu. If you have any other questions, feel free to ask!",
         "model": "GPT 4o Mini"
+    },
+    {
+        "query": "List the name of the faculty from the Masters comptuing AI and Machine learning program",
+        "context": [],
+        "response": "I'm sorry, but I don't have information about the faculty from the Master's in Computing with a focus on AI and Machine Learning program. You might want to check the East Tennessee State University website or contact the department directly for that information.",
+        "model": "GPT 4o Mini"
+    },
+    {
+        "query": "List the name of the faculty from the Masters comptuing AI and Machine learning program",
+        "context": [],
+        "response": "I'm sorry, but it looks like I don't have information about the faculty members for the Master's in Computing program at East Tennessee State University at this time. I recommend checking the university's official website or contacting the department directly for the most accurate information.",
+        "model": "GPT 4o Mini"
+    },
+    {
+        "query": "who are you",
+        "context": [],
+        "response": "I'm BucBuddy, your conversational and context-aware QnA platform for East Tennessee State University! How can I assist you today?",
+        "model": "GPT 4o Mini"
+    },
+    {
+        "query": "who are you",
+        "context": [],
+        "response": "I'm BucBuddy, your conversational and context-aware QnA platform for East Tennessee State University. How can I assist you today?",
+        "model": "GPT 4o Mini"
+    },
+    {
+        "query": "who are you?",
+        "context": [],
+        "response": "I'm BucBuddy, your conversational and context-aware QnA platform for East Tennessee State University! I'm here to help you with any questions you have about the university.",
+        "model": "GPT 4o Mini"
+    },
+    {
+        "query": "who are you?",
+        "context": [],
+        "response": "I\u2019m BucBuddy, your conversational platform here to help you with questions about East Tennessee State University! How can I assist you today?",
+        "model": "GPT 4o Mini"
+    },
+    {
+        "query": "what are the masters in computer sciecnce concentration offered ?",
+        "context": [],
+        "response": "I'm sorry, but it seems there is no specific information available right now about the master's in computer science concentrations offered at East Tennessee State University. If you need detailed information, I recommend checking the university's official website or contacting the admissions office for the most accurate details.",
+        "model": "GPT 4o Mini"
+    },
+    {
+        "query": "what are the masters in computer sciecnce concentration offered ?",
+        "context": [],
+        "response": "I'm sorry, but I don't have the information regarding the master's concentrations offered in computer science at East Tennessee State University. You might want to check the university's official website or contact the department directly for the most accurate and up-to-date information.",
+        "model": "GPT 4o Mini"
     }
 ]
