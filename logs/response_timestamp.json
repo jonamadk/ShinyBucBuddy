@@ -248,5 +248,15 @@
         "Token Count": 777,
         "TimeStamp": 0.8603448867797852,
         "Model": "GPT 4o Mini"
+    },
+    {
+        "Token Count": 3179,
+        "TimeStamp": 1.6697800159454346,
+        "Model": "GPT 4o Mini"
+    },
+    {
+        "Token Count": 3204,
+        "TimeStamp": 3.614288091659546,
+        "Model": "GPT 4o Mini"
     }
 ]
