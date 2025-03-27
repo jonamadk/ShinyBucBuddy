@@ -60,12 +60,23 @@ BucBuddy is a conversational and context-aware QnA platform designed for East Te
    ```
     This should create the docker container that runs on two containers
     > 1. Chroma Vector Database Container -> *chroma-1*
+    Check if database instance is active or not through below endpoint:
+     ```bash
+       http://localhost:8000/health
+      ```
+      
     > 2. Server Application Container -> *my-flask-cont*
-
+    Check if server is active or not through below endpoint:
+      ```bash
+       http://localhost:8000/chat
+      ```
+    
 3. **Add the Embedded Document**
-    Make sure that you haave vector database container running
-    Execute **embed_test.py** on scraped json document using:
+    In case server responds no collection found, there is possibility that there is no vector embeddings/documents in database. 
+
+    **To embed and push data in Chroma DB:**
+    Send the post request to /embed to perform embedding through endpoint:
     ```bash
-    python embed_test.py
+    http://localhost:8000/embed
     ```
     This should add the documents in the vector database. Once you run the client application, you should be able to get response !
