@@ -44,7 +44,7 @@ BucBuddy is a conversational and context-aware QnA platform designed for East Te
 1. **Clone the repository:**
 
    ```sh
-   git clone https://github.com/yourusername/BucBuddy.git
+   git clone https://github.com/jonamadk/ShinyBucBuddy
    cd BucBuddy
    ```
 
