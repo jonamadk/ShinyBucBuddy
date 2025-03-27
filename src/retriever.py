@@ -12,7 +12,7 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler('/app/logs/debug.log')
+        logging.FileHandler('/app/logs/serverlogs/debug.log')
     ]
 )
 logger = logging.getLogger(__name__)
