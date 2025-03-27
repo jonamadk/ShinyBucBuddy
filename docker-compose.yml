@@ -20,7 +20,7 @@ services:
  # Override CMD to ensure it runs from src/
 
   chroma:
-    image: server # Use the working custom image
+    image: ghcr.io/chroma-core/chroma:latest # Use the working custom image or build and use the local
     volumes:
       - index_data:/chroma/.chroma/index  # Align with the working setup
     ports:

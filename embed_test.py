@@ -14,7 +14,7 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler('logs/chromadb_push.log')  # Local log file
+        logging.FileHandler('logs/serverlogs/chromadb_push.log')  # Local log file
     ]
 )
 logger = logging.getLogger(__name__)

@@ -4,5 +4,6 @@ __pycache__/
 .enc
 BUCDB/
 env-buc/
-logs/
+logs/*
+!logs/.gitkeep
 chromadb_push.log

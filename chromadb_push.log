@@ -1,154 +1,154 @@
-2025-03-14 11:37:57,928 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
-2025-03-14 11:38:16,359 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
-2025-03-14 11:39:38,852 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
-2025-03-14 11:40:34,666 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
-2025-03-14 11:40:46,173 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
-2025-03-15 00:34:21,798 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
-2025-03-15 00:34:42,379 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
-2025-03-15 00:34:42,471 - INFO - HTTP Request: GET http://localhost:8000/api/v2/auth/identity "HTTP/1.1 200 OK"
-2025-03-15 00:34:42,473 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
-2025-03-15 00:34:42,503 - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant "HTTP/1.1 200 OK"
-2025-03-15 00:34:42,506 - INFO - HTTP Request: GET http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database "HTTP/1.1 200 OK"
-2025-03-15 00:34:42,560 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections "HTTP/1.1 200 OK"
-2025-03-15 00:34:42,565 - INFO - Collection 'web_information' accessed or created successfully
-2025-03-15 00:34:42,566 - INFO - Loaded 46 items from combined_data_with_metadata.json
-2025-03-15 00:34:43,220 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:43,262 - INFO - HTTP Request: GET http://localhost:8000/api/v2/pre-flight-checks "HTTP/1.1 200 OK"
-2025-03-15 00:34:44,404 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:44,406 - INFO - Item 1 pushed to ChromaDB with ID 04d54244-5d5e-40d4-b737-fa265cb1d154
-2025-03-15 00:34:44,709 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:44,834 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:44,835 - INFO - Item 2 pushed to ChromaDB with ID 50d88ef9-b70d-47ff-8c93-90ea41f5e1f2
-2025-03-15 00:34:45,096 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:45,131 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:45,132 - INFO - Item 3 pushed to ChromaDB with ID b2c45534-fcfa-4bbb-b2ba-91443ad271c1
-2025-03-15 00:34:45,464 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:45,567 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:45,568 - INFO - Item 4 pushed to ChromaDB with ID 0ed812e1-d55f-4e82-9ac7-4804a0d12682
-2025-03-15 00:34:46,113 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:46,147 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:46,147 - INFO - Item 5 pushed to ChromaDB with ID abcf7cc0-637a-4fb9-97fe-6bb4050c14bd
-2025-03-15 00:34:47,543 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:47,620 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:47,621 - INFO - Item 6 pushed to ChromaDB with ID 7650ad80-14ee-44c9-8587-89daaa38a29f
-2025-03-15 00:34:48,369 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:48,454 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:48,454 - INFO - Item 7 pushed to ChromaDB with ID 21ac427d-ec81-416f-a581-671983af9988
-2025-03-15 00:34:48,794 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:48,820 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:48,821 - INFO - Item 8 pushed to ChromaDB with ID a5eb314e-292d-40bf-822b-73f567420195
-2025-03-15 00:34:49,025 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:49,053 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:49,053 - INFO - Item 9 pushed to ChromaDB with ID 90b69e88-4d9a-4ccf-9adb-5ebbcadebc6a
-2025-03-15 00:34:49,330 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:49,350 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:49,351 - INFO - Item 10 pushed to ChromaDB with ID d5178047-7cd5-49f2-8690-f56c665b3d83
-2025-03-15 00:34:49,651 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:49,691 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:49,691 - INFO - Item 11 pushed to ChromaDB with ID 95f0213c-1518-4b86-b95f-3a84eee754f1
-2025-03-15 00:34:49,875 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:49,919 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:49,919 - INFO - Item 12 pushed to ChromaDB with ID 692eedba-2230-4fdd-8319-1d3a2be76fd4
-2025-03-15 00:34:50,274 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:50,382 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:50,383 - INFO - Item 13 pushed to ChromaDB with ID 76a82540-dc26-42f0-a339-5e28def33d9e
-2025-03-15 00:34:50,565 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:50,601 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:50,602 - INFO - Item 14 pushed to ChromaDB with ID 90c4f810-98d5-41e5-b3ba-e0a47f55d85e
-2025-03-15 00:34:50,796 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:50,825 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:50,826 - INFO - Item 15 pushed to ChromaDB with ID 9219e8a6-59f0-4b9e-85d2-29b085a99c59
-2025-03-15 00:34:51,089 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:51,139 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:51,140 - INFO - Item 16 pushed to ChromaDB with ID d8b11d03-6f70-492e-9309-031aa9db90d9
-2025-03-15 00:34:51,481 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:51,551 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:51,552 - INFO - Item 17 pushed to ChromaDB with ID 509cd07d-8c13-4f4d-949d-8f381bba68a2
-2025-03-15 00:34:51,844 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:51,939 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:51,940 - INFO - Item 18 pushed to ChromaDB with ID 9a2a3598-bc6b-4914-a849-4b5d96932539
-2025-03-15 00:34:52,251 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:52,291 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:52,291 - INFO - Item 19 pushed to ChromaDB with ID 1f59748c-3646-459f-8a48-c2607ca26925
-2025-03-15 00:34:52,677 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:52,789 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:52,789 - INFO - Item 20 pushed to ChromaDB with ID cffb246d-3ba4-4af8-9623-fb8edc99466c
-2025-03-15 00:34:53,031 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:53,068 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:53,068 - INFO - Item 21 pushed to ChromaDB with ID 1e391065-0aa8-45db-973e-0d8a7746a301
-2025-03-15 00:34:53,528 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:53,866 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:53,866 - INFO - Item 22 pushed to ChromaDB with ID 57128929-abcc-4f3b-b89d-5ede2360f3ad
-2025-03-15 00:34:55,485 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:55,528 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:55,529 - INFO - Item 23 pushed to ChromaDB with ID 1261e5e3-841a-4902-b1ac-f9e47c9d7f0e
-2025-03-15 00:34:55,891 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:55,995 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:55,995 - INFO - Item 24 pushed to ChromaDB with ID 8952a343-048e-478d-a8e0-ae10d921efdd
-2025-03-15 00:34:56,290 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:56,379 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:56,380 - INFO - Item 25 pushed to ChromaDB with ID 46509743-08f2-4309-97c5-226b53c2a60b
-2025-03-15 00:34:56,767 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:56,794 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:56,795 - INFO - Item 26 pushed to ChromaDB with ID d49f0fc5-35ea-4132-b67a-cdf0c698df1a
-2025-03-15 00:34:57,213 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:57,318 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:57,319 - INFO - Item 27 pushed to ChromaDB with ID d2d652d9-20e2-4442-804f-736b66d3aae7
-2025-03-15 00:34:57,580 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:57,631 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:57,632 - INFO - Item 28 pushed to ChromaDB with ID 15f51a5b-9a4a-4ebc-8019-32d7e5a7c8ee
-2025-03-15 00:34:57,829 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:57,853 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:57,853 - INFO - Item 29 pushed to ChromaDB with ID d9ae5b8c-6a2a-46b0-b14e-c9a7c706362e
-2025-03-15 00:34:58,006 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:58,045 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:58,046 - INFO - Item 30 pushed to ChromaDB with ID 1252eb90-34bc-4b5e-8d07-7bc16012a541
-2025-03-15 00:34:58,474 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:58,510 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:58,510 - INFO - Item 31 pushed to ChromaDB with ID fbd21af0-5c2a-4b01-aba3-debfff0fdaf9
-2025-03-15 00:34:58,764 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:58,812 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:58,813 - INFO - Item 32 pushed to ChromaDB with ID 5b9dc8cc-ec85-464b-9dd9-6e42fdee9e96
-2025-03-15 00:34:59,588 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:34:59,719 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:34:59,720 - INFO - Item 33 pushed to ChromaDB with ID c25a63bc-b3fe-4240-ac88-ec5d6b6c9075
-2025-03-15 00:35:01,640 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:35:01,707 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:35:01,707 - INFO - Item 34 pushed to ChromaDB with ID 9c90e655-5cbd-4d43-81e0-1ee37a8eb584
-2025-03-15 00:35:03,291 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:35:03,340 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:35:03,341 - INFO - Item 35 pushed to ChromaDB with ID 7a9f1a3e-cf6c-4ff0-b3dc-d034bed550d3
-2025-03-15 00:35:03,727 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:35:03,770 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:35:03,771 - INFO - Item 36 pushed to ChromaDB with ID 8f66c384-846d-4c5c-a80e-3e5fa76ea24e
-2025-03-15 00:35:04,173 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:35:04,227 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:35:04,228 - INFO - Item 37 pushed to ChromaDB with ID 729d1dd2-5531-4b06-8d94-71d2e161d2f6
-2025-03-15 00:35:04,399 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:35:04,441 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:35:04,442 - INFO - Item 38 pushed to ChromaDB with ID 1d3cb37e-97f7-425a-8e7f-0162bf0c0b1d
-2025-03-15 00:35:04,688 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:35:04,730 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:35:04,731 - INFO - Item 39 pushed to ChromaDB with ID 19dcd621-25ee-4020-b81a-6c3a1d2029ec
-2025-03-15 00:35:04,983 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:35:05,139 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:35:05,140 - INFO - Item 40 pushed to ChromaDB with ID bd1baaa7-be6d-4f79-8a32-ded12165cf78
-2025-03-15 00:35:05,469 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:35:05,516 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:35:05,517 - INFO - Item 41 pushed to ChromaDB with ID 18aa0b83-d24f-499f-af11-610b414c8278
-2025-03-15 00:35:15,762 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:35:15,861 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:35:15,861 - INFO - Item 42 pushed to ChromaDB with ID 73ee2c05-efac-44ea-aeb8-7286faed302e
-2025-03-15 00:35:16,193 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:35:16,288 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:35:16,288 - INFO - Item 43 pushed to ChromaDB with ID 0064f3b2-2bcf-4ed0-aae9-78c32753e4f8
-2025-03-15 00:35:16,738 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:35:16,826 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:35:16,827 - INFO - Item 44 pushed to ChromaDB with ID ea61e84b-14a7-49d4-9f0b-4d3d2a77f7ca
-2025-03-15 00:35:17,056 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:35:17,101 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:35:17,102 - INFO - Item 45 pushed to ChromaDB with ID caba92ef-201c-436f-bae3-377cb5d3d753
-2025-03-15 00:35:18,108 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
-2025-03-15 00:35:18,153 - INFO - HTTP Request: POST http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections/74d06827-9649-4e3e-b5f3-b03a7cbe1f4b/upsert "HTTP/1.1 200 OK"
-2025-03-15 00:35:18,154 - INFO - Item 46 pushed to ChromaDB with ID ae049b98-d6c9-4680-b09b-df9cdd5d6e5d
-2025-03-15 00:35:18,154 - INFO - Total documents pushed: 46
+2025-03-26 12:29:52,170 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-03-26 12:29:52,220 - INFO - HTTP Request: GET http://localhost:8000/api/v2/auth/identity "HTTP/1.1 404 NOT FOUND"
+2025-03-26 12:31:10,942 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-03-26 12:31:10,987 - INFO - HTTP Request: GET http://localhost:8000/api/v2/auth/identity "HTTP/1.1 404 NOT FOUND"
+2025-03-26 12:32:25,822 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-03-26 12:32:36,326 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-03-26 12:33:17,573 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-03-26 12:33:17,624 - INFO - HTTP Request: GET http://localhost:8001/api/v2/auth/identity "HTTP/1.1 200 OK"
+2025-03-26 12:33:17,626 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-03-26 12:33:17,652 - INFO - HTTP Request: GET http://localhost:8001/api/v2/tenants/default_tenant "HTTP/1.1 200 OK"
+2025-03-26 12:33:17,654 - INFO - HTTP Request: GET http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database "HTTP/1.1 200 OK"
+2025-03-26 12:33:17,714 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections "HTTP/1.1 200 OK"
+2025-03-26 12:33:17,715 - INFO - Collection 'web_information' accessed or created successfully
+2025-03-26 12:33:17,715 - INFO - Loaded 46 items from combined_data_with_metadata.json
+2025-03-26 12:33:18,915 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:18,931 - INFO - HTTP Request: GET http://localhost:8001/api/v2/pre-flight-checks "HTTP/1.1 200 OK"
+2025-03-26 12:33:18,994 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:18,995 - INFO - Item 1 pushed to ChromaDB with ID b828a603-ec73-4b58-b334-261e7a5a9678
+2025-03-26 12:33:20,066 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:20,156 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:20,157 - INFO - Item 2 pushed to ChromaDB with ID 93ee477d-95a3-46ef-b95c-fa6615aa20ff
+2025-03-26 12:33:21,038 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:21,064 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:21,064 - INFO - Item 3 pushed to ChromaDB with ID e75ed8fa-5f27-47ee-a046-f7c3ec5466a0
+2025-03-26 12:33:21,858 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:21,883 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:21,883 - INFO - Item 4 pushed to ChromaDB with ID c540db19-e6b7-4828-8e62-e7e55288b936
+2025-03-26 12:33:22,244 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:22,336 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:22,337 - INFO - Item 5 pushed to ChromaDB with ID 00d0ce88-d352-42ac-99b7-75b70e12a05b
+2025-03-26 12:33:22,985 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:23,010 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:23,010 - INFO - Item 6 pushed to ChromaDB with ID 1432656f-a0a1-452b-ab84-56b37abff99b
+2025-03-26 12:33:24,052 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:24,125 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:24,125 - INFO - Item 7 pushed to ChromaDB with ID 7027fe5e-1a90-42d3-9895-1ab065b4cfb9
+2025-03-26 12:33:24,770 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:24,794 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:24,795 - INFO - Item 8 pushed to ChromaDB with ID 2b9fc6be-44aa-4134-a47a-cb7677cb46b6
+2025-03-26 12:33:25,643 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:25,679 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:25,680 - INFO - Item 9 pushed to ChromaDB with ID d2d67cd6-9c0b-46c6-ba28-09e002bc3cdf
+2025-03-26 12:33:26,217 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:26,325 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:26,326 - INFO - Item 10 pushed to ChromaDB with ID 8175d1e7-702a-4b8e-8a13-ea7be3717fb4
+2025-03-26 12:33:26,659 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:26,688 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:26,688 - INFO - Item 11 pushed to ChromaDB with ID 94196b62-05c0-493d-9537-6bd2513654ca
+2025-03-26 12:33:27,411 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:27,468 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:27,468 - INFO - Item 12 pushed to ChromaDB with ID 8e712944-c26f-473e-b322-40a1b6b7b7ea
+2025-03-26 12:33:27,784 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:27,815 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:27,815 - INFO - Item 13 pushed to ChromaDB with ID 439c82f2-649f-4441-afbd-183cc309b39d
+2025-03-26 12:33:28,233 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:28,257 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:28,257 - INFO - Item 14 pushed to ChromaDB with ID 04662de1-11d5-4b5d-9344-0df074276508
+2025-03-26 12:33:28,793 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:28,812 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:28,812 - INFO - Item 15 pushed to ChromaDB with ID 1233937f-92f1-436d-bc68-d2af5860ff4d
+2025-03-26 12:33:29,281 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:29,312 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:29,312 - INFO - Item 16 pushed to ChromaDB with ID 5d624cbd-c203-49d7-82b5-0bf0313a40c8
+2025-03-26 12:33:29,632 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:29,645 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:29,645 - INFO - Item 17 pushed to ChromaDB with ID 3dec2fb7-8d96-4584-9928-b0a3746d3752
+2025-03-26 12:33:30,434 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:30,470 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:30,471 - INFO - Item 18 pushed to ChromaDB with ID 63725c27-29e8-44b4-bcb4-9262dc7be9e2
+2025-03-26 12:33:30,856 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:30,881 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:30,882 - INFO - Item 19 pushed to ChromaDB with ID 3dc0f289-2307-43d2-95dc-e1b08de0fbca
+2025-03-26 12:33:31,669 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:31,697 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:31,697 - INFO - Item 20 pushed to ChromaDB with ID ba114133-0779-4a6b-b0a5-8f30ce071b48
+2025-03-26 12:33:31,954 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:32,015 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:32,016 - INFO - Item 21 pushed to ChromaDB with ID 5d44e83d-beec-43e2-86e7-814e3bfbd79f
+2025-03-26 12:33:32,737 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:32,771 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:32,771 - INFO - Item 22 pushed to ChromaDB with ID afdfe630-f13a-4e71-981f-83e19d90f075
+2025-03-26 12:33:33,042 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:33,073 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:33,074 - INFO - Item 23 pushed to ChromaDB with ID 7241de48-71b6-4ae0-92a2-a9848030fe4a
+2025-03-26 12:33:33,477 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:33,511 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:33,511 - INFO - Item 24 pushed to ChromaDB with ID 8fb71498-b525-4994-af8d-c87530e4414a
+2025-03-26 12:33:33,818 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:34,024 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:34,025 - INFO - Item 25 pushed to ChromaDB with ID 0db417e4-4c9d-424f-9428-040b1b55d8d5
+2025-03-26 12:33:34,430 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:34,538 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:34,539 - INFO - Item 26 pushed to ChromaDB with ID 85e494d9-7469-4f6f-b1c1-878e621bb8a8
+2025-03-26 12:33:35,063 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:35,076 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:35,077 - INFO - Item 27 pushed to ChromaDB with ID 73e473b7-2fcc-4842-bc78-56ea64b319a7
+2025-03-26 12:33:35,579 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:35,605 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:35,606 - INFO - Item 28 pushed to ChromaDB with ID 46306120-edb2-42ee-b58a-6c7aeea1ffad
+2025-03-26 12:33:35,886 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:35,906 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:35,907 - INFO - Item 29 pushed to ChromaDB with ID 44d98dc6-5781-4261-b301-caf886597e8a
+2025-03-26 12:33:36,295 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:36,329 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:36,329 - INFO - Item 30 pushed to ChromaDB with ID dc025410-8073-4c85-b568-dc20958e9dbf
+2025-03-26 12:33:36,807 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:36,830 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:36,831 - INFO - Item 31 pushed to ChromaDB with ID 1b2a12ec-1255-4552-8849-b088955a5105
+2025-03-26 12:33:37,318 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:37,346 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:37,347 - INFO - Item 32 pushed to ChromaDB with ID aa71adfa-bd4a-4ae1-9e52-33847b654a86
+2025-03-26 12:33:37,798 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:37,877 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:37,878 - INFO - Item 33 pushed to ChromaDB with ID 61b9016d-d651-478b-9a6f-75b0f324e0d5
+2025-03-26 12:33:38,195 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:38,239 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:38,239 - INFO - Item 34 pushed to ChromaDB with ID 779726b0-a876-4953-b06b-a861a25df771
+2025-03-26 12:33:38,720 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:38,743 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:38,744 - INFO - Item 35 pushed to ChromaDB with ID 552d814b-ef91-4f96-9571-ad8e7e409329
+2025-03-26 12:33:39,031 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:39,097 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:39,097 - INFO - Item 36 pushed to ChromaDB with ID 8decd86d-78c8-4074-8824-9075ed668c8e
+2025-03-26 12:33:39,851 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:39,925 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:39,925 - INFO - Item 37 pushed to ChromaDB with ID 1af05ebc-9d4e-4d9c-9d6c-f867a681c2b3
+2025-03-26 12:33:40,390 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:40,412 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:40,413 - INFO - Item 38 pushed to ChromaDB with ID 9bdb5f4e-7cc2-4b54-b4ad-c68733c26ab6
+2025-03-26 12:33:40,857 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:40,886 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:40,887 - INFO - Item 39 pushed to ChromaDB with ID 3deddc40-4b89-4f22-a2d3-35d7d2b3111e
+2025-03-26 12:33:41,344 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:41,368 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:41,369 - INFO - Item 40 pushed to ChromaDB with ID 50125a4f-3b45-429b-a43d-93b82ca04d38
+2025-03-26 12:33:41,866 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:41,881 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:41,881 - INFO - Item 41 pushed to ChromaDB with ID 51db3512-3b2c-4c1e-8152-f41dc309ba94
+2025-03-26 12:33:42,388 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:42,476 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:42,477 - INFO - Item 42 pushed to ChromaDB with ID e9395c08-dbe7-4aff-be03-5c20dae6e23d
+2025-03-26 12:33:42,913 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:42,935 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:42,936 - INFO - Item 43 pushed to ChromaDB with ID 8505f6dc-c011-4ab4-a485-207a99d49603
+2025-03-26 12:33:43,437 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:43,460 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:43,460 - INFO - Item 44 pushed to ChromaDB with ID 7c047add-d4d5-4edf-8e76-bcbd90a93406
+2025-03-26 12:33:43,962 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:43,987 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:43,988 - INFO - Item 45 pushed to ChromaDB with ID c99d8930-ce92-49c7-b46e-1eafb39b2011
+2025-03-26 12:33:44,485 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-03-26 12:33:44,509 - INFO - HTTP Request: POST http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections/bf72dd29-b2be-4116-8f18-983ac995d264/upsert "HTTP/1.1 200 OK"
+2025-03-26 12:33:44,510 - INFO - Item 46 pushed to ChromaDB with ID 0572a7b6-e750-43a6-ba90-e4c6f906025d
+2025-03-26 12:33:44,510 - INFO - Total documents pushed: 46

@@ -9,7 +9,7 @@ from chromadb.config import Settings
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
-logger = ResponseLogger(response_file="logs/response_data.json", timestamp_file="logs/response_timestamp.json")
+logger = ResponseLogger(response_file="logs/responselogs/response_data.json", timestamp_file="logs/responselogs/response_timestamp.json")
 
 # Initialize ChromaDB client for health check
 chroma_client = chromadb.HttpClient(
