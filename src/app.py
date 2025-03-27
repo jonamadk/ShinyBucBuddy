@@ -5,11 +5,13 @@ from responseLLM import generate_filtered_response
 from responselog import ResponseLogger
 import chromadb
 from chromadb.config import Settings
+from embedDoc import process_and_push_data_to_chromadb
 
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
-logger = ResponseLogger(response_file="logs/responselogs/response_data.json", timestamp_file="logs/responselogs/response_timestamp.json")
+logger = ResponseLogger(response_file="logs/responselogs/response_data.json",
+                        timestamp_file="logs/responselogs/response_timestamp.json")
 
 # Initialize ChromaDB client for health check
 chroma_client = chromadb.HttpClient(
@@ -19,6 +21,8 @@ chroma_client = chromadb.HttpClient(
 )
 
 # Health Check Endpoint
+
+
 @app.route('/health', methods=['GET'])
 def health_check():
     """Check if the API and its dependencies are running."""
@@ -39,6 +43,8 @@ def health_check():
     return jsonify(health_status), 200
 
 # Embedding Endpoint
+
+
 @app.route('/embed', methods=['POST'])
 def embed_documents():
     """
@@ -46,15 +52,17 @@ def embed_documents():
     Returns success or error message.
     """
     try:
-        # Execute embedding script (assumes Adaembedding.py exists)
-        subprocess.run(['python3', 'Adaembedding.py'], check=True)
-        return jsonify({"message": "Embedding completed successfully!"}), 200
-    except subprocess.CalledProcessError as e:
-        return jsonify({"error": f"Embedding failed: {str(e)}"}), 500
+        # Call the function from embed_test.py
+        result = process_and_push_data_to_chromadb()
+        return jsonify({"message": result}), 200
     except FileNotFoundError:
-        return jsonify({"error": "Embedding script (Adaembedding.py) not found"}), 404
+        return jsonify({"error": "Input file not found"}), 404
+    except Exception as e:
+        return jsonify({"error": f"Embedding failed: {str(e)}"}), 500
 
 # Chat Endpoint
+
+
 @app.route('/chat', methods=['POST'])
 def chat():
     """
@@ -68,7 +76,8 @@ def chat():
 
     try:
         # Generate response using the LLM and retrieval logic
-        response, top_n_document, citation_data, context_data, timestamp_data = generate_filtered_response(query)
+        response, top_n_document, citation_data, context_data, timestamp_data = generate_filtered_response(
+            query)
 
         # Log the response and timestamp
         response_data_holder = {
@@ -90,6 +99,7 @@ def chat():
         }), 200
     except Exception as e:
         return jsonify({"error": f"Internal server error: {str(e)}"}), 500
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8000, debug=True)
