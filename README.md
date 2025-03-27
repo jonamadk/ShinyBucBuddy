@@ -48,8 +48,24 @@ BucBuddy is a conversational and context-aware QnA platform designed for East Te
    cd BucBuddy
    ```
 
-2. **Create and activate a virtual environment:**
+
+2. **Build and Run service**
+    To build the docker images
     ```bash
-    python3 -m venv env
-    source env/bin/activate 
+    docker-compose up --build   
     ```
+   To run the container
+   ```bash
+   docker-compose up
+   ```
+    This should create the docker container that runs on two containers
+    > 1. Chroma Vector Database Container -> *chroma-1*
+    > 2. Server Application Container -> *my-flask-cont*
+
+3. **Add the Embedded Document**
+    Make sure that you haave vector database container running
+    Execute **embed_test.py** on scraped json document using:
+    ```bash
+    python embed_test.py
+    ```
+    This should add the documents in the vector database. Once you run the client application, you should be able to get response !

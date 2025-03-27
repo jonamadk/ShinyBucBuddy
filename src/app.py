@@ -13,9 +13,10 @@ logger = ResponseLogger(response_file="logs/response_data.json", timestamp_file=
 
 # Initialize ChromaDB client for health check
 chroma_client = chromadb.HttpClient(
-            host="chroma",
-            port = 8000,
-            settings=Settings(allow_reset=True, anonymized_telemetry=False))
+    host="chroma",
+    port=8000,
+    settings=Settings(allow_reset=True, anonymized_telemetry=False)
+)
 
 # Health Check Endpoint
 @app.route('/health', methods=['GET'])
@@ -84,9 +85,8 @@ def chat():
             "query": query,
             "response": response,
             "citation_data": citation_data,
-            "top":top_n_document,
+            "top": top_n_document,
             "timestamp": timestamp_data,
-            
         }), 200
     except Exception as e:
         return jsonify({"error": f"Internal server error: {str(e)}"}), 500
