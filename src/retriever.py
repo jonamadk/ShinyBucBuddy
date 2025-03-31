@@ -15,7 +15,7 @@ logging.basicConfig(
         logging.FileHandler('/app/logs/serverlogs/debug.log')
     ]
 )
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 
 
 class Retriever:

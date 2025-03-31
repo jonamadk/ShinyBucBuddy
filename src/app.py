@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import subprocess
-from responseLLM import generate_filtered_response
+from responseLLM import ResponseLLM
 from responselog import ResponseLogger
 import chromadb
 from chromadb.config import Settings
@@ -19,6 +18,9 @@ chroma_client = chromadb.HttpClient(
     port=8000,
     settings=Settings(allow_reset=True, anonymized_telemetry=False)
 )
+
+# Initialize ResponseLLM
+response_llm = ResponseLLM()
 
 # Health Check Endpoint
 
@@ -75,8 +77,8 @@ def chat():
         return jsonify({"error": "Query is required"}), 400
 
     try:
-        # Generate response using the LLM and retrieval logic
-        response, top_n_document, citation_data, context_data, timestamp_data = generate_filtered_response(
+        # Generate response using the ResponseLLM class
+        response, top_n_document, citation_data, context_data, timestamp_data = response_llm.generate_filtered_response(
             query)
 
         # Log the response and timestamp
