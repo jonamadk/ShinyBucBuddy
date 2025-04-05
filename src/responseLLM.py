@@ -33,7 +33,7 @@ class ResponseLLM:
         # Define query rewrite prompt
         rewrite_query_prompt = """
         Based on the provided user {question} and the conversational {history}:
-        if the {question} has context related to {history}
+        if the {question} is related to {history}
             then rewrite the query based on previous conversations in precisely and concisely adhering to context.
         else
             return the original {question}

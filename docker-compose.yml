@@ -8,23 +8,12 @@ services:
       - "8000:8000"  # App runs on 8000, externally accessible
     volumes:
       - ./:/app/      # Mounts local dir to /app/, preserving src/app.py
-      - ./logs:/app/logs  # Redundant but kept for explicitness
-      - ./.env:/app/.env  # Redundant but kept for explicitness
+      - ./logs:/app/logs
+      - ./.env:/app/.env
     environment:
       - FLASK_ENV=production
       - TOKENIZERS_PARALLELISM=false
-    depends_on:
-      - chroma
-    networks:
-      - net
- # Override CMD to ensure it runs from src/
-
-  chroma:
-    image: ghcr.io/chroma-core/chroma:latest # Use the working custom image or build and use the local
-    volumes:
-      - index_data:/chroma/.chroma/index  # Align with the working setup
-    ports:
-      - "8001:8000"  # Chroma runs on 8000 internally, mapped to 8001 externally
+      - DATABASE_URL=sqlite:///BUCDB/chroma.sqlite3  # Use the BUCDB database
     networks:
       - net
 
