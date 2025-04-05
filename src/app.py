@@ -5,19 +5,39 @@ from responselog import ResponseLogger
 import chromadb
 from chromadb.config import Settings
 from embedDoc import process_and_push_data_to_chromadb
+import os
+import logging
+import shutil
 
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
-logger = ResponseLogger(response_file="logs/responselogs/response_data.json",
-                        timestamp_file="logs/responselogs/response_timestamp.json")
 
-# Initialize ChromaDB client for health check
-chroma_client = chromadb.HttpClient(
-    host="chroma",
-    port=8000,
-    settings=Settings(allow_reset=True, anonymized_telemetry=False)
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
+# Initialize ResponseLogger
+response_logger = ResponseLogger(response_file="logs/responselogs/response_data.json",
+                                 timestamp_file="logs/responselogs/response_timestamp.json")
+
+# Initialize ChromaDB persistent client
+DATASET_PATH = os.path.join(os.getcwd(), "BUCDB")
+
+
+# Ensure consistent settings
+settings = Settings(
+    allow_reset=True,  # Ensure this matches the original settings
+    anonymized_telemetry=False  # Ensure this matches the original settings
 )
+
+logger.debug("Initializing PersistentClient with settings: %s", settings)
+
+chroma_client = chromadb.PersistentClient(
+    path=DATASET_PATH,
+    settings=settings
+)
+
 
 # Initialize ResponseLLM
 response_llm = ResponseLLM()
@@ -88,8 +108,8 @@ def chat():
             "response": response,
             "model": timestamp_data["Model"]
         }
-        logger.append_to_json_file(response_data_holder)
-        logger.time_stamp_append_to_json_file(timestamp_data)
+        response_logger.append_to_json_file(response_data_holder)
+        response_logger.time_stamp_append_to_json_file(timestamp_data)
 
         # Return response to the client
         return jsonify({

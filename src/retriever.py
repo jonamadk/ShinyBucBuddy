@@ -12,10 +12,10 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler('/app/logs/serverlogs/debug.log')
+        logging.FileHandler('logs/serverlogs/debug.log')
     ]
 )
-# logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 class Retriever:
@@ -23,10 +23,16 @@ class Retriever:
         # Set environment variable to prevent tokenizers parallelism warning
         os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-        self.client = chromadb.HttpClient(
-            host="chroma",
-            port=8000,
-            settings=Settings(allow_reset=True, anonymized_telemetry=False)
+        # Set up the dataset path and initialize the ChromaDB persistent client
+        os.makedirs(DATASET_PATH, exist_ok=True)
+
+        # Ensure consistent settings for PersistentClient
+        self.client = chromadb.PersistentClient(
+            path=DATASET_PATH,
+            settings=Settings(
+                allow_reset=True,  # Ensure this matches the original settings
+                anonymized_telemetry=False  # Ensure this matches the original settings
+            )
         )
 
         # Load the cross-encoder reranker model
@@ -53,7 +59,6 @@ class Retriever:
         initial_results = collection.query(
             query_embeddings=query_embedding,
             n_results=top_k
-
         )
 
         documents = initial_results['documents'][0]
