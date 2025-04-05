@@ -2,11 +2,12 @@ import os
 import json
 import uuid
 import logging
-from openai import OpenAI
 import chromadb
 from chromadb.config import Settings
+from config import EMBEDDING_MODEL_NAME
+
 from chromadb.utils import embedding_functions
-from config import OPENAI_API_KEY
+from config import OPENAI_API_KEY, DATASET_PATH
 
 # Configure logging
 logging.basicConfig(
@@ -14,43 +15,33 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler(
-            'logs/serverlogs/chromadb_push.log')  # Local log file
+        logging.FileHandler('logs/serverlogs/chromadb_push.log')
     ]
 )
 logger = logging.getLogger(__name__)
 
-# Replace with your API key (consider moving to .env file in production)
-OPENAI_API_KEY_IS = OPENAI_API_KEY
-INPUT_FILE = "Documents/combined_data_with_metadata.json"
+# Initialize ChromaDB persistent client
+os.makedirs(DATASET_PATH, exist_ok=True)
 
-# Initialize OpenAI client
-client = OpenAI(api_key=OPENAI_API_KEY_IS)
 
-# Initialize ChromaDB HTTP client
-chroma_client = chromadb.HttpClient(
-    host="chroma",  # Use localhost since running locally
-    port=8000,      # Use the host port from docker-compose.yml
-    settings=Settings(allow_reset=True)
+
+
+settings = Settings(
+    allow_reset=True,
+    anonymized_telemetry=False
 )
 
-# Define embedding function
+
+chroma_client = chromadb.PersistentClient(
+    path=DATASET_PATH,
+    settings=settings
+)
+
+# Initialize OpenAI embedding function
 openai_ef = embedding_functions.OpenAIEmbeddingFunction(
     api_key=OPENAI_API_KEY,
-    model_name="text-embedding-3-large"
+    model_name=EMBEDDING_MODEL_NAME
 )
-
-
-def get_embedding(text, model="text-embedding-3-large"):
-    """Generate embedding for a given text using OpenAI."""
-    text = text.replace("\n", " ")
-    try:
-        response = client.embeddings.create(input=[text], model=model)
-        return response.data[0].embedding
-    except Exception as e:
-        logger.error(
-            "Failed to generate embedding for text '%s': %s", text[:50], str(e))
-        raise
 
 
 def process_and_push_data_to_chromadb():
@@ -70,64 +61,33 @@ def process_and_push_data_to_chromadb():
 
     # Load data from JSON file
     try:
-        with open(INPUT_FILE, 'r') as file:
+        with open("Documents/combined_data_with_metadata.json", 'r') as file:
             data = json.load(file)
-        logger.info("Loaded %d items from %s", len(data), INPUT_FILE)
+        logger.info("Loaded %d items from JSON file", len(data))
     except FileNotFoundError:
-        logger.error("Input file %s not found", INPUT_FILE)
+        logger.error("Input file not found")
         raise
     except json.JSONDecodeError:
-        logger.error("Failed to parse JSON from %s", INPUT_FILE)
+        logger.error("Failed to parse JSON file")
         raise
 
     # Process and push data to ChromaDB
-    item_count = 0
-    total_items = 0
-
     for item in data:
-        item_count += 1
         doc_id = str(uuid.uuid4())
         text_data = item.get('document_content', '')
-
-        # Extract metadata with error handling
-        try:
-            tag1, tag2, tag3, tag4, tag5, description = item.get(
-                'metadata', ['', '', '', '', '', ''])
-            metadata_text = f"{tag1}, {tag2}, {tag3}, {tag4}, {tag5}, {description}"
-        except (IndexError, TypeError):
-            metadata_text = ""
-
-        document_title = item.get('document_title', 'No title')
-        document_link = item.get(
-            'document_link', 'Source Link has expired. Cross-validate the response')
-
-        combined_text = f"Metadata: {metadata_text} Content: {text_data}"
-
-        # Prepare metadata
         metadata = {
-            "document_title": document_title,
-            "document_link": document_link
+            "document_title": item.get('document_title', 'No title'),
+            "document_link": item.get('document_link', 'No link available')
         }
 
-        try:
-            # Generate embedding
-            embedding = get_embedding(
-                combined_text, model="text-embedding-3-large")
+        # Generate embedding
+        embedding = openai_ef([text_data])
 
-            # Upsert data into ChromaDB
-            collection.upsert(
-                embeddings=[embedding],
-                documents=[combined_text],
-                ids=[doc_id],
-                metadatas=[metadata]
-            )
-
-            total_items += 1
-            logger.info("Item %d pushed to ChromaDB with ID %s",
-                        item_count, doc_id)
-        except Exception as e:
-            logger.error("Failed to upsert item %d: %s", item_count, str(e))
-            continue
-
-    logger.info("Total documents pushed: %d", total_items)
-    return f"Total documents pushed: {total_items}"
+        # Upsert data into ChromaDB
+        collection.upsert(
+            embeddings=embedding,
+            documents=[text_data],
+            ids=[doc_id],
+            metadatas=[metadata]
+        )
+        logger.info("Document with ID %s pushed to ChromaDB", doc_id)

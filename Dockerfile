@@ -18,8 +18,8 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# No need to COPY src/, .env, or logs/ since docker-compose.yml mounts ./:/app/
-# (These would be overwritten anyway)
+# Copy the BUCDB folder into the container
+COPY BUCDB /app/BUCDB
 
 # Expose the port the Flask app will run on
 EXPOSE 8000
