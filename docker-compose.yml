@@ -11,6 +11,8 @@ services:
     volumes:
       - ./:/app/
       - ./logs:/app/logs
+
+
     environment:
       - FLASK_ENV=production
       - TOKENIZERS_PARALLELISM=false
