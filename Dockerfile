@@ -21,6 +21,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the BUCDB folder into the container
 COPY BUCDB /app/BUCDB
 
+
+# # Copy wait-for-it script
+# COPY wait-for-it.sh /wait-for-it.sh
+# RUN chmod +x /wait-for-it.sh
 # Expose the port the Flask app will run on
 EXPOSE 8000
 

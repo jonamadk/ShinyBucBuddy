@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   app:
     build:
@@ -5,21 +7,37 @@ services:
       dockerfile: Dockerfile
     container_name: my-flask-container
     ports:
-      - "8000:8000"  # App runs on 8000, externally accessible
+      - "8000:8000"
     volumes:
-      - ./:/app/      # Mounts local dir to /app/, preserving src/app.py
+      - ./:/app/
       - ./logs:/app/logs
-      - ./.env:/app/.env
     environment:
       - FLASK_ENV=production
       - TOKENIZERS_PARALLELISM=false
-      - DATABASE_URL=sqlite:///BUCDB/chroma.sqlite3  # Use the BUCDB database
+      - CHROMA_DB_URL=sqlite:///BUCDB/chroma.sqlite3 # Loaded from .env
+    depends_on:
+      - db
+    networks:
+      - net
+    # command: ["/wait-for-it.sh", "db:5432", "--", "python", "app.py"]
+
+  db:
+    image: postgres:16
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: buc_users
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
     networks:
       - net
 
 volumes:
+  pgdata:
   index_data:
-    driver: local
 
 networks:
   net:

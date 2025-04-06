@@ -11,3 +11,5 @@ COLLECTION_NAME = "web_information"
 RERANKER_MODEL = 'cross-encoder/ms-marco-MiniLM-L-12-v2'
 EMBEDDING_MODEL_NAME = "text-embedding-ada-002"
 SENTENCE_TRANSFORMER_MODEL_NAME = "all-MiniLM-L6-v2"
+# For PostgreSQL user storage
+
