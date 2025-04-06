@@ -3,7 +3,7 @@ import time
 import ollama
 import logging
 from openai import OpenAI
-from retriever import Retriever
+from ragapp.retriever import Retriever
 from langchain.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain_core.runnables import RunnablePassthrough, RunnableLambda
