@@ -4,7 +4,8 @@ from marshmallow import Schema, fields
 
 class UserSchema(Schema):
     """Serializer for the User model."""
-    id = fields.Int(dump_only=True)
-    username = fields.Str(required=True)
     email = fields.Email(required=True)
     password = fields.Str(load_only=True, required=True)
+    firstname = fields.Str(required=False, allow_none=True)
+    lastname = fields.Str(required=False, allow_none=True)
+    signinstatus = fields.Bool(required=False)
