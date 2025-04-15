@@ -110,7 +110,8 @@ def google_callback():
         if not user:
             # Create new user if not found
             user = User(
-                username=user_info.get('name', ''),
+                firstname=user_info.get('given_name', ''),
+                lastname=user_info.get('family_name', ''),
                 email=user_info.get('email'),
                 password=''  # Placeholder; password not needed for OAuth
             )
@@ -122,14 +123,15 @@ def google_callback():
 
         # Create a JWT token
         access_token = create_access_token(
-            identity={"id": user.id, "email": user.email})
+            identity={"email": user.email}
+        )
 
         return jsonify({
             "access_token": access_token,
             "user": {
-                "id": user.id,
-                "username": user.username,
-                "email": user.email
+                "email": user.email,
+                "firstname": user.firstname,
+                "lastname": user.lastname
             }
         })
 
