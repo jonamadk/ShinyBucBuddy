@@ -7,7 +7,7 @@ from .responselog import ResponseLogger
 from .embedDoc import process_and_push_data_to_chromadb
 import chromadb
 from extensions import db
-from .models import ChatHistory
+from .models import ChatHistory, ChatConversation
 import json
 
 ragapp_bp = Blueprint('ragapp', __name__)
@@ -86,13 +86,17 @@ def chat():
 @ragapp_bp.route('/auth/chat', methods=['POST'])
 @jwt_required()
 def auth_chat():
-    """Authenticated chat endpoint: checks user login status and logs chat history."""
+    """Authenticated chat endpoint with conversation support."""
+
     data = request.get_json()
     userquery = data.get("userquery")
+    # Optional: frontend passes it if continuing a chat
+    conversation_id = data.get("conversation_id")
+
     if not userquery:
         return jsonify({"error": "Query is required"}), 400
 
-    # Parse the JSON string identity
+    # Decode JWT
     try:
         identity = json.loads(get_jwt_identity())
         useremail = identity.get("email")
@@ -104,18 +108,40 @@ def auth_chat():
         return jsonify({"error": "User not logged in"}), 401
 
     try:
+        # Create new conversation if one doesn't exist
+        if not conversation_id:
+            new_conversation = ChatConversation(
+                useremail=useremail,
+                title="New Chat",  # Or auto-generate from userquery if you want
+                created_at=datetime.now(timezone.utc)
+            )
+            db.session.add(new_conversation)
+            db.session.flush()  # Flush to get new ID before commit
+            conversation_id = new_conversation.conversationid
+        else:
+            # Ensure conversation exists and belongs to the user
+            existing_conversation = ChatConversation.query.filter_by(
+                conversationid=conversation_id, useremail=useremail
+            ).first()
+            if not existing_conversation:
+                return jsonify({"error": "Conversation not found"}), 404
+
+        # Get LLM response
         llmresponse, top_n_document, citation_data, context_data, timestamp_data = response_llm.generate_filtered_response(
             userquery
         )
 
+        # Store in chat history
         chat_history = ChatHistory(
             useremail=user.email,
+            conversationid=conversation_id,
             userquery=userquery,
             llmresponse=llmresponse,
             top_n_document=top_n_document,
             citation_data=citation_data,
             timestamp=datetime.now(timezone.utc)
         )
+
         db.session.add(chat_history)
         db.session.commit()
 
@@ -125,6 +151,8 @@ def auth_chat():
             "citation_data": citation_data,
             "top": top_n_document,
             "timestamp": timestamp_data,
+            "conversation_id": conversation_id  # Return so frontend can reuse
         }), 200
+
     except Exception as e:
         return jsonify({"error": f"Internal server error: {str(e)}"}), 500

@@ -6,7 +6,8 @@ import os
 import secrets
 import logging
 import time
-
+import json
+from datetime import timedelta
 logger = logging.getLogger(__name__)
 
 auth_bp = Blueprint('auth', __name__)
@@ -123,8 +124,9 @@ def google_callback():
 
         # Create a JWT token
         access_token = create_access_token(
-            identity={"email": user.email}
-        )
+        identity=json.dumps({"email": user.email}),
+        expires_delta=timedelta(days=3)
+    )
 
         return jsonify({
             "access_token": access_token,
@@ -133,7 +135,7 @@ def google_callback():
                 "firstname": user.firstname,
                 "lastname": user.lastname
             }
-        })
+        })                                                                                                                                                                                                                                                      
 
     except Exception as e:
         logger.error(f"Error in callback: {str(e)}", exc_info=True)
