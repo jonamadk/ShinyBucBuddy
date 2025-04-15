@@ -8,7 +8,7 @@ from .models import User
 from .serializers import UserSchema
 import bcrypt
 import json
-from ragapp.models import ChatHistory
+from ragapp.models import ChatHistory, ChatConversation
 from ragapp.serializers import ChatHistorySchema
 
 user_bp = Blueprint('user', __name__)
@@ -76,22 +76,22 @@ def login():
     )
     user.signinstatus = True
     db.session.commit()
-   
-    
 
-    # Fetch user's chat history
+    # Fetch user's conversations and their histories
     try:
-        chat_history = ChatHistory.query.filter_by(
-            useremail=user.email)
-        
-        chat_history = ChatHistory.query.filter_by(
-            useremail=user.email).order_by(ChatHistory.timestamp.desc()).all()
-        chat_history_schema = ChatHistorySchema(many=True)
-        chat_history_data = chat_history_schema.dump(chat_history)
-    except:
-        chat_history_data = None
-        
-    # Return the token, user details, and chat history
+        conversations = ChatConversation.query.filter_by(
+            useremail=user.email).all()
+        conversations_data = []
+        for conversation in conversations:
+            conversation_dict = conversation.to_dict()
+            conversation_dict["chat_history"] = [
+                history.to_dict() for history in conversation.chat_history
+            ]
+            conversations_data.append(conversation_dict)
+    except Exception as e:
+        return jsonify({"error": f"Error retrieving conversations: {str(e)}"}), 500
+
+    # Return the token, user details, conversations, and chat histories
     return jsonify({
         "access_token": access_token,
         "user": {
@@ -99,9 +99,8 @@ def login():
             "signinstatus": user.signinstatus,
             "firstname": user.firstname,
             "lastname": user.lastname,
-       
         },
-        "chat_history": chat_history_data
+        "conversations": conversations_data
     }), 200
 
 
