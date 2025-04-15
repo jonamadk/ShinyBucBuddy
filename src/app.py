@@ -2,6 +2,8 @@ from flask import Flask
 from flask_cors import CORS
 from flask_session import Session  # Add this import
 from ragapp import ragapp_bp
+# Import models explicitly to ensure they're registered
+from ragapp.models import ChatHistory  # Add this import
 from user.views import user_bp
 from user.auth import auth_bp, init_oauth
 from extensions import init_extensions, db

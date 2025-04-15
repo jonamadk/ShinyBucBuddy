@@ -1,8 +1,14 @@
 from flask import Blueprint, request, jsonify
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from user.models import User
+from datetime import datetime, timezone
 from .responseLLM import ResponseLLM
 from .responselog import ResponseLogger
 from .embedDoc import process_and_push_data_to_chromadb
 import chromadb
+from extensions import db
+from .models import ChatHistory
+import json
 
 ragapp_bp = Blueprint('ragapp', __name__)
 
@@ -12,6 +18,8 @@ response_logger = ResponseLogger(response_file="logs/responselogs/response_data.
                                  timestamp_file="logs/responselogs/response_timestamp.json")
 
 # Health Check Endpoint for ChromaServer Not PersitentDB
+
+
 @ragapp_bp.route('/health', methods=['GET'])
 def health_check():
     """Check if the API and its dependencies are running."""
@@ -48,23 +56,72 @@ def embed_documents():
 def chat():
     """Handle user queries and return chatbot responses."""
     data = request.get_json()
-    query = data.get("query")
-    if not query:
+    userquery = data.get("userquery")
+    if not userquery:
         return jsonify({"error": "Query is required"}), 400
 
     try:
-        response, top_n_document, citation_data, context_data, timestamp_data = response_llm.generate_filtered_response(
-            query)
+        llmresponse, top_n_document, citation_data, context_data, timestamp_data = response_llm.generate_filtered_response(
+            userquery)
         response_logger.append_to_json_file({
-            "query": query,
+            "query": userquery,
             "context": context_data,
-            "response": response,
+            "llmresponse": llmresponse,
             "model": timestamp_data["Model"]
         })
         response_logger.time_stamp_append_to_json_file(timestamp_data)
         return jsonify({
-            "query": query,
-            "response": response,
+            "query": userquery,
+            "llmresponse": llmresponse,
+            "citation_data": citation_data,
+            "top": top_n_document,
+            "timestamp": timestamp_data,
+        }), 200
+    except Exception as e:
+        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
+
+# Authenticated Chat Endpoint
+
+
+@ragapp_bp.route('/auth/chat', methods=['POST'])
+@jwt_required()
+def auth_chat():
+    """Authenticated chat endpoint: checks user login status and logs chat history."""
+    data = request.get_json()
+    userquery = data.get("userquery")
+    if not userquery:
+        return jsonify({"error": "Query is required"}), 400
+
+    # Parse the JSON string identity
+    try:
+        identity = json.loads(get_jwt_identity())
+        useremail = identity.get("email")
+        user = User.query.filter_by(email=useremail).first()
+    except Exception as e:
+        return jsonify({"error": f"Invalid token or user lookup failed: {str(e)}"}), 401
+
+    if not user or not user.signinstatus:
+        return jsonify({"error": "User not logged in"}), 401
+
+    try:
+        llmresponse, top_n_document, citation_data, context_data, timestamp_data = response_llm.generate_filtered_response(
+            userquery
+        )
+
+        chat_history = ChatHistory(
+            useremail=user.email,
+            userquery=userquery,
+            llmresponse=llmresponse,
+            top_n_document=top_n_document,
+            citation_data=citation_data,
+            timestamp=datetime.now(timezone.utc)
+        )
+        db.session.add(chat_history)
+        db.session.commit()
+
+        return jsonify({
+            "query": userquery,
+            "llmresponse": llmresponse,
             "citation_data": citation_data,
             "top": top_n_document,
             "timestamp": timestamp_data,
