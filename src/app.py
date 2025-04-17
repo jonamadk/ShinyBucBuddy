@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_session import Session  # Add this import
-from ragapp import ragapp_bp
+from ragapp.views import ragapp_bp
 # Import models explicitly to ensure they're registered
 from ragapp.models import ChatHistory  # Add this import
 from user.views import user_bp
@@ -13,13 +13,19 @@ import tempfile  # For temporary session files
 from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 from datetime import timedelta
-
+import chromadb
+from chromadb.config import Settings
 load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
+chroma_client = chromadb.HttpClient(
+    host="chroma",
+    port=8000,
+    settings=Settings(allow_reset=True, anonymized_telemetry=False)
+)
 # Session configuration (important for OAuth)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SESSION_COOKIE_SECURE'] = False  # Set to True in production

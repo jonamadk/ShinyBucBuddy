@@ -11,17 +11,14 @@ services:
     volumes:
       - ./:/app/
       - ./logs:/app/logs
-
-
     environment:
-      - FLASK_ENV=production
-      - TOKENIZERS_PARALLELISM=false
-      - CHROMA_DB_URL=sqlite:///BUCDB/chroma.sqlite3 # Loaded from .env
+      FLASK_ENV: production
+      TOKENIZERS_PARALLELISM: "false"
     depends_on:
       - db
+      - chroma
     networks:
       - net
-    # command: ["/wait-for-it.sh", "db:5432", "--", "python", "app.py"]
 
   db:
     image: postgres:16
@@ -37,9 +34,21 @@ services:
     networks:
       - net
 
+  chroma:
+    image: ghcr.io/chroma-core/chroma:latest
+    container_name: chroma-container
+    volumes:
+      - index_data:/chroma/.chroma/index
+    ports:
+      - "8001:8000"
+    networks:
+      - net
+
 volumes:
   pgdata:
+    driver: local
   index_data:
+    driver: local
 
 networks:
   net:

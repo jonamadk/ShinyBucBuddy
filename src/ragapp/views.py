@@ -9,6 +9,10 @@ import chromadb
 from extensions import db
 from .models import ChatHistory, ChatConversation, UnauthenticatedSession
 import json
+# Check ChromaDB connectivity by attempting a simple operation
+from chromadb.config import Settings
+from chromadb import HttpClient
+
 
 ragapp_bp = Blueprint('ragapp', __name__)
 
@@ -25,7 +29,13 @@ def health_check():
     """Check if the API and its dependencies are running."""
     try:
         health_status = {"status": "healthy", "message": "API is running"}
-        chromadb.heartbeat()  # Check ChromaDB connectivity
+        chroma_client = HttpClient(
+            host="chroma",
+            port=8000,
+            settings=Settings(allow_reset=True, anonymized_telemetry=False)
+        )
+
+        chroma_client.get_or_create_collection(name="health_check_collection")
         health_status["chromadb"] = "connected"
     except Exception as e:
         health_status = {
@@ -33,6 +43,7 @@ def health_check():
             "message": f"API is running, but ChromaDB is not accessible: {str(e)}"
         }
         return jsonify(health_status), 503
+
     return jsonify(health_status), 200
 
 # Embed Documents Endpoint
@@ -58,7 +69,8 @@ def chat():
     session.permanent = True
     data = request.get_json()
     userquery = data.get("userquery")
-    conversation_id = data.get("conversation_id")  # Optional: frontend passes it if continuing a chat
+    # Optional: frontend passes it if continuing a chat
+    conversation_id = data.get("conversation_id")
 
     if not userquery:
         return jsonify({"error": "Query is required"}), 400
@@ -67,12 +79,14 @@ def chat():
         # Initialize session for conversation history if not already present
         if "conversation_history" not in session:
             session["conversation_history"] = {}
-            session["conversation_id_counter"] = 1  # Counter to generate unique conversation IDs
+            # Counter to generate unique conversation IDs
+            session["conversation_id_counter"] = 1
 
         # Handle new conversation
         if not conversation_id:
             conversation_id = session["conversation_id_counter"]
-            session["conversation_history"][conversation_id] = []  # Initialize history for this conversation
+            # Initialize history for this conversation
+            session["conversation_history"][conversation_id] = []
             session["conversation_id_counter"] += 1
         else:
             # Ensure the conversation exists in the session
@@ -89,7 +103,7 @@ def chat():
             userquery, history_userquery
         )
 
-                # Prepare the response data
+        # Prepare the response data
         time_is = datetime.now()
         formatted_time = time_is.strftime("%Y-%m-%d %H:%M:%S")
         # Store the query and response in the session
@@ -101,7 +115,6 @@ def chat():
 
         # Save the session
         session.modified = True
-        
 
         # Save the data in the database
         unauthenticated_session = UnauthenticatedSession(
@@ -117,19 +130,19 @@ def chat():
         db.session.add(unauthenticated_session)
         db.session.commit()
 
-        conversation_history = {conversation_id:[{
+        conversation_history = {conversation_id: [{
             "userquery": userquery,
-            "llmresponse":llmresponse,
+            "llmresponse": llmresponse,
             "query-timestamp": formatted_time
         }]}
         response_data = {
-            
-            "user_type":"Un-Authenticated",
-            "conversation_id":conversation_id,
-            "conversation_history":conversation_history,
+
+            "user_type": "Un-Authenticated",
+            "conversation_id": conversation_id,
+            "conversation_history": conversation_history,
             "token-details": token_details,
             "documents": top_n_document,
-            
+
         }
 
         # Log the response data
@@ -139,7 +152,6 @@ def chat():
 
     except Exception as e:
         return jsonify({"error": f"Internal server error: {str(e)}"}), 500
-
 
 
 # Authenticated Chat Endpoint
@@ -166,7 +178,7 @@ def auth_chat():
 
     if not user or not user.signinstatus:
         return jsonify({"error": "User not logged in"}), 401
-    
+
     time_is = datetime.now()
     formatted_time = time_is.strftime("%Y-%m-%d %H:%M:%S")
     try:
@@ -212,25 +224,23 @@ def auth_chat():
             timestamp=formatted_time
         )
 
-        conversation_history = {chat_history.conversationid:[{
+        conversation_history = {chat_history.conversationid: [{
             "userquery": userquery,
-            "llmresponse":llmresponse,
+            "llmresponse": llmresponse,
             "query-timestamp": formatted_time
         }]}
-        
+
         db.session.add(chat_history)
         db.session.commit()
 
-        
-        
         response_data = {
-            
-            "user_type":"Authenticated",
-            "conversation_id":conversation_id,
-            "conversation_history":conversation_history,
+
+            "user_type": "Authenticated",
+            "conversation_id": conversation_id,
+            "conversation_history": conversation_history,
             "token-details": token_details,
             "documents": top_n_document,
-            
+
         }
 
         response_logger.append_to_json_file(response_data)

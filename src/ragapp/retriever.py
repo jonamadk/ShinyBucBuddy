@@ -4,7 +4,7 @@ from sentence_transformers import CrossEncoder
 import chromadb
 from chromadb.utils import embedding_functions
 from chromadb.config import Settings
-from config import OPENAI_API_KEY, DATASET_PATH, COLLECTION_NAME, RERANKER_MODEL, EMBEDDING_MODEL_NAME
+from config import OPENAI_API_KEY, COLLECTION_NAME, RERANKER_MODEL, EMBEDDING_MODEL_NAME
 
 # Configure logging
 logging.basicConfig(
@@ -23,17 +23,16 @@ class Retriever:
         # Set environment variable to prevent tokenizers parallelism warning
         os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-        # Set up the dataset path and initialize the ChromaDB persistent client
-        os.makedirs(DATASET_PATH, exist_ok=True)
+        # # Set up the dataset path and initialize the ChromaDB persistent client
+        # os.makedirs(DATASET_PATH, exist_ok=True)
 
         # Ensure consistent settings for PersistentClient
-        self.client = chromadb.PersistentClient(
-            path=DATASET_PATH,
-            settings=Settings(
-                allow_reset=True,  # Ensure this matches the original settings
-                anonymized_telemetry=False  # Ensure this matches the original settings
-            )
+        self.client = chromadb.HttpClient(
+            host="chroma",
+            port=8000,
+            settings=Settings(allow_reset=True, anonymized_telemetry=False)
         )
+
 
         # Load the cross-encoder reranker model
         self.reranker = CrossEncoder(RERANKER_MODEL)
