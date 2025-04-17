@@ -1,13 +1,13 @@
 from flask import Blueprint, request, jsonify, session
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from user.models import User
-from datetime import datetime, timezone
+from datetime import datetime
 from .responseLLM import ResponseLLM
 from .responselog import ResponseLogger
 from .embedDoc import process_and_push_data_to_chromadb
 import chromadb
 from extensions import db
-from .models import ChatHistory, ChatConversation
+from .models import ChatHistory, ChatConversation, UnauthenticatedSession
 import json
 
 ragapp_bp = Blueprint('ragapp', __name__)
@@ -55,7 +55,7 @@ def embed_documents():
 @ragapp_bp.route('/chat', methods=['POST'])
 def chat():
     """Handle user queries and maintain conversation history temporarily in the browser."""
-
+    session.permanent = True
     data = request.get_json()
     userquery = data.get("userquery")
     conversation_id = data.get("conversation_id")  # Optional: frontend passes it if continuing a chat
@@ -85,41 +85,69 @@ def chat():
         ]
 
         # Get LLM response
-        llmresponse, top_n_document, citation_data, context_data, timestamp_data = response_llm.generate_filtered_response(
+        llmresponse, top_n_document, citation_data, context_data, token_details = response_llm.generate_filtered_response(
             userquery, history_userquery
         )
 
+                # Prepare the response data
+        time_is = datetime.now()
+        formatted_time = time_is.strftime("%Y-%m-%d %H:%M:%S")
         # Store the query and response in the session
         session["conversation_history"][conversation_id].append({
             "userquery": userquery,
             "llmresponse": llmresponse,
-            "timestamp": datetime.now(timezone.utc).isoformat()
+            "timestamp": formatted_time
         })
 
         # Save the session
         session.modified = True
+        
 
-        return jsonify({
-            "query": userquery,
-            "llmresponse": llmresponse,
-            "citation_data": citation_data,
-            "top": top_n_document,
-            "timestamp": timestamp_data,
-            "history_userquery": history_userquery,
-            "conversation_id": conversation_id  # Return so frontend can reuse
-        }), 200
+        # Save the data in the database
+        unauthenticated_session = UnauthenticatedSession(
+            session_id=session.sid,  # Use Flask session ID
+            conversation_id=conversation_id,
+            userquery=userquery,
+            llmresponse=llmresponse,
+            top_n_document=top_n_document,
+            citation_data=citation_data,
+            history_userquery=history_userquery,
+            timestamp=datetime.now()
+        )
+        db.session.add(unauthenticated_session)
+        db.session.commit()
+
+        conversation_history = {conversation_id:[{
+            "userquery": userquery,
+            "llmresponse":llmresponse,
+            "query-timestamp": formatted_time
+        }]}
+        response_data = {
+            
+            "user_type":"Un-Authenticated",
+            "conversation_id":conversation_id,
+            "conversation_history":conversation_history,
+            "token-details": token_details,
+            "documents": top_n_document,
+            
+        }
+
+        # Log the response data
+        response_logger.append_to_json_file(response_data)
+
+        return jsonify(response_data), 200
 
     except Exception as e:
         return jsonify({"error": f"Internal server error: {str(e)}"}), 500
 
+
+
 # Authenticated Chat Endpoint
-
-
 @ragapp_bp.route('/auth/chat', methods=['POST'])
 @jwt_required()
 def auth_chat():
     """Authenticated chat endpoint with conversation support."""
-
+    session.permanent = True
     data = request.get_json()
     userquery = data.get("userquery")
     # Optional: frontend passes it if continuing a chat
@@ -138,7 +166,9 @@ def auth_chat():
 
     if not user or not user.signinstatus:
         return jsonify({"error": "User not logged in"}), 401
-
+    
+    time_is = datetime.now()
+    formatted_time = time_is.strftime("%Y-%m-%d %H:%M:%S")
     try:
         # Create new conversation if one doesn't exist
         history_userquery = []  # Initialize history_userquery
@@ -146,7 +176,7 @@ def auth_chat():
             new_conversation = ChatConversation(
                 useremail=useremail,
                 title="New Chat",  # Or auto-generate from userquery if you want
-                created_at=datetime.now(timezone.utc)
+                created_at=formatted_time
             )
             db.session.add(new_conversation)
             db.session.flush()  # Flush to get new ID before commit
@@ -167,7 +197,7 @@ def auth_chat():
             ]
 
         # Get LLM response
-        llmresponse, top_n_document, citation_data, context_data, timestamp_data = response_llm.generate_filtered_response(
+        llmresponse, top_n_document, citation_data, context_data, token_details = response_llm.generate_filtered_response(
             userquery, history_userquery
         )
 
@@ -179,20 +209,33 @@ def auth_chat():
             llmresponse=llmresponse,
             top_n_document=top_n_document,
             citation_data=citation_data,
-            timestamp=datetime.now(timezone.utc)
+            timestamp=formatted_time
         )
 
+        conversation_history = {chat_history.conversationid:[{
+            "userquery": userquery,
+            "llmresponse":llmresponse,
+            "query-timestamp": formatted_time
+        }]}
+        
         db.session.add(chat_history)
         db.session.commit()
 
-        return jsonify({
-            "query": userquery,
-            "llmresponse": llmresponse,
-            "citation_data": citation_data,
-            "top": top_n_document,
-            "timestamp": timestamp_data,
-            "conversation_id": conversation_id  # Return so frontend can reuse
-        }), 200
+        
+        
+        response_data = {
+            
+            "user_type":"Authenticated",
+            "conversation_id":conversation_id,
+            "conversation_history":conversation_history,
+            "token-details": token_details,
+            "documents": top_n_document,
+            
+        }
+
+        response_logger.append_to_json_file(response_data)
+
+        return jsonify(response_data), 200
 
     except Exception as e:
         return jsonify({"error": f"Internal server error: {str(e)}"}), 500
