@@ -14,8 +14,6 @@ from sentence_transformers import SentenceTransformer, util
 
 class ResponseLLM:
     def __init__(self):
-    
-
         # Initialize API clients
         self.client = OpenAI(api_key=OPENAI_API_KEY)
 
@@ -23,34 +21,16 @@ class ResponseLLM:
         self.llm = ChatOpenAI(model='gpt-4o-mini', temperature=0.5)
 
         # Load sentence transformer model for similarity computation
-        self.similarity_model = SentenceTransformer(
-            SENTENCE_TRANSFORMER_MODEL_NAME)
-
-        # Simple in-memory history store (mimicking k=1 behavior)
-        # List to store messages; limited to last 2 (1 turn)
-        self.conversation_history = []
+        self.similarity_model = SentenceTransformer(SENTENCE_TRANSFORMER_MODEL_NAME)
 
         # Define query rewrite prompt
         rewrite_query_prompt = """
-        Based on the provided user {question} and the conversational {history}:
-        if the {question} is related to {history}
-            then rewrite the query based on previous conversations in precisely and concisely adhering to context.
-        else
-            return the original {question}
+        Based on the provided user query: "{question}" and the history of previous user questions: "{history}",
+        if the query is related to the history, rewrite the query based on the context of the history.
+        Otherwise, return the original query: "{question}".
         """
 
-        self.rewrite_prompt = ChatPromptTemplate.from_template(
-            rewrite_query_prompt, verbose=True)
-
-        # Define a chain for rewriting queries with history
-        self.rewrite_chain = (
-            {
-                "question": RunnablePassthrough(),
-                "history": RunnableLambda(lambda x: self.conversation_history[-2:] if self.conversation_history else [])
-            }
-            | self.rewrite_prompt
-            | self.llm
-        )
+        self.rewrite_prompt = ChatPromptTemplate.from_template(rewrite_query_prompt, verbose=True)
 
         # Initialize retriever
         self.retriever = Retriever()
@@ -59,20 +39,27 @@ class ResponseLLM:
         """Counts total tokens in the retrieved context data."""
         return sum(len(text.split()) for document in context_data for text in document.values())
 
-    def rewrite_query(self, query):
-        """Rewrites the user query using conversation history if similarity is high enough."""
-        history = self.conversation_history[-2:] if self.conversation_history else [
-        ]  
-        rewritten_query = self.rewrite_chain.invoke(query).content
+    def rewrite_query(self, query, history_userquery):
+        """Rewrites the user query using the provided conversation history."""
+        # Combine the last 4 user queries into a single history string
+        history = ",".join(history_userquery) if history_userquery else ""
+
+        # Use the rewrite prompt to rewrite the query
+        rewritten_query = self.llm.predict(
+            self.rewrite_prompt.format(question=query, history=history)
+        )
 
         return rewritten_query
 
-    def generate_filtered_response(self, query, rerank_score_threshold=-5):
+    def generate_filtered_response(self, query, history_userquery, rerank_score_threshold=-5):
         """Generates a response using retrieved documents."""
-        rewritten_query = self.rewrite_query(query)
+        # Rewrite the query using the provided history
+        rewritten_query = self.rewrite_query(query, history_userquery)
 
+        # Retrieve and rerank documents based on the rewritten query
         top_n_document, citation_data, context_data = self.retriever.retrieve_and_rerank(
-            rewritten_query)
+            rewritten_query
+        )
 
         total_token_count = self.count_tokens(context_data)
         timestamp_holder = {"Token Count": total_token_count}
@@ -122,11 +109,5 @@ class ResponseLLM:
             generated_text = response["message"]["content"]
             timestamp_holder.update(
                 {"TimeStamp": time.time() - start_time, "Model": "Ollama2- Local Server"})
-
-        # Update conversation history (mimicking k=1 behavior)
-        if len(self.conversation_history) >= 2:
-            self.conversation_history.pop(0)  # Remove oldest turn
-        self.conversation_history.append(HumanMessage(content=rewritten_query))
-        self.conversation_history.append(AIMessage(content=generated_text))
 
         return generated_text, top_n_document, citation_data, context_data, timestamp_holder
