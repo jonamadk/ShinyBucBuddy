@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from user.models import User
 from datetime import datetime, timezone
@@ -54,29 +54,61 @@ def embed_documents():
 
 @ragapp_bp.route('/chat', methods=['POST'])
 def chat():
-    """Handle user queries and return chatbot responses."""
+    """Handle user queries and maintain conversation history temporarily in the browser."""
+
     data = request.get_json()
     userquery = data.get("userquery")
+    conversation_id = data.get("conversation_id")  # Optional: frontend passes it if continuing a chat
+
     if not userquery:
         return jsonify({"error": "Query is required"}), 400
 
     try:
+        # Initialize session for conversation history if not already present
+        if "conversation_history" not in session:
+            session["conversation_history"] = {}
+            session["conversation_id_counter"] = 1  # Counter to generate unique conversation IDs
+
+        # Handle new conversation
+        if not conversation_id:
+            conversation_id = session["conversation_id_counter"]
+            session["conversation_history"][conversation_id] = []  # Initialize history for this conversation
+            session["conversation_id_counter"] += 1
+        else:
+            # Ensure the conversation exists in the session
+            if conversation_id not in session["conversation_history"]:
+                return jsonify({"error": "Conversation not found"}), 404
+
+        # Retrieve the last 4 user queries from the session for this conversation
+        history_userquery = [
+            entry["userquery"] for entry in session["conversation_history"][conversation_id][-4:]
+        ]
+
+        # Get LLM response
         llmresponse, top_n_document, citation_data, context_data, timestamp_data = response_llm.generate_filtered_response(
-            userquery)
-        response_logger.append_to_json_file({
-            "query": userquery,
-            "context": context_data,
+            userquery, history_userquery
+        )
+
+        # Store the query and response in the session
+        session["conversation_history"][conversation_id].append({
+            "userquery": userquery,
             "llmresponse": llmresponse,
-            "model": timestamp_data["Model"]
+            "timestamp": datetime.now(timezone.utc).isoformat()
         })
-        response_logger.time_stamp_append_to_json_file(timestamp_data)
+
+        # Save the session
+        session.modified = True
+
         return jsonify({
             "query": userquery,
             "llmresponse": llmresponse,
             "citation_data": citation_data,
             "top": top_n_document,
             "timestamp": timestamp_data,
+            "history_userquery": history_userquery,
+            "conversation_id": conversation_id  # Return so frontend can reuse
         }), 200
+
     except Exception as e:
         return jsonify({"error": f"Internal server error: {str(e)}"}), 500
 
@@ -109,6 +141,7 @@ def auth_chat():
 
     try:
         # Create new conversation if one doesn't exist
+        history_userquery = []  # Initialize history_userquery
         if not conversation_id:
             new_conversation = ChatConversation(
                 useremail=useremail,
@@ -126,9 +159,16 @@ def auth_chat():
             if not existing_conversation:
                 return jsonify({"error": "Conversation not found"}), 404
 
+            # Retrieve the last 4 userquery entries from ChatHistory for this conversation
+            history_userquery = [
+                history.userquery for history in ChatHistory.query.filter_by(
+                    conversationid=conversation_id
+                ).order_by(ChatHistory.timestamp.desc()).limit(4).all()
+            ]
+
         # Get LLM response
         llmresponse, top_n_document, citation_data, context_data, timestamp_data = response_llm.generate_filtered_response(
-            userquery
+            userquery, history_userquery
         )
 
         # Store in chat history
