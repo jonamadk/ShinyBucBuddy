@@ -62,7 +62,7 @@ class ResponseLLM:
         )
 
         total_token_count = self.count_tokens(context_data)
-        timestamp_holder = {"Token Count": total_token_count}
+        token_processing_details_holder = {"Token Count": total_token_count}
 
         generation_kwargs = {
             "max_tokens": 500,
@@ -80,7 +80,7 @@ class ResponseLLM:
                     {
                         "role": "user",
                         "content": f"""
-                        You are BucBuddy - conversational and context-aware QnA platform for East Tennessee State University.
+                        Your identity is: "BucBuddy - conversational and context-aware QnA platform for East Tennessee State University."
                         Your job is to answer the user query in a conversational way strictly based on context.
 
                         Please just answer the question strictly based on the context.
@@ -93,8 +93,8 @@ class ResponseLLM:
                 ]
             )
             generated_text = completion.choices[0].message.content
-            timestamp_holder.update(
-                {"TimeStamp": time.time() - start_time, "Model": "GPT 4o Mini"})
+            token_processing_details_holder.update(
+                {"Process-Time": time.time() - start_time, "Model": "GPT 4o Mini"})
         else:
             response = ollama.chat(
                 model="llama2",
@@ -107,7 +107,7 @@ class ResponseLLM:
                 ]
             )
             generated_text = response["message"]["content"]
-            timestamp_holder.update(
-                {"TimeStamp": time.time() - start_time, "Model": "Ollama2- Local Server"})
+            token_processing_details_holder.update(
+                {"Process-Time": time.time() - start_time, "Model": "Ollama2- Local Server"})
 
-        return generated_text, top_n_document, citation_data, context_data, timestamp_holder
+        return generated_text, top_n_document, citation_data, context_data, token_processing_details_holder
