@@ -7,7 +7,7 @@ from chromadb.config import Settings
 from config import EMBEDDING_MODEL_NAME
 
 from chromadb.utils import embedding_functions
-from config import OPENAI_API_KEY, DATASET_PATH
+from config import OPENAI_API_KEY
 
 # Configure logging
 logging.basicConfig(
@@ -20,21 +20,16 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Initialize ChromaDB persistent client
-os.makedirs(DATASET_PATH, exist_ok=True)
+# # Initialize ChromaDB persistent client
+# os.makedirs(DATASET_PATH, exist_ok=True)
 
 
-
-
-settings = Settings(
-    allow_reset=True,
-    anonymized_telemetry=False
-)
-
-
-chroma_client = chromadb.PersistentClient(
-    path=DATASET_PATH,
-    settings=settings
+# Initialize ChromaDB HTTP client
+chroma_client = chromadb.HttpClient(
+    host="chroma",  # Use localhost since running locally
+    port=8000,      # Use the host port from docker-compose.yml
+    settings=Settings(allow_reset=True,
+    anonymized_telemetry=False)
 )
 
 # Initialize OpenAI embedding function

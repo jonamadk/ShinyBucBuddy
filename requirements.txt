@@ -128,3 +128,4 @@ authlib
 Flask-OAuthlib
 google-auth
 Flask-Session
+chromadb
