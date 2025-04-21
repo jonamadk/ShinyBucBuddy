@@ -245,3 +245,29 @@ def auth_chat():
 
     except Exception as e:
         return jsonify({"error": f"Internal server error: {str(e)}"}), 500
+
+
+@ragapp_bp.route('/conversation/<int:conversation_id>/history', methods=['GET'])
+def get_conversation_history(conversation_id):
+    """Retrieve chat history for a specific conversation ID."""
+    try:
+        # Query the database for chat history associated with the conversation_id
+        chat_history = ChatHistory.query.filter_by(conversationid=conversation_id).order_by(ChatHistory.timestamp.asc()).all()
+
+        if not chat_history:
+            return jsonify({"error": "Conversation history not found"}), 404
+
+        # Format the chat history into a list of dictionaries
+        conversation_history = [
+            {
+                "userquery": history.userquery,
+                "llmresponse": history.llmresponse,
+                "timestamp": history.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+            }
+            for history in chat_history
+        ]
+
+        return jsonify({"conversation_id": conversation_id, "conversation_history": conversation_history}), 200
+
+    except Exception as e:
+        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
