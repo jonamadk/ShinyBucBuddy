@@ -36,7 +36,7 @@ app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_TYPE'] = 'filesystem'
 # Temporary directory for sessions
 app.config['SESSION_FILE_DIR'] = tempfile.mkdtemp()
-app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_PERMANENT'] = True
 app.config['SESSION_USE_SIGNER'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=10)
 Session(app)  # Initialize Flask-Session

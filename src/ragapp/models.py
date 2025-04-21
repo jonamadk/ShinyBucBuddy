@@ -32,18 +32,14 @@ class ChatHistory(db.Model):
 class ChatConversation(db.Model):
     __tablename__ = "chat_conversations"
 
-    conversationid = db.Column(
-        db.Integer, primary_key=True, autoincrement=True)
-    useremail = db.Column(db.String(120), db.ForeignKey(
-        'users.email'), nullable=False)
-    # Optional title for the conversation
+    conversationid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    useremail = db.Column(db.String(120), db.ForeignKey('users.email'), nullable=False)
     title = db.Column(db.String(255), nullable=True)
-    created_at = db.Column(
-        db.DateTime, default=datetime.utcnow, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    last_updated = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     # Relationship to ChatHistory
-    chat_history = db.relationship(
-        'ChatHistory', backref='conversation', lazy=True)
+    chat_history = db.relationship('ChatHistory', backref='conversation', lazy=True)
 
     def to_dict(self):
         return {
