@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required
-from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity
+from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity, unset_jwt_cookies
 from flask_jwt_extended.exceptions import NoAuthorizationError
 from datetime import timedelta
 from extensions import db
@@ -28,17 +28,19 @@ def create_user():
         if User.query.filter_by(email=data['email']).first():
             return jsonify({"error": "Email already exists"}), 400
 
+        if data.get('password') != data.get("confirm_password"):
+            return jsonify({"error": "Password not matched ! Confirm it's same."}), 400
         # Hash the password before storing it
         hashed_password = bcrypt.hashpw(
             data['password'].encode('utf-8'), bcrypt.gensalt())
 
         new_user = User(
 
+            
+            firstname=data.get('firstname'),    # New field
+            lastname=data.get('lastname'),
             email=data['email'],
             password=hashed_password.decode('utf-8'),
-            firstname=data.get('firstname'),    # New field
-            # Changed from last_name to lastname
-            lastname=data.get('lastname'),
             signinstatus=False
         )
         db.session.add(new_user)
@@ -102,6 +104,34 @@ def login():
         },
         "conversations": conversations_data
     }), 200
+
+
+@user_bp.route('/logout', methods=['POST'])
+@jwt_required()
+def logout():
+    """Logout the user by revoking the token and updating signin status."""
+    try:
+        # Get the current user's identity from the JWT token
+        identity = json.loads(get_jwt_identity())
+        user_email = identity.get("email")
+
+        # Query the user by email
+        user = User.query.filter_by(email=user_email).first()
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        # Update the user's signin status to false
+        user.signinstatus = False
+        db.session.commit()
+
+        # Revoke the JWT token by unsetting the cookies
+        response = jsonify({"message": "User logged out successfully"})
+        unset_jwt_cookies(response)
+
+        return response, 200
+
+    except Exception as e:
+        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
 
 
 @user_bp.route('/users', methods=['GET'])

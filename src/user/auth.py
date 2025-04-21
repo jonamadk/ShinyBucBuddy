@@ -9,10 +9,13 @@ import time
 import json
 from datetime import timedelta
 logger = logging.getLogger(__name__)
+from flask_cors import CORS
 
 auth_bp = Blueprint('auth', __name__)
 oauth = OAuth()
 
+
+CORS(auth_bp, supports_credentials=True)
 
 def init_oauth(app):
     """Initialize OAuth with the Flask app."""
