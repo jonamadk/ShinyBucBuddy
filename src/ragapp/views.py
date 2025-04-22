@@ -65,37 +65,44 @@ def embed_documents():
 
 @ragapp_bp.route('/chat', methods=['POST'])
 def chat():
-    """Handle user queries and maintain conversation history temporarily in the browser."""
+    """Handle user queries and maintain conversation history."""
     session.permanent = True
     data = request.get_json()
     userquery = data.get("userquery")
-    # Optional: frontend passes it if continuing a chat
-    conversation_id = data.get("conversation_id")
+    conversation_id = data.get("conversation_id")  # Optional: frontend passes it if continuing a chat
+    conversation_id = int(conversation_id) if conversation_id else None
+    session_id = session.sid  # Get the session ID
 
     if not userquery:
         return jsonify({"error": "Query is required"}), 400
 
     try:
-        # Initialize session for conversation history if not already present
-        if "conversation_history" not in session:
-            session["conversation_history"] = {}
-            # Counter to generate unique conversation IDs
-            session["conversation_id_counter"] = 1
-
         # Handle new conversation
         if not conversation_id:
-            conversation_id = session["conversation_id_counter"]
-            # Initialize history for this conversation
-            session["conversation_history"][conversation_id] = []
-            session["conversation_id_counter"] += 1
-        else:
-            # Ensure the conversation exists in the session
-            if conversation_id not in session["conversation_history"]:
-                return jsonify({"error": "Conversation not found"}), 404
+            # Create a new conversation in the database
+            new_conversation = ChatConversation(
+                useremail=None,  # Set to None for unauthenticated users
+                title=userquery[:50],  # Use the first query as the title
+                created_at=datetime.utcnow()
+            )
+            db.session.add(new_conversation)
+            db.session.flush()  # Flush to get the new conversation ID
+            conversation_id = new_conversation.conversationid
 
-        # Retrieve the last 4 user queries from the session for this conversation
+        # Handle existing conversation
+        else:
+            # Retrieve the conversation from the database
+            existing_conversation = ChatConversation.query.filter_by(
+                conversationid=conversation_id
+            ).first()
+            if not existing_conversation:
+                return jsonify({"error": "Conversation history not found"}), 404
+
+        # Retrieve the last 4 user queries from the database
         history_userquery = [
-            entry["userquery"] for entry in session["conversation_history"][conversation_id][-4:]
+            history.userquery for history in ChatHistory.query.filter_by(
+                conversationid=conversation_id
+            ).order_by(ChatHistory.timestamp.desc()).limit(4)
         ]
 
         # Get LLM response
@@ -103,46 +110,36 @@ def chat():
             userquery, history_userquery
         )
 
-        # Prepare the response data
-        time_is = datetime.now()
-        formatted_time = time_is.strftime("%Y-%m-%d %H:%M:%S")
-        # Store the query and response in the session
-        session["conversation_history"][conversation_id].append({
-            "userquery": userquery,
-            "llmresponse": llmresponse,
-            "timestamp": formatted_time
-        })
-
-        # Save the session
-        session.modified = True
-
-        # Save the data in the database
-        unauthenticated_session = UnauthenticatedSession(
-            session_id=session.sid,  # Use Flask session ID
-            conversation_id=conversation_id,
+        # Save the query and response in the database
+        new_history = ChatHistory(
+            conversationid=conversation_id,
+            useremail=None,  # Set to None for unauthenticated users
             userquery=userquery,
             llmresponse=llmresponse,
             top_n_document=top_n_document,
             citation_data=citation_data,
-            history_userquery=history_userquery,
-            timestamp=datetime.now()
+            timestamp=datetime.utcnow()
         )
-        db.session.add(unauthenticated_session)
+        db.session.add(new_history)
         db.session.commit()
 
-        conversation_history = {conversation_id: [{
-            "userquery": userquery,
-            "llmresponse": llmresponse,
-            "query-timestamp": formatted_time
-        }]}
-        response_data = {
+        # Retrieve the full conversation history for the response
+        conversation_history = [
+            {
+                "userquery": history.userquery,
+                "llmresponse": history.llmresponse,
+                "timestamp": history.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+            }
+            for history in ChatHistory.query.filter_by(conversationid=conversation_id)
+            .order_by(ChatHistory.timestamp.asc())
+        ]
 
+        response_data = {
             "user_type": "Un-Authenticated",
             "conversation_id": conversation_id,
-            "conversation_history": conversation_history,
+            "conversation_history": {str(conversation_id): conversation_history},
             "token-details": token_details,
             "documents": top_n_document,
-
         }
 
         # Log the response data
@@ -244,8 +241,33 @@ def auth_chat():
         }
 
         response_logger.append_to_json_file(response_data)
-
         return jsonify(response_data), 200
+
+    except Exception as e:
+        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
+
+
+@ragapp_bp.route('/conversation/<int:conversation_id>/history', methods=['GET'])
+def get_conversation_history(conversation_id):
+    """Retrieve chat history for a specific conversation ID."""
+    try:
+        # Query the database for chat history associated with the conversation_id
+        chat_history = ChatHistory.query.filter_by(conversationid=conversation_id).order_by(ChatHistory.timestamp.asc()).all()
+
+        if not chat_history:
+            return jsonify({"error": "Conversation history not found"}), 404
+
+        # Format the chat history into a list of dictionaries
+        conversation_history = [
+            {
+                "userquery": history.userquery,
+                "llmresponse": history.llmresponse,
+                "timestamp": history.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+            }
+            for history in chat_history
+        ]
+
+        return jsonify({"conversation_id": conversation_id, "conversation_history": conversation_history}), 200
 
     except Exception as e:
         return jsonify({"error": f"Internal server error: {str(e)}"}), 500
