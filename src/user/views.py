@@ -106,25 +106,34 @@ def login():
     }), 200
 
 
+
 @user_bp.route('/logout', methods=['POST'])
 @jwt_required()
 def logout():
     """Logout the user by revoking the token and updating signin status."""
     try:
-        # Get the current user's identity from the JWT token
-        identity = json.loads(get_jwt_identity())
-        user_email = identity.get("email")
+        identity = get_jwt_identity()
+
+        # Handle both cases: email as plain string or JSON string with "email" key
+        try:
+            # Attempt to parse as JSON object (for normal login)
+            identity_data = json.loads(identity)
+            user_email = identity_data.get("email")
+        except (json.JSONDecodeError, TypeError):
+            # If parsing fails, assume identity is directly the email (for OAuth login)
+            user_email = identity
+
+        if not user_email:
+            return jsonify({"error": "Invalid token format"}), 400
 
         # Query the user by email
         user = User.query.filter_by(email=user_email).first()
         if not user:
             return jsonify({"error": "User not found"}), 404
 
-        # Update the user's signin status to false
         user.signinstatus = False
         db.session.commit()
 
-        # Revoke the JWT token by unsetting the cookies
         response = jsonify({"message": "User logged out successfully"})
         unset_jwt_cookies(response)
 

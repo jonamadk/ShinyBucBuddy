@@ -5,7 +5,7 @@ from ragapp.views import ragapp_bp
 # Import models explicitly to ensure they're registered
 from ragapp.models import ChatHistory  # Add this import
 from user.views import user_bp
-from user.auth import auth_bp, init_oauth
+from user.auth import auth_bp
 from extensions import init_extensions, db
 import os
 import logging
@@ -52,8 +52,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('POSTGRES_DB_URL')
 # Initialize extensions
 init_extensions(app)
 
-# Initialize OAuth
-init_oauth(app)
+# # Initialize OAuth
+# init_oauth(app)
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
