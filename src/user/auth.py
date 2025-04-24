@@ -94,25 +94,23 @@ def auth_callback():
         expires_delta=timedelta(days=3)
     )
 
-    # Fetch user's conversation history
-    conversations = ChatConversation.query.filter_by(
-        useremail=user.email).all()
-    conversations_data = []
-    for conversation in conversations:
-        conversation_dict = conversation.to_dict()
-        conversation_dict["chat_history"] = [
-            history.to_dict() for history in conversation.chat_history
-        ]
-        conversations_data.append(conversation_dict)
+    # # Fetch user's conversation history
+    # conversations = ChatConversation.query.filter_by(
+    #     useremail=user.email).all()
+    # conversations_data = []
+    # for conversation in conversations:
+    #     conversation_dict = conversation.to_dict()
+    #     conversation_dict["chat_history"] = [
+    #         history.to_dict() for history in conversation.chat_history
+    #     ]
+    #     conversations_data.append(conversation_dict)
 
     # Prepare user data
     user_data = {
         "email": user.email,
         "firstname": user.firstname,
         "lastname": user.lastname,
-        "signinstatus": user.signinstatus,
-        "conversations": conversations_data
-    }
+        "signinstatus": user.signinstatus}
 
     # Redirect to frontend with user data and token
     return redirect(f"{FRONTEND_REDIRECT_URI}?user={quote(json.dumps(user_data))}&token={access_token}")
