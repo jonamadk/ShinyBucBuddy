@@ -4,6 +4,7 @@ from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 from google_auth_oauthlib.flow import Flow
 from .models import User
+from ragapp.models import ChatConversation
 from extensions import db
 import os
 import json
@@ -25,7 +26,9 @@ GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
 REDIRECT_URI = "http://localhost:8000/api/auth/callback"
 FRONTEND_REDIRECT_URI = "http://localhost:3000/signin"
 
-SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']
+SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.profile',
+          'https://www.googleapis.com/auth/userinfo.email']
+
 
 @auth_bp.route('auth/login')
 def login_with_google():
@@ -42,8 +45,10 @@ def login_with_google():
         redirect_uri=REDIRECT_URI
     )
 
-    authorization_url, state = flow.authorization_url(include_granted_scopes='true')
+    authorization_url, state = flow.authorization_url(
+        include_granted_scopes='true')
     return redirect(authorization_url)
+
 
 @auth_bp.route('auth/callback')
 def auth_callback():
@@ -71,27 +76,43 @@ def auth_callback():
     firstname = id_info.get("given_name")
     lastname = id_info.get("family_name")
 
+    # Check if the user exists
     user = User.query.filter_by(email=email).first()
     if user:
         user.signinstatus = True
         db.session.commit()
-    if not user:
+    else:
+        # Create a new user if not found
         user = User(email=email, firstname=firstname, lastname=lastname)
-        
         db.session.add(user)
         user.signinstatus = True
         db.session.commit()
 
+    # Generate JWT token
     access_token = create_access_token(
-    identity=json.dumps({"email": user.email}),
-    expires_delta=timedelta(days=3))
-    
+        identity=json.dumps({"email": user.email}),
+        expires_delta=timedelta(days=3)
+    )
 
+    # Fetch user's conversation history
+    conversations = ChatConversation.query.filter_by(
+        useremail=user.email).all()
+    conversations_data = []
+    for conversation in conversations:
+        conversation_dict = conversation.to_dict()
+        conversation_dict["chat_history"] = [
+            history.to_dict() for history in conversation.chat_history
+        ]
+        conversations_data.append(conversation_dict)
+
+    # Prepare user data
     user_data = {
         "email": user.email,
         "firstname": user.firstname,
         "lastname": user.lastname,
-        "signinstatus": user.signinstatus
+        "signinstatus": user.signinstatus,
+        "conversations": conversations_data
     }
 
+    # Redirect to frontend with user data and token
     return redirect(f"{FRONTEND_REDIRECT_URI}?user={quote(json.dumps(user_data))}&token={access_token}")
