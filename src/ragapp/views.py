@@ -184,7 +184,7 @@ def auth_chat():
         if not conversation_id:
             new_conversation = ChatConversation(
                 useremail=useremail,
-                title="New Chat",  # Or auto-generate from userquery if you want
+                title=userquery,  # Or auto-generate from userquery if you want
                 created_at=formatted_time
             )
             db.session.add(new_conversation)
@@ -224,7 +224,8 @@ def auth_chat():
         conversation_history = {chat_history.conversationid: [{
             "userquery": userquery,
             "llmresponse": llmresponse,
-            "query-timestamp": formatted_time
+            "query-timestamp": formatted_time,
+            "user":user.email
         }]}
 
         db.session.add(chat_history)
@@ -233,6 +234,7 @@ def auth_chat():
         response_data = {
 
             "user_type": "Authenticated",
+            "user": user.email,
             "conversation_id": conversation_id,
             "conversation_history": conversation_history,
             "token-details": token_details,

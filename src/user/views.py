@@ -208,3 +208,27 @@ def delete_user(user_id):
         return jsonify({"message": "User deleted successfully"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@user_bp.route('/auth/conversations', methods=['GET'])
+@jwt_required()
+def get_conversations():
+    """Retrieve all conversations for the authenticated user."""
+    try:
+        identity = json.loads(get_jwt_identity())
+        useremail = identity.get("email")
+
+        conversations = ChatConversation.query.filter_by(useremail=useremail).all()
+        conversations_data = []
+        for conversation in conversations:
+            conversation_dict = conversation.to_dict()
+            conversation_dict["chat_history"] = [
+                history.to_dict() for history in conversation.chat_history
+            ]
+            conversations_data.append(conversation_dict)
+
+        return jsonify({"conversations": conversations_data}), 200
+    except Exception as e:
+        return jsonify({"error": f"Error retrieving conversations: {str(e)}"}), 500
+
+
