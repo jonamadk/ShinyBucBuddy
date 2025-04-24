@@ -72,9 +72,14 @@ def auth_callback():
     lastname = id_info.get("family_name")
 
     user = User.query.filter_by(email=email).first()
+    if user:
+        user.signinstatus = True
+        db.session.commit()
     if not user:
         user = User(email=email, firstname=firstname, lastname=lastname)
+        
         db.session.add(user)
+        user.signinstatus = True
         db.session.commit()
 
     access_token = create_access_token(
@@ -85,7 +90,8 @@ def auth_callback():
     user_data = {
         "email": user.email,
         "firstname": user.firstname,
-        "lastname": user.lastname
+        "lastname": user.lastname,
+        "signinstatus": user.signinstatus
     }
 
     return redirect(f"{FRONTEND_REDIRECT_URI}?user={quote(json.dumps(user_data))}&token={access_token}")
