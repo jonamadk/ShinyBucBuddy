@@ -10,6 +10,7 @@ import os
 import logging
 import tempfile
 from flask_jwt_extended import JWTManager
+from flask_migrate import Migrate
 from dotenv import load_dotenv
 from datetime import timedelta
 import chromadb
@@ -23,7 +24,7 @@ app = Flask(__name__)
 # Configure CORS for all routes
 CORS(app, resources={
     r"/*": {
-        "origins": "http://localhost:3000",
+        "origins": ["http://localhost:3000", "http://127.0.0.1:3000"],
         "methods": ["GET", "POST", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"],
         "supports_credentials": True
@@ -31,7 +32,7 @@ CORS(app, resources={
 })
 
 chroma_client = chromadb.HttpClient(
-    host="chroma",
+    host="chroma-container",
     port=8000,
     settings=Settings(allow_reset=True, anonymized_telemetry=False)
 )
@@ -59,6 +60,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('POSTGRES_DB_URL')
 # Initialize extensions
 init_extensions(app)
 
+# Initialize Flask-Migrate
+migrate = Migrate(app, db)
+
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -73,7 +77,13 @@ app.register_blueprint(auth_bp, url_prefix='/api')
 def handle_options_request():
     if request.method == 'OPTIONS':
         response = jsonify({"status": "ok"})
-        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+        # Set Access-Control-Allow-Origin based on request origin
+        origin = request.headers.get('Origin')
+        allowed_origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
+        if origin in allowed_origins:
+            response.headers.add('Access-Control-Allow-Origin', origin)
+        else:
+            response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
         response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
         response.headers.add('Access-Control-Allow-Credentials', 'true')
@@ -83,12 +93,18 @@ def handle_options_request():
 @app.errorhandler(404)
 def not_found(error):
     response = jsonify({"error": "Not Found", "message": "The requested API endpoint does not exist."})
-    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+    origin = request.headers.get('Origin')
+    allowed_origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
+    if origin in allowed_origins:
+        response.headers.add('Access-Control-Allow-Origin', origin)
+    else:
+        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
     return response, 404
 
 # Create database schema
 with app.app_context():
-    db.create_all()
+    db.drop_all()  # Drop existing tables
+    db.create_all()  # Create new schema
     print("Database schema created successfully!")
 
 if __name__ == "__main__":

@@ -75,9 +75,15 @@ def auth_callback():
             user.signinstatus = True
             db.session.commit()
         else:
-            user = User(email=email, firstname=firstname, lastname=lastname)
+            user = User(
+                email=email,
+                password=None,  # No password for Google OAuth users
+                firstname=firstname,
+                lastname=lastname,
+                signinstatus=True,
+                auth_provider='google'
+            )
             db.session.add(user)
-            user.signinstatus = True
             db.session.commit()
 
         access_token = create_access_token(
@@ -89,7 +95,8 @@ def auth_callback():
             "email": user.email,
             "firstname": user.firstname,
             "lastname": user.lastname,
-            "signinstatus": user.signinstatus
+            "signinstatus": user.signinstatus,
+            "auth_provider": user.auth_provider
         }
 
         return redirect(f"{FRONTEND_REDIRECT_URI}?user={quote(json.dumps(user_data))}&token={access_token}")

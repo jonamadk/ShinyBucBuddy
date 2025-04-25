@@ -35,7 +35,7 @@ services:
       - net
 
   chroma:
-    image: ghcr.io/chroma-core/chroma:latest
+    image: ghcr.io/chroma-core/chroma:0.5.5
     container_name: chroma-container
     volumes:
       - index_data:/chroma/.chroma/index

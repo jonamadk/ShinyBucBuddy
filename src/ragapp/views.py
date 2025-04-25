@@ -11,8 +11,13 @@ from .models import ChatHistory, ChatConversation, UnauthenticatedSession
 import json
 from chromadb.config import Settings
 from chromadb import HttpClient
+import logging
 
 ragapp_bp = Blueprint('ragapp', __name__)
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 # Initialize ResponseLLM and ResponseLogger
 response_llm = ResponseLLM()
@@ -25,20 +30,23 @@ def health_check():
     try:
         health_status = {"status": "healthy", "message": "API is running"}
         chroma_client = HttpClient(
-            host="chroma",
+            host="chroma-container",
             port=8000,
             settings=Settings(allow_reset=True, anonymized_telemetry=False)
         )
-
+        logger.debug("Attempting to connect to ChromaDB at chroma-container:8000")
+        response = chroma_client.heartbeat()
+        logger.debug(f"ChromaDB heartbeat response: {response}")
         chroma_client.get_or_create_collection(name="health_check_collection")
         health_status["chromadb"] = "connected"
+        logger.info("ChromaDB connection successful")
     except Exception as e:
+        logger.error(f"ChromaDB connection failed: {str(e)}", exc_info=True)
         health_status = {
             "status": "unhealthy",
             "message": f"API is running, but ChromaDB is not accessible: {str(e)}"
         }
         return jsonify(health_status), 503
-
     return jsonify(health_status), 200
 
 @ragapp_bp.route('/embed', methods=['POST'])
@@ -46,10 +54,13 @@ def embed_documents():
     """Trigger document embedding process."""
     try:
         result = process_and_push_data_to_chromadb()
+        logger.info(f"Embedding successful: {result}")
         return jsonify({"message": result}), 200
     except FileNotFoundError:
+        logger.error("Input file not found for embedding")
         return jsonify({"error": "Input file not found"}), 404
     except Exception as e:
+        logger.error(f"Embedding failed: {str(e)}", exc_info=True)
         return jsonify({"error": f"Embedding failed: {str(e)}"}), 500
 
 @ragapp_bp.route('/chat', methods=['POST', 'OPTIONS'])
@@ -71,6 +82,7 @@ def chat():
     session_id = session.sid
 
     if not userquery:
+        logger.error("No user query provided")
         return jsonify({"error": "Query is required"}), 400
 
     try:
@@ -83,12 +95,13 @@ def chat():
             db.session.add(new_conversation)
             db.session.flush()
             conversation_id = new_conversation.conversationid
-
+            logger.debug(f"Created new conversation: {conversation_id}")
         else:
             existing_conversation = ChatConversation.query.filter_by(
                 conversationid=conversation_id
             ).first()
             if not existing_conversation:
+                logger.error(f"Conversation {conversation_id} not found")
                 return jsonify({"error": "Conversation history not found"}), 404
 
         history_userquery = [
@@ -112,6 +125,7 @@ def chat():
         )
         db.session.add(new_history)
         db.session.commit()
+        logger.debug(f"Saved chat history for conversation {conversation_id}")
 
         conversation_history = [
             {
@@ -132,9 +146,11 @@ def chat():
         }
 
         response_logger.append_to_json_file(response_data)
+        logger.info(f"Chat response generated for conversation {conversation_id}")
         return jsonify(response_data), 200
 
     except Exception as e:
+        logger.error(f"Chat error: {str(e)}", exc_info=True)
         return jsonify({"error": f"Internal server error: {str(e)}"}), 500
 
 @ragapp_bp.route('/auth/chat', methods=['POST', 'OPTIONS'])
@@ -156,6 +172,7 @@ def auth_chat():
         conversation_id = data.get("conversation_id")
 
         if not userquery:
+            logger.error("No user query provided for authenticated chat")
             return jsonify({"error": "Query is required"}), 400
 
         try:
@@ -163,9 +180,11 @@ def auth_chat():
             useremail = identity.get("email")
             user = User.query.filter_by(email=useremail).first()
         except Exception as e:
+            logger.error(f"Token validation error: {str(e)}", exc_info=True)
             return jsonify({"error": f"Invalid token or user lookup failed: {str(e)}"}), 401
 
         if not user or not user.signinstatus:
+            logger.error(f"User not logged in: {useremail}")
             return jsonify({"error": "User not logged in"}), 401
 
         time_is = datetime.now()
@@ -181,11 +200,13 @@ def auth_chat():
                 db.session.add(new_conversation)
                 db.session.flush()
                 conversation_id = new_conversation.conversationid
+                logger.debug(f"Created new authenticated conversation: {conversation_id}")
             else:
                 existing_conversation = ChatConversation.query.filter_by(
                     conversationid=conversation_id, useremail=useremail
                 ).first()
                 if not existing_conversation:
+                    logger.error(f"Authenticated conversation {conversation_id} not found for {useremail}")
                     return jsonify({"error": "Conversation not found"}), 404
 
                 history_userquery = [
@@ -217,6 +238,7 @@ def auth_chat():
 
             db.session.add(chat_history)
             db.session.commit()
+            logger.debug(f"Saved authenticated chat history for conversation {conversation_id}")
 
             response_data = {
                 "user_type": "Authenticated",
@@ -228,20 +250,46 @@ def auth_chat():
             }
 
             response_logger.append_to_json_file(response_data)
+            logger.info(f"Authenticated chat response generated for conversation {conversation_id}")
             return jsonify(response_data), 200
 
         except Exception as e:
+            logger.error(f"Authenticated chat error: {str(e)}", exc_info=True)
             return jsonify({"error": f"Internal server error: {str(e)}"}), 500
 
     return handle_post()
 
 @ragapp_bp.route('/conversation/<int:conversation_id>/history', methods=['GET'])
+@jwt_required(optional=True)
 def get_conversation_history(conversation_id):
-    """Retrieve chat history for a specific conversation ID."""
+    """Retrieve chat history for a specific conversation ID, with user validation for authenticated requests."""
     try:
-        chat_history = ChatHistory.query.filter_by(conversationid=conversation_id).order_by(ChatHistory.timestamp.asc()).all()
+        # Check if user is authenticated
+        useremail = None
+        identity = get_jwt_identity()
+        if identity:
+            identity_data = json.loads(identity)
+            useremail = identity_data.get("email")
+            user = User.query.filter_by(email=useremail).first()
+            if not user or not user.signinstatus:
+                logger.error(f"User not logged in: {useremail}")
+                return jsonify({"error": "User not logged in"}), 401
 
+        # Fetch conversation
+        conversation = ChatConversation.query.filter_by(conversationid=conversation_id).first()
+        if not conversation:
+            logger.error(f"Conversation {conversation_id} not found")
+            return jsonify({"error": "Conversation not found"}), 404
+
+        # For authenticated users, verify conversation ownership
+        if useremail and conversation.useremail and conversation.useremail != useremail:
+            logger.error(f"User {useremail} not authorized for conversation {conversation_id}")
+            return jsonify({"error": "Not authorized to access this conversation"}), 403
+
+        # Fetch chat history
+        chat_history = ChatHistory.query.filter_by(conversationid=conversation_id).order_by(ChatHistory.timestamp.asc()).all()
         if not chat_history:
+            logger.error(f"Conversation history not found for ID {conversation_id}")
             return jsonify({"error": "Conversation history not found"}), 404
 
         conversation_history = [
@@ -253,7 +301,9 @@ def get_conversation_history(conversation_id):
             for history in chat_history
         ]
 
+        logger.info(f"Retrieved conversation history for ID {conversation_id}")
         return jsonify({"conversation_id": conversation_id, "conversation_history": conversation_history}), 200
 
     except Exception as e:
+        logger.error(f"Conversation history error: {str(e)}", exc_info=True)
         return jsonify({"error": f"Internal server error: {str(e)}"}), 500
