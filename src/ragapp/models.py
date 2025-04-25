@@ -9,12 +9,12 @@ class ChatHistory(db.Model):
     conversationid = db.Column(db.Integer, db.ForeignKey(
         'chat_conversations.conversationid'), nullable=False)  # Link to ChatConversation
     useremail = db.Column(db.String(120), db.ForeignKey(
-        'users.email'), nullable=False)
+        'users.email'), nullable=True)
     userquery = db.Column(db.Text, nullable=False)
     llmresponse = db.Column(db.Text, nullable=False)
     top_n_document = db.Column(db.JSON, nullable=True)
     citation_data = db.Column(db.JSON, nullable=True)
-    timestamp = db.Column(db.DateTime, nullable=False)
+    timestamp = db.Column(db.DateTime, nullable=True)
 
     def to_dict(self):
         return {
@@ -33,7 +33,7 @@ class ChatConversation(db.Model):
     __tablename__ = "chat_conversations"
 
     conversationid = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    useremail = db.Column(db.String(120), db.ForeignKey('users.email'), nullable=False)
+    useremail = db.Column(db.String(120), db.ForeignKey('users.email'), nullable=True)
     title = db.Column(db.String(255), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     last_updated = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)

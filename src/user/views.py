@@ -27,7 +27,8 @@ def create_user():
     try:
         if User.query.filter_by(email=data['email']).first():
             return jsonify({"error": "Email already exists"}), 400
-
+        if not data['password']:
+            return jsonify({"error": "Password is required field"}), 400
         if data.get('password') != data.get("confirm_password"):
             return jsonify({"error": "Password not matched ! Confirm it's same."}), 400
         # Hash the password before storing it
@@ -65,6 +66,9 @@ def login():
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
+    
+    if not password:
+        return jsonify({"error": "Password is Mandatory !"}), 401
 
     # Query the user by email
     user = User.query.filter_by(email=email).first()
@@ -232,3 +236,32 @@ def get_conversations():
         return jsonify({"error": f"Error retrieving conversations: {str(e)}"}), 500
 
 
+
+
+@user_bp.route('/auth/conversations/<int:conversation_id>', methods=['GET'])
+@jwt_required()
+def get_conversation_by_id(conversation_id):
+    """Retrieve a specific conversation by ID for the authenticated user."""
+    try:
+        identity = json.loads(get_jwt_identity())
+        useremail = identity.get("email")
+
+        # Query the conversation by ID and user email
+        conversation = ChatConversation.query.filter_by(
+            conversationid=conversation_id, useremail=useremail
+        ).first()
+
+        if not conversation:
+            return jsonify({"error": "Conversation not found or not authorized"}), 404
+
+        # Format the conversation data
+        conversation_dict = conversation.to_dict()
+        conversation_dict["chat_history"] = [
+            history.to_dict() for history in conversation.chat_history
+        ]
+
+        return jsonify({"conversation": conversation_dict}), 200
+    except Exception as e:
+        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
+    
+    

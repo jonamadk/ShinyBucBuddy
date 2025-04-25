@@ -6,7 +6,7 @@ class User(db.Model):
 
     email = db.Column(db.String(120), primary_key=True,
                       unique=True, nullable=False)  # email as primary key
-    password = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=True)
     firstname = db.Column(db.String(100), nullable=True)
     lastname = db.Column(db.String(100), nullable=True)
     signinstatus = db.Column(db.Boolean, default=False, nullable=True)
