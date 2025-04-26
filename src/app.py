@@ -103,7 +103,7 @@ def not_found(error):
 
 # Create database schema
 with app.app_context():
-    db.drop_all()  # Drop existing tables
+    # db.drop_all()  # Drop existing tables
     db.create_all()  # Create new schema
     print("Database schema created successfully!")
 
