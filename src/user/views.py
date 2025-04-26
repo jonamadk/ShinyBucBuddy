@@ -3,7 +3,7 @@ from .models import User
 from extensions import db
 from marshmallow import Schema, fields, ValidationError, validates
 import hashlib
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, unset_jwt_cookies
 from datetime import timedelta
 from ragapp.models import ChatConversation
 import json
@@ -112,6 +112,44 @@ def login_user():
         'user': user_data,
         'message': 'Login successful'
     }), 200
+
+
+@user_bp.route('/logout', methods=['POST'])
+@jwt_required()
+def logout():
+    """Logout the user by revoking the token and updating signin status."""
+    try:
+        identity = get_jwt_identity()
+
+        # Handle both cases: email as plain string or JSON string with "email" key
+        try:
+            # Attempt to parse as JSON object (for normal login)
+            identity_data = json.loads(identity)
+            user_email = identity_data.get("email")
+        except (json.JSONDecodeError, TypeError):
+            # If parsing fails, assume identity is directly the email (for OAuth login)
+            user_email = identity
+
+        if not user_email:
+            return jsonify({"error": "Invalid token format"}), 400
+
+        # Query the user by email
+        user = User.query.filter_by(email=user_email).first()
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        user.signinstatus = False
+        db.session.commit()
+
+        response = jsonify({"message": "User logged out successfully"})
+        unset_jwt_cookies(response)
+
+        return response, 200
+
+    except Exception as e:
+        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
+
+
 
 @user_bp.route('/auth/conversations', methods=['GET'])
 @jwt_required()
