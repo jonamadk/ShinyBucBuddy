@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from .models import User
-from extensions import db
+from extensions import db, limiter
 from marshmallow import Schema, fields, ValidationError, validates
 import hashlib
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
@@ -10,6 +10,7 @@ import json
 import re
 import logging
 from .serializers   import UserSchema
+
 user_bp = Blueprint('user', __name__)
 
 # Configure logging
@@ -21,7 +22,10 @@ user_schema = UserSchema()
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
+
+
 @user_bp.route('/register', methods=['POST'])
+@limiter.limit("5 per minute")
 def create_user():
     data = request.get_json()
     # Set context for confirm_password validation
@@ -45,6 +49,7 @@ def create_user():
     return jsonify({'message': 'User created successfully'}), 201
 
 @user_bp.route('/login', methods=['POST'])
+@limiter.limit("5 per minute")
 def login_user():
     data = request.get_json()
     try:

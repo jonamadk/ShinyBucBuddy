@@ -131,3 +131,4 @@ Flask-OAuthlib
 google-auth
 Flask-Session
 chromadb
+flask-limiter

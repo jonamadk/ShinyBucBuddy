@@ -28,11 +28,10 @@ class ResponseLLM:
 
                 Given:
                 - The user's current query: "{question}"
-                - A history of previous user queries: "{history}"
+                - A history of previous user queries: "{history}, where 0 index is the latest question"
 
                 If the current query depends on or refers to the previous conversation, rewrite it to be a fully self-contained and contextually complete question.
-
-                If the current query stands on its own and is unrelated to the history, return it unchanged.
+                Otherwise return current query.
 
                 Only return the rewritten query or the original query — do not include explanations or additional content.
                 """
@@ -40,7 +39,6 @@ class ResponseLLM:
         
         self.rewrite_prompt = ChatPromptTemplate.from_template(rewrite_query_prompt, verbose=True)
 
-        # Define text decoration prompt (NEW ✅)
         self.decorate_text_prompt = """
         You are a helpful assistant for East Tennessee State University students.
 
@@ -65,8 +63,10 @@ class ResponseLLM:
 
     def rewrite_query(self, query, history_userquery):
         """Rewrites the user query using the provided conversation history."""
-        history = ",".join(history_userquery) if history_userquery else ""
+        
 
+    
+        history = str({index:item for index, item in enumerate(history_userquery)} if history_userquery else "")
         rewritten_query = self.llm.predict(
             self.rewrite_prompt.format(question=query, history=history)
         )

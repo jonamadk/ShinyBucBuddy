@@ -6,7 +6,7 @@ from ragapp.models import ChatHistory
 from user.views import user_bp
 from user.auth import auth_bp
 from chromvec.views import chroma_bp
-from extensions import init_extensions, db
+from extensions import init_extensions, db, limiter
 import os
 import logging
 import tempfile
@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 from datetime import timedelta
 import chromadb
 from chromadb.config import Settings
+from flask_limiter.errors import RateLimitExceeded
 
 load_dotenv()
 
@@ -31,6 +32,8 @@ CORS(app, resources={
         "supports_credentials": True
     }
 })
+
+
 
 chroma_client = chromadb.HttpClient(
     host="chroma-container",
@@ -102,6 +105,22 @@ def not_found(error):
     else:
         response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
     return response, 404
+
+# Custom 404 handler for API routes
+@app.errorhandler(404)
+def not_found(error):
+    response = jsonify({"error": "Not Found", "message": "The requested API endpoint does not exist."})
+    origin = request.headers.get('Origin')
+    allowed_origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
+    if origin in allowed_origins:
+        response.headers.add('Access-Control-Allow-Origin', origin)
+    else:
+        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+    return response, 40
+
+@app.errorhandler(RateLimitExceeded)
+def ratelimit_handler(e):
+    return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
 
 # Create database schema
 with app.app_context():

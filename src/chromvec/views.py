@@ -14,7 +14,6 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-
 # ChromaDB setup
 chroma_client = HttpClient(
     host="chroma-container",
@@ -33,7 +32,8 @@ def health_check():
             port=8000,
             settings=Settings(allow_reset=True, anonymized_telemetry=False)
         )
-        logger.debug("Attempting to connect to ChromaDB at chroma-container:8000")
+        logger.debug(
+            "Attempting to connect to ChromaDB at chroma-container:8000")
         response = chroma_client.heartbeat()
         logger.debug(f"ChromaDB heartbeat response: {response}")
         chroma_client.get_or_create_collection(name="health_check_collection")
@@ -47,6 +47,7 @@ def health_check():
         }
         return jsonify(health_status), 503
     return jsonify(health_status), 200
+
 
 @chroma_bp.route('/embed', methods=['POST'])
 def embed_documents():
@@ -73,16 +74,14 @@ def document_count():
         return jsonify({"document_count": count})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
-    
 
 
-@chroma_bp.route("/collection/delete", methods=["DELETE"])
-def delete_collection():
-    try:
-        chroma_client.delete_collection(COLLECTION_NAME)
-        logger.info(f"Collection '{COLLECTION_NAME}' deleted successfully")
-        return jsonify({"message": f"Collection '{COLLECTION_NAME}' deleted successfully"}), 200
-    except Exception as e:
-        logger.error(f"Failed to delete collection: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+# @chroma_bp.route("/collection/delete", methods=["DELETE"])
+# def delete_collection():
+#     try:
+#         chroma_client.delete_collection(COLLECTION_NAME)
+#         logger.info(f"Collection '{COLLECTION_NAME}' deleted successfully")
+#         return jsonify({"message": f"Collection '{COLLECTION_NAME}' deleted successfully"}), 200
+#     except Exception as e:
+#         logger.error(f"Failed to delete collection: {str(e)}")
+#         return jsonify({"error": str(e)}), 500

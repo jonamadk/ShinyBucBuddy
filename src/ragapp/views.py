@@ -8,6 +8,7 @@ from extensions import db
 from .models import ChatHistory, ChatConversation, UnauthenticatedSession
 import json
 import logging
+from extensions import limiter
 
 ragapp_bp = Blueprint('ragapp', __name__)
 
@@ -21,7 +22,21 @@ response_logger = ResponseLogger(response_file="logs/responselogs/response_data.
                                  timestamp_file="logs/responselogs/response_timestamp.json")
 
 
+'''
+USER BASED RATE LIMITOR, ALTERNATIVE TO IP BASED
+def get_user_email():
+    try:
+        identity = json.loads(get_jwt_identity())
+        return identity.get("email", "anonymous")
+    except:
+        return "anonymous"
+IMPLEMENTATION: @limiter.limit("10 per minute", key_func=get_user_email) 
+'''
+
+
+
 @ragapp_bp.route('/chat', methods=['POST', 'OPTIONS'])
+@limiter.limit("5 per minute")
 def chat():
     """Handle user queries and maintain conversation history."""
     if request.method == 'OPTIONS':
@@ -65,7 +80,7 @@ def chat():
         history_userquery = [
             history.userquery for history in ChatHistory.query.filter_by(
                 conversationid=conversation_id
-            ).order_by(ChatHistory.timestamp.desc()).limit(4)
+            ).order_by(ChatHistory.timestamp.desc()).limit(3)
         ]
 
         llmresponse, top_n_document, citation_data, context_data, token_details = response_llm.generate_filtered_response(
@@ -101,6 +116,7 @@ def chat():
             "conversation_history": {str(conversation_id): conversation_history},
             "token-details": token_details,
             "documents": top_n_document,
+            
         }
 
         response_logger.append_to_json_file(response_data)
@@ -112,6 +128,7 @@ def chat():
         return jsonify({"error": f"Internal server error: {str(e)}"}), 500
 
 @ragapp_bp.route('/auth/chat', methods=['POST', 'OPTIONS'])
+@limiter.limit("10 per minute")
 def auth_chat():
     """Authenticated chat endpoint with conversation support."""
     if request.method == 'OPTIONS':
@@ -170,7 +187,7 @@ def auth_chat():
                 history_userquery = [
                     history.userquery for history in ChatHistory.query.filter_by(
                         conversationid=conversation_id
-                    ).order_by(ChatHistory.timestamp.desc()).limit(4).all()
+                    ).order_by(ChatHistory.timestamp.desc()).limit(3).all()
                 ]
 
             llmresponse, top_n_document, citation_data, context_data, token_details = response_llm.generate_filtered_response(
