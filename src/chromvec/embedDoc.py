@@ -5,7 +5,7 @@ import logging
 import chromadb
 from chromadb.config import Settings
 from chromadb.utils import embedding_functions
-from config import EMBEDDING_MODEL_NAME, COLLECTION_NAME, OPENAI_API_KEY
+from config import EMBEDDING_MODEL_NAME, COLLECTION_NAME, OPENAI_API_KEY, JSON_FILE_PATH
 
 # Configure logging
 logging.basicConfig(
@@ -17,6 +17,9 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger(__name__)
+
+# Define the absolute path to the JSON file inside the container
+json_path = os.path.join(JSON_FILE_PATH)
 
 # Initialize ChromaDB HTTP client
 chroma_client = chromadb.HttpClient(
@@ -32,25 +35,29 @@ openai_ef = embedding_functions.OpenAIEmbeddingFunction(
 )
 
 def process_and_push_data_to_chromadb():
-    """Process data from JSON file and push it to ChromaDB."""
+    """Reset collection and push data from JSON file to ChromaDB."""
     try:
-        # Test connection with heartbeat
+        # Test connection
         heartbeat = chroma_client.heartbeat()
         logger.debug(f"ChromaDB heartbeat response: {heartbeat}")
 
-        # Access or create the collection
+        # Delete the existing collection
+        chroma_client.delete_collection(COLLECTION_NAME)
+        logger.info(f"Deleted existing collection: {COLLECTION_NAME}")
+
+        # Recreate collection
         collection = chroma_client.get_or_create_collection(
             name=COLLECTION_NAME,
             embedding_function=openai_ef
         )
-        logger.info(f"Collection '{COLLECTION_NAME}' accessed or created successfully")
+        logger.info(f"Recreated collection: {COLLECTION_NAME}")
 
         # Load data from JSON file
-        with open("Documents/combined_data_with_metadata.json", 'r') as file:
+        with open(json_path, 'r') as file:
             data = json.load(file)
         logger.info("Loaded %d items from JSON file", len(data))
 
-        # Process and push data to ChromaDB
+        # Process and add data to ChromaDB
         for item in data:
             doc_id = str(uuid.uuid4())
             text_data = item.get('document_content', '')
@@ -59,17 +66,15 @@ def process_and_push_data_to_chromadb():
                 "document_link": item.get('document_link', 'No link available')
             }
 
-            # Generate embedding
             embedding = openai_ef([text_data])
 
-            # Upsert data into ChromaDB
-            collection.upsert(
+            collection.add(
                 embeddings=embedding,
                 documents=[text_data],
                 ids=[doc_id],
                 metadatas=[metadata]
             )
-            logger.info("Document with ID %s pushed to ChromaDB", doc_id)
+            logger.info("Document with ID %s added to ChromaDB", doc_id)
 
         return f"Successfully embedded {len(data)} documents"
 

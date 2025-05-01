@@ -4,13 +4,9 @@ from user.models import User
 from datetime import datetime
 from .responseLLM import ResponseLLM
 from .responselog import ResponseLogger
-from .embedDoc import process_and_push_data_to_chromadb
-import chromadb
 from extensions import db
 from .models import ChatHistory, ChatConversation, UnauthenticatedSession
 import json
-from chromadb.config import Settings
-from chromadb import HttpClient
 import logging
 
 ragapp_bp = Blueprint('ragapp', __name__)
@@ -24,44 +20,6 @@ response_llm = ResponseLLM()
 response_logger = ResponseLogger(response_file="logs/responselogs/response_data.json",
                                  timestamp_file="logs/responselogs/response_timestamp.json")
 
-@ragapp_bp.route('/health', methods=['GET'])
-def health_check():
-    """Check if the API and its dependencies are running."""
-    try:
-        health_status = {"status": "healthy", "message": "API is running"}
-        chroma_client = HttpClient(
-            host="chroma-container",
-            port=8000,
-            settings=Settings(allow_reset=True, anonymized_telemetry=False)
-        )
-        logger.debug("Attempting to connect to ChromaDB at chroma-container:8000")
-        response = chroma_client.heartbeat()
-        logger.debug(f"ChromaDB heartbeat response: {response}")
-        chroma_client.get_or_create_collection(name="health_check_collection")
-        health_status["chromadb"] = "connected"
-        logger.info("ChromaDB connection successful")
-    except Exception as e:
-        logger.error(f"ChromaDB connection failed: {str(e)}", exc_info=True)
-        health_status = {
-            "status": "unhealthy",
-            "message": f"API is running, but ChromaDB is not accessible: {str(e)}"
-        }
-        return jsonify(health_status), 503
-    return jsonify(health_status), 200
-
-@ragapp_bp.route('/embed', methods=['POST'])
-def embed_documents():
-    """Trigger document embedding process."""
-    try:
-        result = process_and_push_data_to_chromadb()
-        logger.info(f"Embedding successful: {result}")
-        return jsonify({"message": result}), 200
-    except FileNotFoundError:
-        logger.error("Input file not found for embedding")
-        return jsonify({"error": "Input file not found"}), 404
-    except Exception as e:
-        logger.error(f"Embedding failed: {str(e)}", exc_info=True)
-        return jsonify({"error": f"Embedding failed: {str(e)}"}), 500
 
 @ragapp_bp.route('/chat', methods=['POST', 'OPTIONS'])
 def chat():

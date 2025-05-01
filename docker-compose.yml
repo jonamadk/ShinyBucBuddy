@@ -9,8 +9,9 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./:/app/
       - ./logs:/app/logs
+      - ./Documents:/app/Documents
+      - .env:/app/.env          # <-- mount the .env file into the container
     environment:
       FLASK_ENV: production
       TOKENIZERS_PARALLELISM: "false"

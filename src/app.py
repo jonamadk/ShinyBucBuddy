@@ -5,6 +5,7 @@ from ragapp.views import ragapp_bp
 from ragapp.models import ChatHistory
 from user.views import user_bp
 from user.auth import auth_bp
+from chromvec.views import chroma_bp
 from extensions import init_extensions, db
 import os
 import logging
@@ -71,6 +72,7 @@ logger = logging.getLogger(__name__)
 app.register_blueprint(ragapp_bp, url_prefix='/api')
 app.register_blueprint(user_bp, url_prefix='/api')
 app.register_blueprint(auth_bp, url_prefix='/api')
+app.register_blueprint(chroma_bp, url_prefix='/api')
 
 # Handle OPTIONS requests for all endpoints
 @app.before_request
