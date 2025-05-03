@@ -85,3 +85,29 @@ def document_count():
 #     except Exception as e:
 #         logger.error(f"Failed to delete collection: {str(e)}")
 #         return jsonify({"error": str(e)}), 500
+
+@chroma_bp.route("/documents", methods=["GET"])
+def get_all_documents():
+    try:
+        # Get collection
+        collection = chroma_client.get_collection(name=COLLECTION_NAME)
+
+        # Retrieve documents (no "ids" in include list!)
+        results = collection.get(include=["documents", "metadatas"], limit=100000)
+
+        return jsonify({
+            "count": len(results["documents"]),
+            "documents": [
+                {
+                    "id": doc_id,
+                    "content": doc,
+                    "metadata": metadata
+                }
+                for doc_id, doc, metadata in zip(
+                    results["ids"], results["documents"], results["metadatas"]
+                )
+            ]
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

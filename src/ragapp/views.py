@@ -36,7 +36,7 @@ IMPLEMENTATION: @limiter.limit("10 per minute", key_func=get_user_email)
 
 
 @ragapp_bp.route('/chat', methods=['POST', 'OPTIONS'])
-@limiter.limit("5 per minute")
+@limiter.limit("20 per minute")
 def chat():
     """Handle user queries and maintain conversation history."""
     if request.method == 'OPTIONS':
@@ -128,7 +128,7 @@ def chat():
         return jsonify({"error": f"Internal server error: {str(e)}"}), 500
 
 @ragapp_bp.route('/auth/chat', methods=['POST', 'OPTIONS'])
-@limiter.limit("10 per minute")
+@limiter.limit("30 per minute")
 def auth_chat():
     """Authenticated chat endpoint with conversation support."""
     if request.method == 'OPTIONS':

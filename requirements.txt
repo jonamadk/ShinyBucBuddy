@@ -132,3 +132,4 @@ google-auth
 Flask-Session
 chromadb
 flask-limiter
+tiktoken

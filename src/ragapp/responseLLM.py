@@ -24,29 +24,19 @@ class ResponseLLM:
 
         # Define query rewrite prompt
         rewrite_query_prompt = """
-                You are a context-aware assistant that helps clarify user questions using their conversation history.
-
                 Given:
                 - The user's current query: "{question}"
-                - A history of previous user queries: "{history}, where 0 index is the latest question"
+                - A history of previous user queries: "{history}"
 
-                If the current query depends on or refers to the previous conversation, rewrite it to be a fully self-contained and contextually complete question.
-                Otherwise return current query.
-
-                Only return the rewritten query or the original query — do not include explanations or additional content.
+                If the current query refers to the previous conversation, rewrite {question}" it to be self-contained and contextually complete question.
+                Otherwise return current query {question}".
                 """
 
         
         self.rewrite_prompt = ChatPromptTemplate.from_template(rewrite_query_prompt, verbose=True)
 
         self.decorate_text_prompt = """
-        You are a helpful assistant for East Tennessee State University students.
-
-        **Decorate and format the following response text with Markdown syntax**:
-        - **Use `**bold**`** to highlight the **main results**, key findings, important terms, or conclusions.
-        - **Use `\\n` (newlines)** to clearly separate different ideas, steps, sections, or topics.
-        - **DO NOT** add any new information not in the original text.
-
+        Decorate response text with `**bold**`** to highlight important terms.
         Here is the text you need to decorate:
 
         "{raw_response}"
@@ -95,7 +85,7 @@ class ResponseLLM:
 
         generation_kwargs = {
             "max_tokens": 500,
-            "echo": True,
+            "echo": False,
             "top_k": 1
         }
 
@@ -110,12 +100,11 @@ class ResponseLLM:
                         "role": "user",
                         "content": f"""
                 
-                        Your identity is: "BucBuddy - conversational and context-aware QnA platform for East Tennessee State University who help to student to explore campus resources".
+                        Your identity is: "BucAIDE - conversational and context-aware QnA platform for East Tennessee State University who help to student to explore campus resources".
                         
                         Your task is to:
-                        - Not to answer any other context questions - example joke, sexual content, news, internet topics, trends, songs etc.
+                        - Not to answer any other context questions - example joke, explicit content, news, internet topics, trends, songs etc.
                         - Answer the User question: {rewritten_query} **strictly based on the provided Context: {top_n_document}.**.
-                        - Respond in a **friendly, conversational tone** suitable for students.
                         - **Do not fabricate** information not present in the context.
                         """ 
                     }
