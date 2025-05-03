@@ -28,19 +28,15 @@ class ResponseLLM:
                 - The user's current query: "{question}"
                 - A history of previous user queries: "{history}"
 
-                If the current query refers to the previous conversation, rewrite {question}" it to be self-contained and contextually complete question.
-                Otherwise return current query {question}".
+                If the current query refers to the previous conversation by (his, her, this, that, it , etc.), then rewrite {question} it make context aware question and return rewritten question.
+                ELSE return current query query {question}.
                 """
 
         
         self.rewrite_prompt = ChatPromptTemplate.from_template(rewrite_query_prompt, verbose=True)
 
         self.decorate_text_prompt = """
-        Decorate response text with `**bold**`** to highlight important terms.
-        Here is the text you need to decorate:
-
-        "{raw_response}"
-
+        Decorate  {raw_response} response with `**bold**`** to highlight important terms.
         Respond only with the decorated Markdown-formatted text.
         """
 

@@ -9,8 +9,8 @@ from chromadb.utils import embedding_functions
 from config import EMBEDDING_MODEL_NAME, COLLECTION_NAME, OPENAI_API_KEY, JSON_FILE_PATH
 
 # Constants
-MAX_TOKENS = 5000  # Safe token limit
-CHUNK_OVERLAP = 500 # Optional: slight overlap between chunks
+MAX_TOKENS = 1000  # Safe token limit
+CHUNK_OVERLAP = 200 # Optional: slight overlap between chunks
 
 # Configure logging
 logging.basicConfig(

@@ -33,7 +33,6 @@ class Retriever:
             settings=Settings(allow_reset=True, anonymized_telemetry=False)
         )
 
-
         # Load the cross-encoder reranker model
         self.reranker = CrossEncoder(RERANKER_MODEL)
 
@@ -43,7 +42,7 @@ class Retriever:
             model_name=EMBEDDING_MODEL_NAME
         )
 
-    def retrieve_and_rerank(self, query, top_k=5):
+    def retrieve_and_rerank(self, query, top_k=7):
         """
         Retrieves the top K documents based on cosine similarity to the query and
         reranks them using a cross-encoder for improved relevance.
@@ -83,7 +82,7 @@ class Retriever:
                 "document_link": meta.get('document_link', 'No link available'),
                 "document_name": meta.get('document_title', 'Name not Available')
             }
-            for doc, meta, score in reranked_docs[:3]
+            for doc, meta, score in reranked_docs[:5]
         ]
 
         citation_data = []
