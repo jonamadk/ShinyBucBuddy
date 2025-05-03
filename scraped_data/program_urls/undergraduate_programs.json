@@ -1,0 +1,689 @@
+[
+    {
+        "program_type": "Major",
+        "programs": [
+            {
+                "program_name": "Accountancy Major, B.B.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17163&returnto=3362"
+            },
+            {
+                "program_name": "Accountancy Major, B.B.A.-M.Acc.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17174&returnto=3362"
+            },
+            {
+                "program_name": "Allied Health Major, B.S. (Allied Health Leadership Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17006&returnto=3362"
+            },
+            {
+                "program_name": "Anthropology Major, B.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17011&returnto=3362"
+            },
+            {
+                "program_name": "Anthropology Major, B.A. and Social Work Major, B.S.W. Articulation Agreement",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17191&returnto=3362"
+            },
+            {
+                "program_name": "Applied Science Major, B.A.S. (Culinary Leadership Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17350&returnto=3362"
+            },
+            {
+                "program_name": "Applied Science Major, B.A.S. (Industrial Leadership Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17351&returnto=3362"
+            },
+            {
+                "program_name": "Applied Science Major, B.A.S. (Professional Development Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17014&returnto=3362"
+            },
+            {
+                "program_name": "Art Major, B.A. (Art History Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17016&returnto=3362"
+            },
+            {
+                "program_name": "Art Major, B.A. (Studio Art Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17017&returnto=3362"
+            },
+            {
+                "program_name": "Biology Major, B.S. (Biochemistry Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17023&returnto=3362"
+            },
+            {
+                "program_name": "Biology Major, B.S. (Biology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17022&returnto=3362"
+            },
+            {
+                "program_name": "Biology Major, B.S. (Biology Secondary Education Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17170&returnto=3362"
+            },
+            {
+                "program_name": "Biology Major, B.S. (Biology Teacher Education Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17787&returnto=3362"
+            },
+            {
+                "program_name": "Biology Major, B.S. (Biomedical Sciences Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17389&returnto=3362"
+            },
+            {
+                "program_name": "Biology Major, B.S. (Interdisciplinary Biology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17021&returnto=3362"
+            },
+            {
+                "program_name": "Biology Major, B.S. (Natural Resource Ecology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17419&returnto=3362"
+            },
+            {
+                "program_name": "Biology Major, B.S. and Pharmacy 3 + 1 Program",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17339&returnto=3362"
+            },
+            {
+                "program_name": "Bluegrass, Old-Time, and Roots Music Studies Major, B.A. (Audio Production Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17374&returnto=3362"
+            },
+            {
+                "program_name": "Bluegrass, Old-Time, and Roots Music Studies Major, B.A. (Bluegrass Profession Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17376&returnto=3362"
+            },
+            {
+                "program_name": "Bluegrass, Old-Time, and Roots Music Studies Major, B.A. (Old-Time Music Studies Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17375&returnto=3362"
+            },
+            {
+                "program_name": "Bluegrass, Old-Time, and Roots Music Studies Major, B.A. (Scottish and Irish Traditional Music Studies Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17377&returnto=3362"
+            },
+            {
+                "program_name": "Chemistry Major, B.S. (ACS Chemistry Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17026&returnto=3362"
+            },
+            {
+                "program_name": "Chemistry Major, B.S. (Biochemistry Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17027&returnto=3362"
+            },
+            {
+                "program_name": "Chemistry Major, B.S. (Chemical Physics Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17028&returnto=3362"
+            },
+            {
+                "program_name": "Chemistry Major, B.S. (Chemistry Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17029&returnto=3362"
+            },
+            {
+                "program_name": "Chemistry Major, B.S. and Pharmacy 3 + 1 Program",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17340&returnto=3362"
+            },
+            {
+                "program_name": "Communication Studies Major, B.A. (Communication Studies Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17151&returnto=3362"
+            },
+            {
+                "program_name": "Communication Studies Major, B.A. (Storytelling Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17392&returnto=3362"
+            },
+            {
+                "program_name": "Communication Studies Major, B.S. (Communication Studies Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17152&returnto=3362"
+            },
+            {
+                "program_name": "Communication Studies Major, B.S. (Storytelling Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17393&returnto=3362"
+            },
+            {
+                "program_name": "Computing Major, B.S. (Computer Science Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17035&returnto=3362"
+            },
+            {
+                "program_name": "Computing Major, B.S. (Cybersecurity and Modern Networks)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17334&returnto=3362"
+            },
+            {
+                "program_name": "Computing Major, B.S. (Information Systems Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17036&returnto=3362"
+            },
+            {
+                "program_name": "Computing Major, B.S. (Information Technology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17037&returnto=3362"
+            },
+            {
+                "program_name": "Criminal Justice and Criminology Major, B.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17039&returnto=3362"
+            },
+            {
+                "program_name": "Criminal Justice and Criminology Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17040&returnto=3362"
+            },
+            {
+                "program_name": "Dental Hygiene Major, B.S.D.H.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17008&returnto=3362"
+            },
+            {
+                "program_name": "Dental Hygiene Major, B.S.D.H., Online Completion Degree",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17164&returnto=3362"
+            },
+            {
+                "program_name": "Digital Media Major, B.S. (Digital Animation Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17042&returnto=3362"
+            },
+            {
+                "program_name": "Digital Media Major, B.S. (Digital Game Design Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17043&returnto=3362"
+            },
+            {
+                "program_name": "Digital Media Major, B.S. (Digital Visual Effects Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17182&returnto=3362"
+            },
+            {
+                "program_name": "Digital Media Major, B.S. (Digital Visualization Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17044&returnto=3362"
+            },
+            {
+                "program_name": "Early Childhood Development Major, B.S. (Early Care and Education Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17045&returnto=3362"
+            },
+            {
+                "program_name": "Early Childhood Development Major, B.S. (PreK-3 Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17046&returnto=3362"
+            },
+            {
+                "program_name": "Economics Major, B.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17048&returnto=3362"
+            },
+            {
+                "program_name": "Economics Major, B.A. (International Commerce Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17049&returnto=3362"
+            },
+            {
+                "program_name": "Economics Major, B.B.A. (Business Economics Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17050&returnto=3362"
+            },
+            {
+                "program_name": "Economics Major, B.B.A. (Financial Economics Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17167&returnto=3362"
+            },
+            {
+                "program_name": "Economics Major, B.B.A. (General Business Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17051&returnto=3362"
+            },
+            {
+                "program_name": "Elementary Education Major, B.S.E.D.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17088&returnto=3362"
+            },
+            {
+                "program_name": "Engineering Technology Major, B.S. (Biomedical Engineering Technology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17054&returnto=3362"
+            },
+            {
+                "program_name": "Engineering Technology Major, B.S. (Construction Engineering Technology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17055&returnto=3362"
+            },
+            {
+                "program_name": "Engineering Technology Major, B.S. (Electronics Engineering Technology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17056&returnto=3362"
+            },
+            {
+                "program_name": "Engineering Technology Major, B.S. (Industrial Technology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17057&returnto=3362"
+            },
+            {
+                "program_name": "Engineering Technology Major, B.S. (Manufacturing Engineering Technology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17058&returnto=3362"
+            },
+            {
+                "program_name": "Engineering Technology Major, B.S. (Product Development Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17059&returnto=3362"
+            },
+            {
+                "program_name": "Engineering, TTU-ETSU Bachelor of Science in Engineering",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17189&returnto=3362"
+            },
+            {
+                "program_name": "English Major, B.A. (Nonteaching Major)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17060&returnto=3362"
+            },
+            {
+                "program_name": "English Major, B.A. (Teaching Major)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17061&returnto=3362"
+            },
+            {
+                "program_name": "Environmental Health Major, B.S.E.H. (Environmental Health Practices Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17063&returnto=3362"
+            },
+            {
+                "program_name": "Finance Major, B.B.A. (Corporate Finance and Investments Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17069&returnto=3362"
+            },
+            {
+                "program_name": "Finance Major, B.B.A. (Financial Services Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17068&returnto=3362"
+            },
+            {
+                "program_name": "Finance Major, B.B.A. (General Finance Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17395&returnto=3362"
+            },
+            {
+                "program_name": "Finance Major, B.B.A. (Real Estate Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17070&returnto=3362"
+            },
+            {
+                "program_name": "Foreign Languages Major, B.A. (German Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17072&returnto=3362"
+            },
+            {
+                "program_name": "Foreign Languages Major, B.A. (Japanese Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17383&returnto=3362"
+            },
+            {
+                "program_name": "Foreign Languages Major, B.A. (Spanish Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17073&returnto=3362"
+            },
+            {
+                "program_name": "Geosciences Major, B.S. (Geography and Sustainability Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17199&returnto=3362"
+            },
+            {
+                "program_name": "Geosciences Major, B.S. (Geology and Environment Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17186&returnto=3362"
+            },
+            {
+                "program_name": "Geosciences Major, B.S. (Geospatial Science Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17198&returnto=3362"
+            },
+            {
+                "program_name": "Geosciences Major, B.S. (Paleontology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17200&returnto=3362"
+            },
+            {
+                "program_name": "Graphic Design Major, B.F.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17181&returnto=3362"
+            },
+            {
+                "program_name": "Health Administration Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17331&returnto=3362"
+            },
+            {
+                "program_name": "Health Sciences Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17080&returnto=3362"
+            },
+            {
+                "program_name": "Health Sciences Major, B.S. (Biomedical Sciences Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17387&returnto=3362"
+            },
+            {
+                "program_name": "Health Sciences Major, B.S. and Pharmacy 3 + 1 Program",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17346&returnto=3362"
+            },
+            {
+                "program_name": "History Major, B.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17082&returnto=3362"
+            },
+            {
+                "program_name": "History Major, B.A. (History Teacher Education Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17791&returnto=3362"
+            },
+            {
+                "program_name": "History Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17083&returnto=3362"
+            },
+            {
+                "program_name": "History Major, B.S. (History Teacher Education Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17792&returnto=3362"
+            },
+            {
+                "program_name": "Human Services Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17086&returnto=3362"
+            },
+            {
+                "program_name": "Human Services Major, B.S. (Child Life Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17432&returnto=3362"
+            },
+            {
+                "program_name": "Interdisciplinary Studies Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17378&returnto=3362"
+            },
+            {
+                "program_name": "Interdisciplinary Studies Major, B.S. (Integrative Studies Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17380&returnto=3362"
+            },
+            {
+                "program_name": "Interdisciplinary Studies Major, B.S. (Professional Studies Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17379&returnto=3362"
+            },
+            {
+                "program_name": "Interior Architecture Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17089&returnto=3362"
+            },
+            {
+                "program_name": "International Affairs Major, B.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17090&returnto=3362"
+            },
+            {
+                "program_name": "Kinesiology Major, B.S. (Exercise Science Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17123&returnto=3362"
+            },
+            {
+                "program_name": "Kinesiology Major, B.S. (Physical Education K-12 Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17124&returnto=3362"
+            },
+            {
+                "program_name": "Management Major, B.B.A. (General Management Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17097&returnto=3362"
+            },
+            {
+                "program_name": "Management Major, B.B.A. (Hospitality and Tourism)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17422&returnto=3362"
+            },
+            {
+                "program_name": "Management Major, B.B.A. (Human Resources Management Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17098&returnto=3362"
+            },
+            {
+                "program_name": "Management Major, B.B.A. (International Business Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17353&returnto=3362"
+            },
+            {
+                "program_name": "Management Major, B.B.A. (Legal Studies Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17099&returnto=3362"
+            },
+            {
+                "program_name": "Marketing Major, B.B.A. (Entrepreneurship Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17394&returnto=3362"
+            },
+            {
+                "program_name": "Marketing Major, B.B.A. (Fashion Marketing and Merchandising Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17103&returnto=3362"
+            },
+            {
+                "program_name": "Marketing Major, B.B.A. (Integrated Marketing Communications Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17101&returnto=3362"
+            },
+            {
+                "program_name": "Marketing Major, B.B.A. (Marketing Analytics Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17354&returnto=3362"
+            },
+            {
+                "program_name": "Marketing Major, B.B.A. (Marketing Management Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17102&returnto=3362"
+            },
+            {
+                "program_name": "Mathematics Major, B.S. (Computational Applied Mathematics Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17178&returnto=3362"
+            },
+            {
+                "program_name": "Mathematics Major, B.S. (Mathematical Sciences Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17176&returnto=3362"
+            },
+            {
+                "program_name": "Mathematics Major, B.S. (Mathematics Education Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17177&returnto=3362"
+            },
+            {
+                "program_name": "Mathematics Major, B.S. (Mathematics Teacher Education Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17790&returnto=3362"
+            },
+            {
+                "program_name": "Mathematics Major, B.S. (Statistics Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17179&returnto=3362"
+            },
+            {
+                "program_name": "Mechatronics Engineering Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17444&returnto=3362"
+            },
+            {
+                "program_name": "Media and Communication Major, B.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17105&returnto=3362"
+            },
+            {
+                "program_name": "Media and Communication Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17106&returnto=3362"
+            },
+            {
+                "program_name": "Microbiology Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17332&returnto=3362"
+            },
+            {
+                "program_name": "Music Major, B.A. (Composition Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17360&returnto=3362"
+            },
+            {
+                "program_name": "Music Major, B.A. (Contemporary Music Performance Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17361&returnto=3362"
+            },
+            {
+                "program_name": "Music Major, B.A. (Music History Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17362&returnto=3362"
+            },
+            {
+                "program_name": "Music Major, B.A. (Performance Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17359&returnto=3362"
+            },
+            {
+                "program_name": "Music Major, B.M. (Music Education: Instrumental/General Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17112&returnto=3362"
+            },
+            {
+                "program_name": "Music Major, B.M. (Music Education: Vocal/General Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17196&returnto=3362"
+            },
+            {
+                "program_name": "Music Major, B.M. (Performance: Instrumental Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17113&returnto=3362"
+            },
+            {
+                "program_name": "Music Major, B.M. (Performance: Keyboard Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17194&returnto=3362"
+            },
+            {
+                "program_name": "Music Major, B.M. (Performance: Vocal Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17195&returnto=3362"
+            },
+            {
+                "program_name": "Nursing Major, B.S.N.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17116&returnto=3362"
+            },
+            {
+                "program_name": "Nutrition Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17009&returnto=3362"
+            },
+            {
+                "program_name": "Pharmacy Studies Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17190&returnto=3362"
+            },
+            {
+                "program_name": "Philosophy Major, B.A. (Justice, Ethics, and Law Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17203&returnto=3362"
+            },
+            {
+                "program_name": "Philosophy Major, B.A. (Philosophy and Religious Studies Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17118&returnto=3362"
+            },
+            {
+                "program_name": "Philosophy Major, B.A. (Philosophy Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17119&returnto=3362"
+            },
+            {
+                "program_name": "Philosophy Major, B.S. (Justice, Ethics, and Law Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17204&returnto=3362"
+            },
+            {
+                "program_name": "Philosophy Major, B.S. (Philosophy and Religious Studies Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17120&returnto=3362"
+            },
+            {
+                "program_name": "Philosophy Major, B.S. (Philosophy Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17121&returnto=3362"
+            },
+            {
+                "program_name": "Physics Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17126&returnto=3362"
+            },
+            {
+                "program_name": "Political Science Major, B.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17128&returnto=3362"
+            },
+            {
+                "program_name": "Political Science Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17129&returnto=3362"
+            },
+            {
+                "program_name": "Psychology Major, B.A. (Child Psychology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17132&returnto=3362"
+            },
+            {
+                "program_name": "Psychology Major, B.A. (Clinical Psychological Sciences Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17133&returnto=3362"
+            },
+            {
+                "program_name": "Psychology Major, B.A. (General Psychology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17134&returnto=3362"
+            },
+            {
+                "program_name": "Psychology Major, B.A. (Health Professions Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17192&returnto=3362"
+            },
+            {
+                "program_name": "Psychology Major, B.S. (Child Psychology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17135&returnto=3362"
+            },
+            {
+                "program_name": "Psychology Major, B.S. (Clinical Psychological Sciences Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17136&returnto=3362"
+            },
+            {
+                "program_name": "Psychology Major, B.S. (General Psychology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17137&returnto=3362"
+            },
+            {
+                "program_name": "Psychology Major, B.S. (Health Professions Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17193&returnto=3362"
+            },
+            {
+                "program_name": "Psychology Major, B.S. and Social Work Major, B.S.W. Articulation Agreement",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17386&returnto=3362"
+            },
+            {
+                "program_name": "Public Health Major, B.S. (Community Health Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17140&returnto=3362"
+            },
+            {
+                "program_name": "Radiologic Science Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17010&returnto=3362"
+            },
+            {
+                "program_name": "Radiologic Science Major, B.S., Online Completion Degree",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17794&returnto=3362"
+            },
+            {
+                "program_name": "Rehabilitative Health Sciences Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17241&returnto=3362"
+            },
+            {
+                "program_name": "Respiratory Therapy Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17007&returnto=3362"
+            },
+            {
+                "program_name": "Respiratory Therapy Major, B.S., Online Completion Degree",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17795&returnto=3362"
+            },
+            {
+                "program_name": "Social Work Major, B.S.W.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17145&returnto=3362"
+            },
+            {
+                "program_name": "Social Work Major, B.S.W. and Anthropology Major, B.A. Articulation Agreement",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17779&returnto=3362"
+            },
+            {
+                "program_name": "Social Work Major, B.S.W. and Psychology Major, B.S. Articulation Agreement",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17778&returnto=3362"
+            },
+            {
+                "program_name": "Sociology Major, B.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17147&returnto=3362"
+            },
+            {
+                "program_name": "Sociology Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17148&returnto=3362"
+            },
+            {
+                "program_name": "Special Education Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17197&returnto=3362"
+            },
+            {
+                "program_name": "Sport and Recreation Management Major, B.S. (Park and Recreation Management Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17154&returnto=3362"
+            },
+            {
+                "program_name": "Sport and Recreation Management Major, B.S. (Sport Management Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17155&returnto=3362"
+            },
+            {
+                "program_name": "Studio Art Major, B.F.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17018&returnto=3362"
+            },
+            {
+                "program_name": "Supply Chain Management Major, B.B.A. (Supply Chain Leadership Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17399&returnto=3362"
+            },
+            {
+                "program_name": "Supply Chain Management Major, B.B.A. (Supply Chain Marketing Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17398&returnto=3362"
+            },
+            {
+                "program_name": "Supply Chain Management Major, B.B.A. (Supply Chain Operations and Analytics Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17397&returnto=3362"
+            },
+            {
+                "program_name": "Surveying and Mapping Science Major, B.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17157&returnto=3362"
+            },
+            {
+                "program_name": "Theatre Major, B.A. (Acting Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17320&returnto=3362"
+            },
+            {
+                "program_name": "Theatre Major, B.A. (Design/Production Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17321&returnto=3362"
+            },
+            {
+                "program_name": "Theatre Major, B.A. (General Theatre Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17352&returnto=3362"
+            },
+            {
+                "program_name": "Theatre Major, B.A. (Musical Theatre Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17322&returnto=3362"
+            },
+            {
+                "program_name": "Theatre Major, B.A. (Physical Theatre Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17323&returnto=3362"
+            }
+        ]
+    },
+    {
+        "program_type": "Additional Programs",
+        "programs": [
+            {
+                "program_name": "Medical Professions Advisement",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17342&returnto=3362"
+            },
+            {
+                "program_name": "Military Science Program (Four-Year Program)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17109&returnto=3362"
+            },
+            {
+                "program_name": "Military Science Program (Two-Year Program)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17111&returnto=3362"
+            }
+        ]
+    },
+    {
+        "program_type": "Other Programs",
+        "programs": [
+            {
+                "program_name": "Accelerated Bachelors to Masters Degree Program",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17187&returnto=3362"
+            },
+            {
+                "program_name": "Pharmacy Early Admission Pathway",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=58&poid=17205&returnto=3362"
+            }
+        ]
+    }
+]

@@ -1,0 +1,755 @@
+[
+    {
+        "program_type": "Doctorate",
+        "programs": [
+            {
+                "program_name": "Audiology, Au.D.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16753&returnto=3119"
+            },
+            {
+                "program_name": "Biomedical Sciences, Ph.D. (Cardiovascular Sciences Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16894&returnto=3119"
+            },
+            {
+                "program_name": "Biomedical Sciences, Ph.D. (Cellular, Molecular and Chemical Biology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16895&returnto=3119"
+            },
+            {
+                "program_name": "Biomedical Sciences, Ph.D. (Immunology, Inflammation and Infectious Diseases Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16893&returnto=3119"
+            },
+            {
+                "program_name": "Biomedical Sciences, Ph.D. (Neuroscience Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16896&returnto=3119"
+            },
+            {
+                "program_name": "Biomedical Sciences, Ph.D. (Pharmaceutical Sciences Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16758&returnto=3119"
+            },
+            {
+                "program_name": "Early Childhood Education, Ph.D.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16771&returnto=3119"
+            },
+            {
+                "program_name": "Educational Leadership, Ed.D. (Administrative Endorsement Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16767&returnto=3119"
+            },
+            {
+                "program_name": "Educational Leadership, Ed.D. (Higher Education Leadership Concentration) (Online)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16772&returnto=3119"
+            },
+            {
+                "program_name": "Educational Leadership, Ed.D. (School Leadership Concentration) (Online)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16773&returnto=3119"
+            },
+            {
+                "program_name": "Global Sport Leadership, Ed.D.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16854&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, D.N.P. (Adult-Gerontology Primary Care Nurse Practitioner Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16791&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, D.N.P. (Family Nurse Practitioner Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16793&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, D.N.P. (Nursing and Healthcare Leadership Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16792&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, D.N.P. (Psychiatric/Mental Health Nurse Practitioner Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16794&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, DNP ETSU-TTU (Adult-Gerontology Acute Care Nurse Practitioner)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16870&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, DNP ETSU-TTU (Family Nurse Practitioner Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16869&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, DNP ETSU-TTU (Nursing and Healthcare Leadership Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16874&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, DNP ETSU-TTU (Pediatric Nurse Practitioner-Primary Care Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16872&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, DNP ETSU-TTU (Psychiatric/Mental Health Nurse Practitioner Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16873&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, DNP ETSU-TTU (Women\u2019s Health Care Nurse Practitioner)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16871&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, Ph.D.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16798&returnto=3119"
+            },
+            {
+                "program_name": "Occupational Therapy, O.T.D.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16919&returnto=3119"
+            },
+            {
+                "program_name": "Physical Therapy, D.P.T.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16800&returnto=3119"
+            },
+            {
+                "program_name": "Psychology, M.A./Ph.D. (Clinical Psychology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16804&returnto=3119"
+            },
+            {
+                "program_name": "Psychology, M.A./Ph.D. (Experimental Psychology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16805&returnto=3119"
+            },
+            {
+                "program_name": "Public Health, Dr.P.H. (Community Health Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16809&returnto=3119"
+            },
+            {
+                "program_name": "Public Health, Dr.P.H. (Epidemiology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16810&returnto=3119"
+            },
+            {
+                "program_name": "Public Health, Dr.P.H. (Health Management and Policy Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16868&returnto=3119"
+            },
+            {
+                "program_name": "Sport Physiology and Performance, Ph.D. (Sport Performance Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16824&returnto=3119"
+            },
+            {
+                "program_name": "Sport Physiology and Performance, Ph.D. (Sport Physiology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16825&returnto=3119"
+            }
+        ]
+    },
+    {
+        "program_type": "Specialist",
+        "programs": [
+            {
+                "program_name": "Educational Leadership, Ed.S. (Administration Endorsement Concentration) (Online)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16774&returnto=3119"
+            },
+            {
+                "program_name": "Educational Leadership, Ed.S. (School System Leadership Concentration) (Online)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16776&returnto=3119"
+            }
+        ]
+    },
+    {
+        "program_type": "Master",
+        "programs": [
+            {
+                "program_name": "Accountancy, M.Acc. (Audit Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16881&returnto=3119"
+            },
+            {
+                "program_name": "Accountancy, M.Acc. (Controllership Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16882&returnto=3119"
+            },
+            {
+                "program_name": "Accountancy, M.Acc. (Generalist Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16883&returnto=3119"
+            },
+            {
+                "program_name": "Accountancy, M.Acc. (Taxation Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16748&returnto=3119"
+            },
+            {
+                "program_name": "Allied Health, M.S.A.H.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16750&returnto=3119"
+            },
+            {
+                "program_name": "Appalachian Studies, M.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16886&returnto=3119"
+            },
+            {
+                "program_name": "Applied Data Science, M.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16924&returnto=3119"
+            },
+            {
+                "program_name": "Biology, M.S. (Biology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16755&returnto=3119"
+            },
+            {
+                "program_name": "Biology, M.S. (Biomedical Sciences Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16756&returnto=3119"
+            },
+            {
+                "program_name": "Biology, M.S. (Microbiology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16757&returnto=3119"
+            },
+            {
+                "program_name": "Brand and Media Strategy, M.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16790&returnto=3119"
+            },
+            {
+                "program_name": "Business Administration, M.B.A. (Accelerated Program)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16936&returnto=3119"
+            },
+            {
+                "program_name": "Business Administration, M.B.A. (Business Analytics Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16902&returnto=3119"
+            },
+            {
+                "program_name": "Business Administration, M.B.A. (Business Analytics Concentration) (Online)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16929&returnto=3119"
+            },
+            {
+                "program_name": "Business Administration, M.B.A. (Cybersecurity Management Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16901&returnto=3119"
+            },
+            {
+                "program_name": "Business Administration, M.B.A. (Cybersecurity Management Concentration) (Online)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16938&returnto=3119"
+            },
+            {
+                "program_name": "Business Administration, M.B.A. (Health Care Marketing Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16905&returnto=3119"
+            },
+            {
+                "program_name": "Business Administration, M.B.A. (Health Care Marketing Concentration) (Online)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16930&returnto=3119"
+            },
+            {
+                "program_name": "Business Administration, M.B.A. (No Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16760&returnto=3119"
+            },
+            {
+                "program_name": "Business Administration, M.B.A. (No Concentration) (Online)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16937&returnto=3119"
+            },
+            {
+                "program_name": "Chemistry, M.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16761&returnto=3119"
+            },
+            {
+                "program_name": "Clinical Nutrition, M.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16762&returnto=3119"
+            },
+            {
+                "program_name": "Communication & Storytelling Studies, M.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16801&returnto=3119"
+            },
+            {
+                "program_name": "Computer Science, M.S. (AI and Machine Learning Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16907&returnto=3119"
+            },
+            {
+                "program_name": "Computer Science, M.S. (Applied Computer Science Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16906&returnto=3119"
+            },
+            {
+                "program_name": "Computer Science, M.S. (Software Engineering Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16908&returnto=3119"
+            },
+            {
+                "program_name": "Counseling, M.A. (Clinical Mental Health Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16840&returnto=3119"
+            },
+            {
+                "program_name": "Counseling, M.A. (Elementary/Secondary School Counseling Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16842&returnto=3119"
+            },
+            {
+                "program_name": "Criminal Justice and Criminology, M.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16766&returnto=3119"
+            },
+            {
+                "program_name": "Curriculum and Instruction, M.Ed.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16904&returnto=3119"
+            },
+            {
+                "program_name": "Digital Marketing, M.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16851&returnto=3119"
+            },
+            {
+                "program_name": "Digital Media, M.F.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16921&returnto=3119"
+            },
+            {
+                "program_name": "Early Childhood Education, M.A. (Early Care and Education Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16769&returnto=3119"
+            },
+            {
+                "program_name": "Early Childhood Education, M.A. (Initial Licensure Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16768&returnto=3119"
+            },
+            {
+                "program_name": "Early Childhood Education, M.A. (Research Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16770&returnto=3119"
+            },
+            {
+                "program_name": "Educational Leadership, M.Ed. (Higher Education Concentration) (Online)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16853&returnto=3119"
+            },
+            {
+                "program_name": "Educational Leadership, M.Ed. (School Administration and Leadership Concentration) (Online)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16852&returnto=3119"
+            },
+            {
+                "program_name": "Engineering Technology, M.S. (Digital Construction and Data Analytics Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16927&returnto=3119"
+            },
+            {
+                "program_name": "Engineering Technology, M.S. (Robotics, Automation, and Instrumentation Systems Concentrations)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16830&returnto=3119"
+            },
+            {
+                "program_name": "English, M.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16779&returnto=3119"
+            },
+            {
+                "program_name": "Geosciences, M.S. (Geospatial Analysis Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16880&returnto=3119"
+            },
+            {
+                "program_name": "Geosciences, M.S. (Paleontology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16782&returnto=3119"
+            },
+            {
+                "program_name": "Health Administration, M.H.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16815&returnto=3119"
+            },
+            {
+                "program_name": "History, M.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16785&returnto=3119"
+            },
+            {
+                "program_name": "Individual, Family, and Community Sciences, M.S. (Online)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16862&returnto=3119"
+            },
+            {
+                "program_name": "Information Systems, M.S. (Cybersecurity Management Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16916&returnto=3119"
+            },
+            {
+                "program_name": "Information Systems, M.S. (Data Analytics Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16915&returnto=3119"
+            },
+            {
+                "program_name": "Information Systems, M.S. (Information Management Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16917&returnto=3119"
+            },
+            {
+                "program_name": "Information Systems, M.S. (User Experience Engineering Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16918&returnto=3119"
+            },
+            {
+                "program_name": "Interdisciplinary Studies, M.A.L.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16786&returnto=3119"
+            },
+            {
+                "program_name": "Interdisciplinary Studies, M.A.L.S. (Archival Studies Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16787&returnto=3119"
+            },
+            {
+                "program_name": "Interdisciplinary Studies, M.A.L.S. (Gender and Diversity Studies Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16788&returnto=3119"
+            },
+            {
+                "program_name": "Interdisciplinary Studies, M.A.L.S. (Regional and Community Studies Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16837&returnto=3119"
+            },
+            {
+                "program_name": "Mathematical Sciences, M.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16789&returnto=3119"
+            },
+            {
+                "program_name": "Music, M.M. (Composition Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=17777&returnto=3119"
+            },
+            {
+                "program_name": "Music, M.M. (Conducting Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=17771&returnto=3119"
+            },
+            {
+                "program_name": "Music, M.M. (Instrumental Performance Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=17773&returnto=3119"
+            },
+            {
+                "program_name": "Music, M.M. (Music Education Concentration) (non-licensure)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=17776&returnto=3119"
+            },
+            {
+                "program_name": "Music, M.M. (Percussion Performance Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=17774&returnto=3119"
+            },
+            {
+                "program_name": "Music, M.M. (Piano Performance Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=17784&returnto=3119"
+            },
+            {
+                "program_name": "Music, M.M. (Vocal Performance Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=17775&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, M.S.N. (Family Nurse Practitioner Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16795&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, M.S.N. (Nursing Administration Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16796&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, M.S.N. (Nursing Education Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16797&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, M.S.N. (Psychiatric/Mental Health Nurse Practitioner Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16876&returnto=3119"
+            },
+            {
+                "program_name": "Orthotics and Prosthetics, M.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16920&returnto=3119"
+            },
+            {
+                "program_name": "Professional Studies, M.P.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16912&returnto=3119"
+            },
+            {
+                "program_name": "Professional Studies, M.P.S. (Leadership, Organizations, and Workforce Studies Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16913&returnto=3119"
+            },
+            {
+                "program_name": "Public Administration, M.P.A. (Economic Development and Planning Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16808&returnto=3119"
+            },
+            {
+                "program_name": "Public Administration, M.P.A. (Government Generalist Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16911&returnto=3119"
+            },
+            {
+                "program_name": "Public Administration, M.P.A. (Local Government Management Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16806&returnto=3119"
+            },
+            {
+                "program_name": "Public Administration, M.P.A. (Nonprofit & Public Financial Management Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16807&returnto=3119"
+            },
+            {
+                "program_name": "Public Health, M.P.H. (Biostatistics Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16811&returnto=3119"
+            },
+            {
+                "program_name": "Public Health, M.P.H. (Community Health Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16812&returnto=3119"
+            },
+            {
+                "program_name": "Public Health, M.P.H. (Environmental and Occupational Health Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16813&returnto=3119"
+            },
+            {
+                "program_name": "Public Health, M.P.H. (Epidemiology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16814&returnto=3119"
+            },
+            {
+                "program_name": "Public Health, M.P.H. (Public Health Leadership & Policy)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16926&returnto=3119"
+            },
+            {
+                "program_name": "Reading, M.Ed.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16816&returnto=3119"
+            },
+            {
+                "program_name": "School Librarianship, M.Ed.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16777&returnto=3119"
+            },
+            {
+                "program_name": "Social Work, M.S.W.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16820&returnto=3119"
+            },
+            {
+                "program_name": "Sociology, M.A. (Applied Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16885&returnto=3119"
+            },
+            {
+                "program_name": "Sociology, M.A. (General Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16821&returnto=3119"
+            },
+            {
+                "program_name": "Special Education, M.Ed. (Advanced Studies in Special Education Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16822&returnto=3119"
+            },
+            {
+                "program_name": "Special Education, M.Ed. (Early Childhood Special Education Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16823&returnto=3119"
+            },
+            {
+                "program_name": "Special Education, M.Ed. (High Incidence Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16866&returnto=3119"
+            },
+            {
+                "program_name": "Special Education, M.Ed. (Low Incidence Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16867&returnto=3119"
+            },
+            {
+                "program_name": "Speech-Language Pathology, M.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16763&returnto=3119"
+            },
+            {
+                "program_name": "Sport Management, M.S.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16863&returnto=3119"
+            },
+            {
+                "program_name": "Sport Science and Coach Education, M.S. (Applied Sport Science Concentration-Onsite)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16859&returnto=3119"
+            },
+            {
+                "program_name": "Sport Science and Coach Education, M.S. (Strength and Conditioning Concentration-Online)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16861&returnto=3119"
+            },
+            {
+                "program_name": "Studio Art, M.F.A.",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16752&returnto=3119"
+            },
+            {
+                "program_name": "Teacher Education, M.A.T. (Elementary Education Grades K-5 Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=17781&returnto=3119"
+            },
+            {
+                "program_name": "Teacher Education, M.A.T. (K-12 Education Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=17780&returnto=3119"
+            },
+            {
+                "program_name": "Teacher Education, M.A.T. (Middle Grades Education 6-8 Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16827&returnto=3119"
+            },
+            {
+                "program_name": "Teacher Education, M.A.T. (Secondary Education 6-12 Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16828&returnto=3119"
+            }
+        ]
+    },
+    {
+        "program_type": "Certificate",
+        "programs": [
+            {
+                "program_name": "Appalachian Studies, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16839&returnto=3119"
+            },
+            {
+                "program_name": "Archival Studies, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16751&returnto=3119"
+            },
+            {
+                "program_name": "Athletic Administration, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16850&returnto=3119"
+            },
+            {
+                "program_name": "Biostatistics, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16759&returnto=3119"
+            },
+            {
+                "program_name": "Child Advocacy Studies Training, Graduate Certificate (Online)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16933&returnto=3119"
+            },
+            {
+                "program_name": "Clinical Addiction Counseling Studies, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16884&returnto=3119"
+            },
+            {
+                "program_name": "Community College Leadership, Graduate Certificate* (Online)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16865&returnto=3119"
+            },
+            {
+                "program_name": "Community Leadership, Graduate Certificate* (Online)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16860&returnto=3119"
+            },
+            {
+                "program_name": "Data Analytics, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16900&returnto=3119"
+            },
+            {
+                "program_name": "Early Childhood Education Emergent Inquiry, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16835&returnto=3119"
+            },
+            {
+                "program_name": "Educator Job Embedded, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16931&returnto=3119"
+            },
+            {
+                "program_name": "English as a Second Language PreK-12, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16910&returnto=3119"
+            },
+            {
+                "program_name": "Epidemiology, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16780&returnto=3119"
+            },
+            {
+                "program_name": "Esports Management, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16899&returnto=3119"
+            },
+            {
+                "program_name": "Film Production, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16878&returnto=3119"
+            },
+            {
+                "program_name": "Forensic Document Examination, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16781&returnto=3119"
+            },
+            {
+                "program_name": "Geographic Information Systems, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16877&returnto=3119"
+            },
+            {
+                "program_name": "Gerontology, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16783&returnto=3119"
+            },
+            {
+                "program_name": "Global Health, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16887&returnto=3119"
+            },
+            {
+                "program_name": "Health Care Genetics and Genomics, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16889&returnto=3119"
+            },
+            {
+                "program_name": "Health Care Management, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16784&returnto=3119"
+            },
+            {
+                "program_name": "Health Data Analytics, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16897&returnto=3119"
+            },
+            {
+                "program_name": "Healthcare Spanish, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16932&returnto=3119"
+            },
+            {
+                "program_name": "Heritage Interpretation and Museum Studies, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16898&returnto=3119"
+            },
+            {
+                "program_name": "Higher Education Teaching, Graduate Certificate",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16909&returnto=3119"
+            },
+            {
+                "program_name": "History, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16925&returnto=3119"
+            },
+            {
+                "program_name": "Interprofessional Pediatric Feeding, Graduate Certificate (Online)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16934&returnto=3119"
+            },
+            {
+                "program_name": "Nature-Based Therapy, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16923&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, Post-D.N.P. Adult/Gerontological Nurse Practitioner, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16855&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, Post-Graduate Family Nurse Practitioner, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16749&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, Post-Graduate Nursing Administration, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16836&returnto=3119"
+            },
+            {
+                "program_name": "Nursing, Post-Graduate Psychiatric Mental Health Nurse Practitioner, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16879&returnto=3119"
+            },
+            {
+                "program_name": "One Health and Climate Studies, Graduate Certificate",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16939&returnto=3119"
+            },
+            {
+                "program_name": "Public Health, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16864&returnto=3119"
+            },
+            {
+                "program_name": "Qualitative Research Methods, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=17783&returnto=3119"
+            },
+            {
+                "program_name": "Reading Specialist P-12, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=17782&returnto=3119"
+            },
+            {
+                "program_name": "Recovery Research, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16922&returnto=3119"
+            },
+            {
+                "program_name": "Rural Public Health, Graduate Certificate",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16817&returnto=3119"
+            },
+            {
+                "program_name": "School Library Professional, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16818&returnto=3119"
+            },
+            {
+                "program_name": "Special Education: Early Childhood Special Education, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16858&returnto=3119"
+            },
+            {
+                "program_name": "Special Education: High Incidence Disabilities, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16857&returnto=3119"
+            },
+            {
+                "program_name": "Special Education: Low Incidence Disabilities, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16856&returnto=3119"
+            },
+            {
+                "program_name": "Sport Nutrition, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16890&returnto=3119"
+            },
+            {
+                "program_name": "STEM K-12 Education, Graduate Certificate",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16875&returnto=3119"
+            },
+            {
+                "program_name": "Storytelling, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16826&returnto=3119"
+            },
+            {
+                "program_name": "Student Affairs, Graduate Certificate (Online)*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16935&returnto=3119"
+            },
+            {
+                "program_name": "Teaching English to Speakers of Other Languages, Graduate Certificate*",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16829&returnto=3119"
+            }
+        ]
+    },
+    {
+        "program_type": "Doctorate and Masters",
+        "programs": [
+            {
+                "program_name": "MD/MBA",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16891&returnto=3119"
+            },
+            {
+                "program_name": "MD/MPH (Biostatistics Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16834&returnto=3119"
+            },
+            {
+                "program_name": "MD/MPH (Community Health Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16831&returnto=3119"
+            },
+            {
+                "program_name": "MD/MPH (Epidemiology Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16832&returnto=3119"
+            },
+            {
+                "program_name": "MD/MPH (Public Health Leadership & Policy Concentration)",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16928&returnto=3119"
+            },
+            {
+                "program_name": "PharmD/MBA",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16844&returnto=3119"
+            },
+            {
+                "program_name": "PharmD/MPH",
+                "program_link": "https://catalog.etsu.edu/preview_program.php?catoid=57&poid=16838&returnto=3119"
+            }
+        ]
+    }
+]

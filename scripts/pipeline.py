@@ -122,8 +122,15 @@ class ScrapingPipeline:
                 if isinstance(data, list):
                     merged_data.extend(data)
         
-        output_path = os.path.join(self.base_dir, 'final_merged_data.json')
+        # Get absolute path to Documents directory
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        output_path = os.path.join(base_dir, 'Documents', 'final_merged_data.json')
+        
+        # Create Documents directory if it doesn't exist
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        
         with open(output_path, 'w') as f:
+            
             json.dump(merged_data, f, indent=4)
         print(f"Merged {len(json_files)} files into {output_path}")
 
