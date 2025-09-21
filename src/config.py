@@ -14,3 +14,4 @@ EMBEDDING_MODEL_NAME =  "text-embedding-3-large"
 SENTENCE_TRANSFORMER_MODEL_NAME = "all-MiniLM-L6-v2"
 # For PostgreSQL user storage
 
+JSON_FILE_PATH="/app/Documents/combined_data_with_metadata.json"
