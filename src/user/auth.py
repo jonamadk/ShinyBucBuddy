@@ -11,14 +11,12 @@ from urllib.parse import quote
 from dotenv import load_dotenv
 from datetime import timedelta
 
+# Set OAUTHLIB_INSECURE_TRANSPORT before any OAuth operations
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+
 load_dotenv()
 
 auth_bp = Blueprint('auth', __name__)
-
-
-OAUTHLIB_INSECURE_TRANSPORT = os.getenv("OAUTHLIB_INSECURE_TRANSPORT", "0")
-if OAUTHLIB_INSECURE_TRANSPORT == "1":
-    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
 GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
@@ -47,45 +45,60 @@ def login_with_google():
 
 @auth_bp.route('auth/callback')
 def auth_callback():
-    flow = Flow.from_client_config(
-        {
-            "web": {
-                "client_id": GOOGLE_CLIENT_ID,
-                "client_secret": GOOGLE_CLIENT_SECRET,
-                "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-                "token_uri": "https://oauth2.googleapis.com/token"
-            }
-        },
-        scopes=SCOPES,
-        redirect_uri=REDIRECT_URI
-    )
+    try:
+        flow = Flow.from_client_config(
+            {
+                "web": {
+                    "client_id": GOOGLE_CLIENT_ID,
+                    "client_secret": GOOGLE_CLIENT_SECRET,
+                    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+                    "token_uri": "https://oauth2.googleapis.com/token"
+                }
+            },
+            scopes=SCOPES,
+            redirect_uri=REDIRECT_URI
+        )
 
-    flow.fetch_token(authorization_response=request.url)
+        flow.fetch_token(authorization_response=request.url)
 
-    credentials = flow.credentials
-    token_request = google_requests.Request()
-    id_info = id_token.verify_oauth2_token(
-        credentials.id_token, token_request, GOOGLE_CLIENT_ID)
+        credentials = flow.credentials
+        token_request = google_requests.Request()
+        id_info = id_token.verify_oauth2_token(
+            credentials.id_token, token_request, GOOGLE_CLIENT_ID)
 
-    email = id_info.get("email")
-    firstname = id_info.get("given_name")
-    lastname = id_info.get("family_name")
+        email = id_info.get("email")
+        firstname = id_info.get("given_name")
+        lastname = id_info.get("family_name")
 
-    user = User.query.filter_by(email=email).first()
-    if not user:
-        user = User(email=email, firstname=firstname, lastname=lastname)
-        db.session.add(user)
-        db.session.commit()
+        user = User.query.filter_by(email=email).first()
+        if user:
+            user.signinstatus = True
+            db.session.commit()
+        else:
+            user = User(
+                email=email,
+                password=None,  # No password for Google OAuth users
+                firstname=firstname,
+                lastname=lastname,
+                signinstatus=True,
+                auth_provider='google'
+            )
+            db.session.add(user)
+            db.session.commit()
 
-    access_token = create_access_token(
-    identity=json.dumps({"email": user.email}),
-    expires_delta=timedelta(days=3))
-    
+        access_token = create_access_token(
+            identity=json.dumps({"email": user.email}),
+            expires_delta=timedelta(days=3)
+        )
 
-    user_data = {
-        "email": user.email,
-        "firstname": user.firstname,
-        "lastname": user.lastname
-    }
+        user_data = {
+            "email": user.email,
+            "firstname": user.firstname,
+            "lastname": user.lastname,
+            "signinstatus": user.signinstatus,
+            "auth_provider": user.auth_provider
+        }
 
-    return redirect(f"{FRONTEND_REDIRECT_URI}?user={quote(json.dumps(user_data))}&token={access_token}")
+        return redirect(f"{FRONTEND_REDIRECT_URI}?user={quote(json.dumps(user_data))}&token={access_token}")
+    except Exception as e:
+        return jsonify({"error": f"Google OAuth failed: {str(e)}"}), 500

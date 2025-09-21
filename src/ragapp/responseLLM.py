@@ -11,7 +11,6 @@ from langchain_core.messages import HumanMessage, AIMessage
 from config import OPENAI_API_KEY, SENTENCE_TRANSFORMER_MODEL_NAME
 from sentence_transformers import SentenceTransformer, util
 
-
 class ResponseLLM:
     def __init__(self):
         # Initialize API clients
@@ -25,12 +24,21 @@ class ResponseLLM:
 
         # Define query rewrite prompt
         rewrite_query_prompt = """
-        Based on the provided user query: "{question}" and the history of previous user questions: "{history}",
-        if the query is related to the history, rewrite the query based on the context of the history.
-        Otherwise, return the original query: "{question}".
-        """
+                Given:
+                - The user's current query: "{question}"
+                - A history of previous user queries: "{history}"
 
+                If the current query refers to the previous conversation by (his, her, this, that, it , etc.), then rewrite {question} it make context aware question and return rewritten question.
+                ELSE return current query query {question}.
+                """
+
+        
         self.rewrite_prompt = ChatPromptTemplate.from_template(rewrite_query_prompt, verbose=True)
+
+        self.decorate_text_prompt = """
+        Decorate  {raw_response} response with `**bold**`** to highlight important terms.
+        Respond only with the decorated Markdown-formatted text.
+        """
 
         # Initialize retriever
         self.retriever = Retriever()
@@ -41,22 +49,29 @@ class ResponseLLM:
 
     def rewrite_query(self, query, history_userquery):
         """Rewrites the user query using the provided conversation history."""
-        # Combine the last 4 user queries into a single history string
-        history = ",".join(history_userquery) if history_userquery else ""
+        
 
-        # Use the rewrite prompt to rewrite the query
+    
+        history = str({index:item for index, item in enumerate(history_userquery)} if history_userquery else "")
         rewritten_query = self.llm.predict(
             self.rewrite_prompt.format(question=query, history=history)
         )
 
         return rewritten_query
 
+    def decorate_text(self, raw_response):
+        """Decorates the raw LLM response with Markdown formatting."""
+        decorated_text = self.llm.predict(
+            self.decorate_text_prompt.format(raw_response=raw_response)
+        )
+        return decorated_text
+
     def generate_filtered_response(self, query, history_userquery, rerank_score_threshold=-5):
-        """Generates a response using retrieved documents."""
-        # Rewrite the query using the provided history
+        """Generates a response using retrieved documents and decorates the final text."""
+        # Rewrite query
         rewritten_query = self.rewrite_query(query, history_userquery)
 
-        # Retrieve and rerank documents based on the rewritten query
+        # Retrieve and rerank
         top_n_document, citation_data, context_data = self.retriever.retrieve_and_rerank(
             rewritten_query
         )
@@ -66,13 +81,13 @@ class ResponseLLM:
 
         generation_kwargs = {
             "max_tokens": 500,
-            "echo": True,
+            "echo": False,
             "top_k": 1
         }
 
         llmChoiceGPT = True
-
         start_time = time.time()
+
         if llmChoiceGPT:
             completion = self.client.chat.completions.create(
                 model="gpt-4o-mini",
@@ -80,15 +95,14 @@ class ResponseLLM:
                     {
                         "role": "user",
                         "content": f"""
-                        Your identity is: "BucBuddy - conversational and context-aware QnA platform for East Tennessee State University."
-                        Your job is to answer the user query in a conversational way strictly based on context.
-
-                        Please just answer the question strictly based on the context.
-
-                        User question: {rewritten_query}
-
-                        Context: {top_n_document}.
-                        """
+                
+                        Your identity is: "BucAIDE - conversational and context-aware QnA platform for East Tennessee State University who help to student to explore campus resources".
+                        
+                        Your task is to:
+                        - Not to answer any other context questions - example joke, explicit content, news, internet topics, trends, songs etc.
+                        - Answer the User question: {rewritten_query} **strictly based on the provided Context: {top_n_document}.**.
+                        - **Do not fabricate** information not present in the context.
+                        """ 
                     }
                 ]
             )
@@ -110,4 +124,7 @@ class ResponseLLM:
             token_processing_details_holder.update(
                 {"Process-Time": time.time() - start_time, "Model": "Ollama2- Local Server"})
 
-        return generated_text, top_n_document, citation_data, context_data, token_processing_details_holder
+        # 🌟 NEW: Decorate generated text with Markdown
+        decorated_text = self.decorate_text(generated_text)
+
+        return decorated_text, top_n_document, citation_data, context_data, token_processing_details_holder
