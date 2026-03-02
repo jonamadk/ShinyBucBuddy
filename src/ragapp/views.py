@@ -83,9 +83,23 @@ def chat():
             ).order_by(ChatHistory.timestamp.desc()).limit(3)
         ]
 
+        #llmresponse, top_n_document, citation_data, context_data, token_details = response_llm.generate_filtered_response(
+            #userquery, history_userquery
+        
+    try:
         llmresponse, top_n_document, citation_data, context_data, token_details = response_llm.generate_filtered_response(
-            userquery, history_userquery
+        userquery, history_userquery
         )
+    except Exception as e:
+        logger.error(f"LLM disabled/failing. Falling back without OpenAI. Error: {str(e)}", exc_info=True)
+        llmresponse = (
+             "⚠️ LLM is currently disabled (no OpenAI key/quota). "
+            "The app is running locally, but I can’t generate an AI answer right now."
+        )
+    top_n_document = []
+    citation_data = []
+    context_data = []
+    token_details = {"llm": "disabled", "error": str(e)}
 
         new_history = ChatHistory(
             conversationid=conversation_id,
@@ -190,9 +204,24 @@ def auth_chat():
                     ).order_by(ChatHistory.timestamp.desc()).limit(3).all()
                 ]
 
-            llmresponse, top_n_document, citation_data, context_data, token_details = response_llm.generate_filtered_response(
-                userquery, history_userquery
+            #llmresponse, top_n_document, citation_data, context_data, token_details = response_llm.generate_filtered_response(
+                #userquery, history_userquery
+            #)
+            try:
+                llmresponse, top_n_document, citation_data, context_data, token_details = response_llm.generate_filtered_response(
+                    userquery, history_userquery
+                )
+            except Exception as e:
+                logger.error(f"LLM disabled/failing. Falling back without OpenAI. Error: {str(e)}", exc_info=True)
+                llmresponse = (
+                    "⚠️ LLM is currently disabled (no OpenAI key/quota). "
+                    "The app is running locally, but I can’t generate an AI answer right now."
             )
+                top_n_document = []
+                citation_data = []
+                context_data = []
+                token_details = {"llm": "disabled", "error": str(e)}
+
 
             chat_history = ChatHistory(
                 useremail=user.email,

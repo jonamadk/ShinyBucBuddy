@@ -59,7 +59,7 @@ app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 jwt = JWTManager(app)
 
 # Configure PostgreSQL database
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('POSTGRES_DB_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:postgres@db:5432/buc_users'
 
 # Initialize extensions
 init_extensions(app)
