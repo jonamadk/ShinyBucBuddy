@@ -8,7 +8,7 @@ db = SQLAlchemy()
 # Limiter setup
 limiter = Limiter(
     key_func=get_remote_address,  # Fallback key func (IP based)
-    default_limits=["25 per hour"],  # Global default if needed
+    default_limits=["200 per hour"],  # Global default if needed
 )
 
 

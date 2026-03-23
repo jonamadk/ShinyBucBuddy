@@ -5,7 +5,7 @@ from datetime import datetime
 from .responseLLM import ResponseLLM
 from .responselog import ResponseLogger
 from extensions import db
-from .models import ChatHistory, ChatConversation, UnauthenticatedSession
+from .models import ChatHistory, ChatConversation, UnauthenticatedSession, ChatFeedback
 import json
 import logging
 from extensions import limiter
@@ -21,6 +21,18 @@ response_llm = ResponseLLM()
 response_logger = ResponseLogger(response_file="logs/responselogs/response_data.json",
                                  timestamp_file="logs/responselogs/response_timestamp.json")
 
+def parse_conversation_id(raw):
+    # raw can be None, "", "undefined", "null", etc.
+    if raw is None:
+        return None
+    if isinstance(raw, str):
+        raw = raw.strip()
+        if raw == "" or raw.lower() in ("undefined", "null", "none"):
+            return None
+    try:
+        return int(raw)
+    except (TypeError, ValueError):
+        return None
 
 '''
 USER BASED RATE LIMITOR, ALTERNATIVE TO IP BASED
@@ -50,8 +62,7 @@ def chat():
     session.permanent = True
     data = request.get_json()
     userquery = data.get("userquery")
-    conversation_id = data.get("conversation_id")
-    conversation_id = int(conversation_id) if conversation_id else None
+    conversation_id = parse_conversation_id(data.get("conversation_id"))
     session_id = session.sid
 
     if not userquery:
@@ -83,23 +94,9 @@ def chat():
             ).order_by(ChatHistory.timestamp.desc()).limit(3)
         ]
 
-        #llmresponse, top_n_document, citation_data, context_data, token_details = response_llm.generate_filtered_response(
-            #userquery, history_userquery
-        
-    try:
         llmresponse, top_n_document, citation_data, context_data, token_details = response_llm.generate_filtered_response(
-        userquery, history_userquery
+            userquery, history_userquery
         )
-    except Exception as e:
-        logger.error(f"LLM disabled/failing. Falling back without OpenAI. Error: {str(e)}", exc_info=True)
-        llmresponse = (
-             "⚠️ LLM is currently disabled (no OpenAI key/quota). "
-            "The app is running locally, but I can’t generate an AI answer right now."
-        )
-    top_n_document = []
-    citation_data = []
-    context_data = []
-    token_details = {"llm": "disabled", "error": str(e)}
 
         new_history = ChatHistory(
             conversationid=conversation_id,
@@ -158,7 +155,7 @@ def auth_chat():
         session.permanent = True
         data = request.get_json()
         userquery = data.get("userquery")
-        conversation_id = data.get("conversation_id")
+        conversation_id = parse_conversation_id(data.get("conversation_id"))
 
         if not userquery:
             logger.error("No user query provided for authenticated chat")
@@ -236,6 +233,7 @@ def auth_chat():
             conversation_history = {chat_history.conversationid: [{
                 "userquery": userquery,
                 "llmresponse": llmresponse,
+                "citation_data": citation_data,
                 "query-timestamp": formatted_time,
                 "user": user.email
             }]}
@@ -251,6 +249,7 @@ def auth_chat():
                 "conversation_history": conversation_history,
                 "token-details": token_details,
                 "documents": top_n_document,
+                "citation_data": citation_data,
             }
 
             response_logger.append_to_json_file(response_data)
@@ -262,6 +261,84 @@ def auth_chat():
             return jsonify({"error": f"Internal server error: {str(e)}"}), 500
 
     return handle_post()
+
+
+@ragapp_bp.route('/auth/conversations', methods=['GET'])
+@jwt_required()
+def get_user_conversations():
+    """Fetch all conversations for the authenticated user."""
+    try:
+        identity = json.loads(get_jwt_identity())
+        useremail = identity.get("email")
+        user = User.query.filter_by(email=useremail).first()
+        if not user or not user.signinstatus:
+            return jsonify({"error": "User not logged in"}), 401
+
+        conversations = ChatConversation.query.filter_by(
+            useremail=useremail
+        ).order_by(ChatConversation.created_at.desc()).all()
+
+        result = []
+        for conv in conversations:
+            result.append({
+                "conversationid": conv.conversationid,
+                "title": conv.title or "Untitled Chat",
+                "created_at": conv.created_at.isoformat() if conv.created_at else None,
+            })
+
+        logger.info(f"Fetched {len(result)} conversations for {useremail}")
+        return jsonify({"conversations": result}), 200
+
+    except Exception as e:
+        logger.error(f"Get conversations error: {str(e)}", exc_info=True)
+        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
+
+
+@ragapp_bp.route('/auth/conversations/<int:conversation_id>', methods=['GET'])
+@jwt_required()
+def get_single_conversation(conversation_id):
+    """Fetch a single conversation with full chat history for the authenticated user."""
+    try:
+        identity = json.loads(get_jwt_identity())
+        useremail = identity.get("email")
+        user = User.query.filter_by(email=useremail).first()
+        if not user or not user.signinstatus:
+            return jsonify({"error": "User not logged in"}), 401
+
+        conversation = ChatConversation.query.filter_by(
+            conversationid=conversation_id, useremail=useremail
+        ).first()
+
+        if not conversation:
+            return jsonify({"error": "Conversation not found"}), 404
+
+        chat_history = ChatHistory.query.filter_by(
+            conversationid=conversation_id
+        ).order_by(ChatHistory.timestamp.asc()).all()
+
+        history_data = [
+            {
+                "userquery": h.userquery,
+                "llmresponse": h.llmresponse,
+                "citation_data": h.citation_data or [],
+                "timestamp": h.timestamp.strftime("%Y-%m-%d %H:%M:%S") if h.timestamp else None
+            }
+            for h in chat_history
+        ]
+
+        logger.info(f"Fetched conversation {conversation_id} for {useremail}")
+        return jsonify({
+            "conversation": {
+                "conversationid": conversation.conversationid,
+                "title": conversation.title or "Untitled Chat",
+                "created_at": conversation.created_at.isoformat() if conversation.created_at else None,
+                "chat_history": history_data
+            }
+        }), 200
+
+    except Exception as e:
+        logger.error(f"Get single conversation error: {str(e)}", exc_info=True)
+        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
 
 @ragapp_bp.route('/conversation/<int:conversation_id>/history', methods=['GET'])
 @jwt_required(optional=True)
@@ -310,4 +387,44 @@ def get_conversation_history(conversation_id):
 
     except Exception as e:
         logger.error(f"Conversation history error: {str(e)}", exc_info=True)
+        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
+
+@ragapp_bp.route('/feedback', methods=['POST', 'OPTIONS'])
+def submit_feedback():
+    """Receive thumbs up/down + written feedback from users."""
+    if request.method == 'OPTIONS':
+        response = jsonify({"status": "ok"})
+        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+        response.headers.add('Access-Control-Allow-Credentials', 'true')
+        return response, 200
+
+    data = request.get_json()
+    vote = data.get("vote")
+    comment = data.get("comment", "")
+    conversation_id = data.get("conversation_id")
+    message_index = data.get("message_index")
+    userquery = data.get("userquery")
+    llmresponse = data.get("llmresponse")
+
+    if vote not in ("up", "down"):
+        return jsonify({"error": "Invalid vote value"}), 400
+
+    try:
+        feedback = ChatFeedback(
+            conversation_id=conversation_id,
+            message_index=message_index,
+            vote=vote,
+            comment=comment,
+            userquery=userquery,
+            llmresponse=llmresponse,
+        )
+        db.session.add(feedback)
+        db.session.commit()
+        logger.info(f"Feedback saved: {vote} for conversation {conversation_id}")
+        return jsonify({"message": "Feedback received, thank you!"}), 200
+
+    except Exception as e:
+        logger.error(f"Feedback error: {str(e)}", exc_info=True)
         return jsonify({"error": f"Internal server error: {str(e)}"}), 500

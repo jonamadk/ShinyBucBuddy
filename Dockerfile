@@ -31,5 +31,5 @@ EXPOSE 8000
 ENV TOKENIZERS_PARALLELISM=false
 ENV FLASK_ENV=production
 
-# Default command to run the Flask app
+# Use Gunicorn for production — 4 workers x 2 threads = 8 concurrent requests
 CMD ["python", "src/app.py"]
