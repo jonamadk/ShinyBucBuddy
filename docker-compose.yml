@@ -11,10 +11,12 @@ services:
     volumes:
       - ./logs:/app/logs
       - ./Documents:/app/Documents
-      - .env:/app/.env          # <-- mount the .env file into the container
+    env_file:
+      - .env
     environment:
       FLASK_ENV: production
       TOKENIZERS_PARALLELISM: "false"
+      #SQLALCHEMY_DATABASE_URI: ${SQLALCHEMY_DATABASE_URI}
     depends_on:
       - db
       - chroma
@@ -38,8 +40,11 @@ services:
   chroma:
     image: ghcr.io/chroma-core/chroma:0.5.5
     container_name: chroma-container
+    environment:
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/chroma/chroma
     volumes:
-      - index_data:/chroma/.chroma/index
+      - index_data:/chroma/chroma
     ports:
       - "8001:8000"
     networks:

@@ -76,3 +76,27 @@ class UnauthenticatedSession(db.Model):
             "history_userquery": self.history_userquery,
             "timestamp": self.timestamp.isoformat() if self.timestamp else None,
         }
+
+class ChatFeedback(db.Model):
+    __tablename__ = 'chat_feedback'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    conversation_id = db.Column(db.Integer, nullable=True)
+    message_index = db.Column(db.Integer, nullable=True)
+    vote = db.Column(db.String(10), nullable=False)
+    comment = db.Column(db.Text, nullable=True)
+    userquery = db.Column(db.Text, nullable=True)      # ← ADD THIS
+    llmresponse = db.Column(db.Text, nullable=True)    # ← ADD THIS
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+def to_dict(self):
+        return {
+            "id": self.id,
+            "conversation_id": self.conversation_id,
+            "message_index": self.message_index,
+            "vote": self.vote,
+            "comment": self.comment,
+            "userquery": self.userquery,
+            "llmresponse": self.llmresponse,
+            "timestamp": self.timestamp.isoformat() if self.timestamp else None,
+        }

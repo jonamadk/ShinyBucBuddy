@@ -17,12 +17,12 @@ from datetime import timedelta
 import chromadb
 from chromadb.config import Settings
 from flask_limiter.errors import RateLimitExceeded
-
+ 
 load_dotenv()
-
+ 
 # Initialize Flask app
 app = Flask(__name__)
-
+ 
 # Configure CORS for all routes
 CORS(app, resources={
     r"/*": {
@@ -32,15 +32,15 @@ CORS(app, resources={
         "supports_credentials": True
     }
 })
-
-
-
+ 
+ 
+ 
 chroma_client = chromadb.HttpClient(
     host="chroma-container",
     port=8000,
     settings=Settings(allow_reset=True, anonymized_telemetry=False)
 )
-
+ 
 # Session configuration
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SESSION_COOKIE_SECURE'] = False  # Set to True in production
@@ -52,37 +52,36 @@ app.config['SESSION_PERMANENT'] = True
 app.config['SESSION_USE_SIGNER'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=10)
 Session(app)
-
+ 
 # Configure JWT
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 jwt = JWTManager(app)
-
+ 
 # Configure PostgreSQL database
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('POSTGRES_DB_URL')
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:postgres@db:5432/buc_users'
+ 
 # Initialize extensions
 init_extensions(app)
-
+ 
 # Initialize Flask-Migrate
 migrate = Migrate(app, db)
-
+ 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-
+ 
 # Register Blueprints
 app.register_blueprint(ragapp_bp, url_prefix='/api')
 app.register_blueprint(user_bp, url_prefix='/api')
 app.register_blueprint(auth_bp, url_prefix='/api')
 app.register_blueprint(chroma_bp, url_prefix='/api')
-
+ 
 # Handle OPTIONS requests for all endpoints
 @app.before_request
 def handle_options_request():
     if request.method == 'OPTIONS':
         response = jsonify({"status": "ok"})
-        # Set Access-Control-Allow-Origin based on request origin
         origin = request.headers.get('Origin')
         allowed_origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
         if origin in allowed_origins:
@@ -93,8 +92,8 @@ def handle_options_request():
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
         response.headers.add('Access-Control-Allow-Credentials', 'true')
         return response, 200
-
-# Custom 404 handler for API routes
+ 
+# FIX: Removed duplicate 404 handler and fixed status code typo (was returning 40)
 @app.errorhandler(404)
 def not_found(error):
     response = jsonify({"error": "Not Found", "message": "The requested API endpoint does not exist."})
@@ -105,28 +104,16 @@ def not_found(error):
     else:
         response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
     return response, 404
-
-# Custom 404 handler for API routes
-@app.errorhandler(404)
-def not_found(error):
-    response = jsonify({"error": "Not Found", "message": "The requested API endpoint does not exist."})
-    origin = request.headers.get('Origin')
-    allowed_origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
-    if origin in allowed_origins:
-        response.headers.add('Access-Control-Allow-Origin', origin)
-    else:
-        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
-    return response, 40
-
+ 
 @app.errorhandler(RateLimitExceeded)
 def ratelimit_handler(e):
     return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
-
+ 
 # Create database schema
 with app.app_context():
     # db.drop_all()  # Drop existing tables
     db.create_all()  # Create new schema
     print("Database schema created successfully!")
-
+ 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8000, debug=True)
