@@ -7,3 +7,4 @@ env-buc/
 logs/*
 !logs/.gitkeep
 chromadb_push.logDocuments/combined_data_with_metadata.json
+etsu_scraper.py

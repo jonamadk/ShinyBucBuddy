@@ -7,14 +7,32 @@ class ChatHistory(db.Model):
 
     historyid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     conversationid = db.Column(db.Integer, db.ForeignKey(
-        'chat_conversations.conversationid'), nullable=False)  # Link to ChatConversation
+        'chat_conversations.conversationid'), nullable=False)
     useremail = db.Column(db.String(120), db.ForeignKey(
         'users.email'), nullable=True)
     userquery = db.Column(db.Text, nullable=False)
     llmresponse = db.Column(db.Text, nullable=False)
+
+    # Top 5 documents retrieved from ChromaDB BEFORE reranking
+    top_5_retrieved = db.Column(db.JSON, nullable=True)
+
+    # Top 3 documents AFTER reranking (what gets passed to the LLM)
     top_n_document = db.Column(db.JSON, nullable=True)
+
+    # Citations shown to the user
     citation_data = db.Column(db.JSON, nullable=True)
+
+    # Timestamps for response time measurement
+    prompt_received_at = db.Column(db.DateTime, nullable=True)    # When query hit the server
+    response_generated_at = db.Column(db.DateTime, nullable=True) # When response was ready
+    response_time_ms = db.Column(db.Float, nullable=True)         # Difference in milliseconds
+
+    # Main message timestamp
     timestamp = db.Column(db.DateTime, nullable=False)
+
+    # Additional metrics — added for full pilot tracking
+    token_count = db.Column(db.Integer, nullable=True)   # Total tokens in context per prompt
+    user_consent = db.Column(db.Boolean, nullable=True)  # Did user agree to data capture (True/False/None)
 
     def to_dict(self):
         return {
@@ -23,9 +41,15 @@ class ChatHistory(db.Model):
             "useremail": self.useremail,
             "userquery": self.userquery,
             "llmresponse": self.llmresponse,
+            "top_5_retrieved": self.top_5_retrieved,
             "top_n_document": self.top_n_document,
             "citation_data": self.citation_data,
-            "timestamp": self.timestamp.isoformat() if self.timestamp else None
+            "prompt_received_at": self.prompt_received_at.isoformat() if self.prompt_received_at else None,
+            "response_generated_at": self.response_generated_at.isoformat() if self.response_generated_at else None,
+            "response_time_ms": self.response_time_ms,
+            "timestamp": self.timestamp.isoformat() if self.timestamp else None,
+            "token_count": self.token_count,
+            "user_consent": self.user_consent,
         }
 
 
@@ -36,7 +60,7 @@ class ChatConversation(db.Model):
     useremail = db.Column(db.String(120), db.ForeignKey('users.email'), nullable=True)
     title = db.Column(db.String(255), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    last_updated = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+    last_updated = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)  # Updated on every message
 
     # Relationship to ChatHistory
     chat_history = db.relationship('ChatHistory', backref='conversation', lazy=True)
@@ -47,6 +71,7 @@ class ChatConversation(db.Model):
             "useremail": self.useremail,
             "title": self.title,
             "created_at": self.created_at.isoformat(),
+            "last_updated": self.last_updated.isoformat() if self.last_updated else None,
             "chat_history": [history.to_dict() for history in self.chat_history]
         }
 
@@ -54,15 +79,15 @@ class ChatConversation(db.Model):
 class UnauthenticatedSession(db.Model):
     __tablename__ = "unauthenticated_sessions"
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # Unique identifier for each row
-    session_id = db.Column(db.String(255), nullable=False)  # Unique session ID
-    conversation_id = db.Column(db.Integer, nullable=False)  # Conversation ID
-    userquery = db.Column(db.Text, nullable=False)  # User query
-    llmresponse = db.Column(db.Text, nullable=False)  # LLM response
-    top_n_document = db.Column(db.JSON, nullable=True)  # Top N documents
-    citation_data = db.Column(db.JSON, nullable=True)  # Citation data
-    history_userquery = db.Column(db.JSON, nullable=True)  # History of user queries
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)  # Timestamp of the interaction
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    session_id = db.Column(db.String(255), nullable=False)
+    conversation_id = db.Column(db.Integer, nullable=False)
+    userquery = db.Column(db.Text, nullable=False)
+    llmresponse = db.Column(db.Text, nullable=False)
+    top_n_document = db.Column(db.JSON, nullable=True)
+    citation_data = db.Column(db.JSON, nullable=True)
+    history_userquery = db.Column(db.JSON, nullable=True)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
     def to_dict(self):
         return {
@@ -77,6 +102,7 @@ class UnauthenticatedSession(db.Model):
             "timestamp": self.timestamp.isoformat() if self.timestamp else None,
         }
 
+
 class ChatFeedback(db.Model):
     __tablename__ = 'chat_feedback'
 
@@ -85,11 +111,11 @@ class ChatFeedback(db.Model):
     message_index = db.Column(db.Integer, nullable=True)
     vote = db.Column(db.String(10), nullable=False)
     comment = db.Column(db.Text, nullable=True)
-    userquery = db.Column(db.Text, nullable=True)      # ← ADD THIS
-    llmresponse = db.Column(db.Text, nullable=True)    # ← ADD THIS
+    userquery = db.Column(db.Text, nullable=True)
+    llmresponse = db.Column(db.Text, nullable=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
-def to_dict(self):
+    def to_dict(self):
         return {
             "id": self.id,
             "conversation_id": self.conversation_id,

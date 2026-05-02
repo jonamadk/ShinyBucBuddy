@@ -23,7 +23,7 @@ Flask-SQLAlchemy
 flatbuffers==25.2.10
 fsspec==2025.3.0
 google-auth==2.38.0
-google-auth-oauthlib
+google-auth-oauthlib==0.8.0
 googleapis-common-protos==1.69.1
 grpcio==1.71.0
 gunicorn==23.0.0

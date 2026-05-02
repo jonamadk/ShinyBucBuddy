@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BucBuddy— Metrics Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy:#00053E; --navy-light:#071d49; --gold:#FFC72C;
+  --bg:#f5f5f0; --white:#ffffff; --gray:#8a8a8a;
+  --light-gray:#e8e8e4; --border:#e0e0d8; --text:#1a1a2e;
+  --text-sub:#6b7280; --green:#16a34a; --green-bg:#dcfce7;
+  --red:#dc2626; --red-bg:#fee2e2; --yellow:#d97706; --yellow-bg:#fef3c7;
+  --shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 12px rgba(0,0,0,0.04);
+  --shadow-md:0 4px 16px rgba(0,0,0,0.08);
+}
+body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); display:flex; min-height:100vh; font-size:14px; }
+.material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; font-size:18px; }
+
+/* Sidebar */
+.sidebar { width:272px; min-width:272px; min-height:100vh; background:#fff; border-right:1px solid #edf1f5; padding:24px 16px 16px; display:flex; flex-direction:column; position:fixed; left:0; top:0; z-index:40; }
+.sidebar-brand { display:flex; align-items:center; gap:10px; margin-bottom:20px; }
+.brand-icon { width:46px; height:46px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:800; background:linear-gradient(180deg,#071d49 0%,#041433 100%); color:var(--gold); }
+.brand-text h1 { font-size:18px; font-weight:800; color:#111827; letter-spacing:-0.02em; }
+.brand-text p { font-size:11px; color:#6b7280; font-weight:500; margin-top:4px; }
+.sidebar-new-btn { width:100%; height:35px; border:none; border-radius:10px; background:linear-gradient(180deg,#071d49 0%,#041433 100%); color:#fff; display:flex; align-items:center; gap:10px; padding:0 14px; font-size:13px; font-weight:600; cursor:pointer; box-shadow:0 8px 18px rgba(7,29,73,0.15); margin-bottom:4px; font-family:'Inter',sans-serif; }
+.sidebar-nav { flex:1; margin-top:4px; }
+.sidebar-label { font-size:10px; font-weight:700; color:#98a2b3; text-transform:uppercase; letter-spacing:0.14em; padding:0 4px; margin:24px 0 10px; }
+.nav-item { min-height:42px; border-radius:10px; padding:8px 10px; margin-bottom:2px; display:flex; align-items:center; gap:10px; cursor:pointer; border:none; background:none; width:100%; text-align:left; font-size:13px; font-weight:500; color:#111827; font-family:'Inter',sans-serif; transition:background 0.15s; }
+.nav-item:hover { background:#f5f7fb; }
+.nav-item.active { background:#eef4ff; box-shadow:inset 0 0 0 1px #d8e5ff; font-weight:600; }
+.nav-item .material-symbols-outlined { font-size:16px; }
+.sidebar-footer { padding-top:6px; border-top:1px solid #edf1f5; }
+.pilot-card { width:100%; display:flex; align-items:center; gap:10px; padding:4px 8px; border-radius:10px; }
+.pilot-avatar { width:35px; height:35px; border-radius:999px; background:#e6b800; color:#111827; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center; }
+.pilot-stat { font-size:13px; font-weight:600; color:#111827; }
+.pilot-sub { font-size:11px; color:#98a2b3; }
+
+/* Main */
+.main { margin-left:272px; flex:1; display:flex; flex-direction:column; min-height:100vh; }
+.topbar { background:#fff; border-bottom:1px solid var(--border); padding:14px 28px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:30; }
+.search-box { position:relative; width:340px; }
+.search-box .material-symbols-outlined { position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--gray); font-size:16px; }
+.search-box input { width:100%; padding:8px 12px 8px 34px; border:1px solid var(--border); border-radius:10px; font-size:13px; font-family:'Inter',sans-serif; background:var(--bg); outline:none; }
+.search-box input:focus { border-color:var(--navy); }
+.topbar-actions { display:flex; align-items:center; gap:10px; }
+.btn { display:flex; align-items:center; gap:6px; padding:8px 16px; border-radius:10px; font-size:12px; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; border:none; transition:all 0.15s; }
+.btn-secondary { background:var(--bg); border:1px solid var(--border); color:var(--navy); }
+.btn-secondary:hover { background:var(--light-gray); }
+.btn-primary { background:var(--navy); color:#fff; }
+.btn-primary:hover { background:var(--navy-light); }
+.admin-chip { display:flex; align-items:center; gap:8px; padding:6px 12px; background:var(--bg); border:1px solid var(--border); border-radius:10px; }
+.avatar { width:28px; height:28px; background:var(--navy); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:var(--gold); }
+.admin-chip .info p { font-size:12px; font-weight:600; color:var(--navy); }
+.admin-chip .info span { font-size:10px; color:var(--gray); }
+
+/* Content */
+.content { padding:28px; flex:1; }
+.section { display:none; }
+.section.active { display:block; }
+.page-header { margin-bottom:24px; }
+.page-header h2 { font-size:22px; font-weight:800; color:var(--navy); letter-spacing:-0.02em; }
+.page-header p { font-size:13px; color:var(--text-sub); margin-top:4px; }
+.section-label { font-size:10px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:12px; }
+.online-dot { display:inline-block; width:8px; height:8px; background:#22c55e; border-radius:50%; margin-right:6px; }
+
+/* Formula banner */
+.formula-banner { background:#f0f7ff; border:1px solid #bfdbfe; border-radius:12px; padding:14px 18px; margin-bottom:20px; }
+.formula-banner .fb-title { font-size:11px; font-weight:700; color:#1e40af; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; }
+.formula-banner .fb-row { display:flex; align-items:baseline; gap:8px; margin-bottom:4px; }
+.formula-banner .fb-row:last-child { margin-bottom:0; }
+.formula-banner code { font-size:12px; color:#1e40af; font-family:'SF Mono',monospace; background:rgba(30,64,175,0.08); padding:2px 6px; border-radius:4px; }
+.formula-banner .fb-note { font-size:12px; color:#3b82f6; margin-top:6px; line-height:1.5; }
+
+/* KPI grids */
+.kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:24px; }
+.kpi-grid-2 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:24px; }
+.kpi-card { background:#fff; border-radius:14px; padding:18px 20px; box-shadow:var(--shadow); border:1px solid var(--border); cursor:pointer; transition:all 0.15s; position:relative; }
+.kpi-card:hover { box-shadow:var(--shadow-md); transform:translateY(-1px); }
+.kpi-card::after { content:'↗'; position:absolute; top:10px; right:14px; font-size:10px; color:var(--gray); opacity:0.5; }
+.kpi-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; }
+.kpi-label { font-size:10px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.1em; line-height:1.4; padding-right:16px; }
+.kpi-icon .material-symbols-outlined { color:var(--navy); opacity:0.3; font-size:20px; }
+.kpi-value { font-size:32px; font-weight:800; color:var(--navy); letter-spacing:-0.03em; }
+.kpi-sub { font-size:11px; color:var(--text-sub); margin-top:6px; line-height:1.4; }
+.kpi-sub.good { color:var(--green); font-weight:600; }
+.kpi-sub.warn { color:var(--yellow); font-weight:600; }
+.kpi-sub.bad { color:var(--red); font-weight:600; }
+
+/* Charts */
+.charts-row { display:grid; grid-template-columns:2fr 1fr; gap:14px; margin-bottom:24px; }
+.chart-card { background:#fff; border-radius:14px; padding:22px 24px; box-shadow:var(--shadow); border:1px solid var(--border); }
+.chart-card h3 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+.chart-sub { font-size:11px; color:var(--text-sub); margin-bottom:18px; }
+.bar-chart { height:140px; display:flex; align-items:flex-end; gap:4px; }
+.bar-col { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; position:relative; }
+.bar-col .bar { width:100%; background:var(--navy); opacity:0.15; border-radius:4px 4px 0 0; transition:opacity 0.15s; }
+.bar-col:hover .bar { opacity:0.5; }
+.bar-col .tooltip { position:absolute; bottom:100%; margin-bottom:4px; background:var(--navy); color:#fff; font-size:10px; font-weight:700; padding:3px 7px; border-radius:6px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity 0.15s; }
+.bar-col:hover .tooltip { opacity:1; }
+.chart-labels { display:flex; justify-content:space-between; margin-top:8px; }
+.chart-labels span { font-size:9px; font-weight:600; color:var(--gray); text-transform:uppercase; }
+.topic-list { display:flex; flex-direction:column; gap:14px; }
+.topic-item .topic-row { display:flex; justify-content:space-between; margin-bottom:5px; }
+.topic-item .topic-name { font-size:12px; font-weight:600; color:var(--navy); }
+.topic-item .topic-pct { font-size:12px; font-weight:700; color:var(--text-sub); }
+.topic-item .topic-bar-bg { width:100%; height:6px; background:var(--light-gray); border-radius:99px; overflow:hidden; }
+.topic-item .topic-bar-fill { height:100%; background:var(--navy); border-radius:99px; }
+.topic-item .topic-bar-fill.gold { background:var(--gold); }
+
+/* Table card */
+.table-card { background:#fff; border-radius:14px; box-shadow:var(--shadow); border:1px solid var(--border); overflow:hidden; margin-bottom:24px; }
+.table-header { padding:18px 24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+.table-header h3 { font-size:15px; font-weight:700; color:var(--navy); }
+.table-header p { font-size:11px; color:var(--text-sub); margin-top:2px; }
+.count { font-size:12px; color:var(--text-sub); font-weight:500; }
+table { width:100%; border-collapse:collapse; }
+thead th { padding:12px 20px; font-size:10px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.1em; background:var(--bg); text-align:left; }
+tbody tr { border-bottom:1px solid var(--border); }
+tbody tr:last-child { border-bottom:none; }
+tbody tr:hover { background:#fafaf8; }
+tbody td { padding:14px 20px; font-size:12px; color:var(--text); vertical-align:top; }
+.td-query { font-weight:600; color:var(--navy); max-width:200px; }
+.td-resp { color:var(--text-sub); max-width:240px; }
+.td-small { font-size:11px; color:var(--text-sub); white-space:nowrap; }
+.line-clamp { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+
+/* Badges */
+.badge { display:inline-block; padding:3px 9px; border-radius:99px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; }
+.badge-green { background:var(--green-bg); color:var(--green); }
+.badge-red { background:var(--red-bg); color:var(--red); }
+.badge-yellow { background:var(--yellow-bg); color:var(--yellow); }
+
+/* Doc details */
+details summary { cursor:pointer; list-style:none; font-size:11px; font-weight:600; color:var(--navy); user-select:none; }
+details summary::-webkit-details-marker { display:none; }
+details ul { margin-top:6px; padding-left:4px; }
+details li { font-size:10px; color:var(--navy); margin-bottom:3px; }
+details li a { color:var(--navy); text-decoration:none; }
+details li a:hover { text-decoration:underline; }
+
+/* Pagination */
+.pagination { padding:14px 24px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:var(--bg); }
+.pagination span { font-size:12px; color:var(--text-sub); }
+.pagination-btns { display:flex; gap:8px; align-items:center; }
+.page-btn { padding:6px 14px; border-radius:8px; font-size:12px; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; border:1px solid var(--border); background:#fff; color:var(--navy); transition:all 0.15s; }
+.page-btn:hover { background:var(--navy); color:#fff; border-color:var(--navy); }
+.page-num { font-size:12px; font-weight:600; color:var(--navy); }
+.fb-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:24px; }
+
+/* Drill-down modal */
+.drill-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center; z-index:6000; padding:20px; backdrop-filter:blur(3px); }
+.drill-modal { background:#fff; border-radius:16px; width:100%; max-width:900px; max-height:85vh; display:flex; flex-direction:column; box-shadow:0 20px 60px rgba(0,0,0,0.2); }
+.drill-modal-header { padding:24px 28px 16px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:flex-start; flex-shrink:0; }
+.drill-modal-title { font-size:18px; font-weight:800; color:var(--navy); }
+.drill-modal-sub { font-size:12px; color:var(--text-sub); margin-top:4px; }
+.drill-close { background:none; border:none; cursor:pointer; font-size:20px; color:var(--gray); padding:0 4px; line-height:1; }
+.drill-close:hover { color:var(--navy); }
+.drill-modal-body { overflow-y:auto; flex:1; padding:20px 28px; display:flex; flex-direction:column; gap:16px; }
+.drill-formula { background:#f0f7ff; border:1px solid #bfdbfe; border-radius:10px; padding:14px 16px; }
+.drill-formula .df-title { font-size:11px; font-weight:700; color:#1e40af; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; }
+.drill-formula code { font-size:12px; color:#1e40af; font-family:'SF Mono',monospace; display:block; margin-bottom:4px; background:rgba(30,64,175,0.08); padding:3px 8px; border-radius:4px; }
+.drill-formula .df-note { font-size:12px; color:#3b82f6; margin-top:6px; line-height:1.5; }
+.drill-stats { display:flex; gap:12px; flex-wrap:wrap; }
+.drill-stat { flex:1; min-width:100px; background:var(--bg); border-radius:10px; padding:12px 14px; border:1px solid var(--border); }
+.drill-stat .ds-label { font-size:10px; font-weight:700; color:var(--gray); text-transform:uppercase; }
+.drill-stat .ds-value { font-size:22px; font-weight:800; color:var(--navy); margin-top:4px; }
+.drill-table-wrap { overflow-x:auto; }
+.drill-table { width:100%; border-collapse:collapse; font-size:12px; }
+.drill-table th { padding:10px 12px; background:var(--bg); text-align:left; font-size:10px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.08em; border-bottom:1px solid var(--border); position:sticky; top:0; }
+.drill-table td { padding:10px 12px; border-bottom:1px solid var(--border); color:var(--text); }
+.drill-table tr:hover td { background:#fafaf8; }
+.drill-pagination { display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid var(--border); flex-shrink:0; }
+.drill-pagination span { font-size:12px; color:var(--text-sub); }
+.drill-pagination-btns { display:flex; gap:8px; align-items:center; }
+
+#toast { position:fixed; top:20px; right:20px; z-index:9999; background:var(--navy); color:#fff; font-size:12px; font-weight:600; padding:10px 18px; border-radius:10px; box-shadow:var(--shadow-md); opacity:0; pointer-events:none; transition:opacity 0.3s; }
+</style>
+</head>
+<body>
+<div id="toast"></div>
+
+<!-- Drill-down modal -->
+<div id="drill-overlay" class="drill-overlay" style="display:none" onclick="if(event.target===this)closeDrill()">
+  <div class="drill-modal">
+    <div class="drill-modal-header">
+      <div>
+        <div class="drill-modal-title" id="drill-title"></div>
+        <div class="drill-modal-sub" id="drill-sub"></div>
+      </div>
+      <button class="drill-close" onclick="closeDrill()">✕</button>
+    </div>
+    <div class="drill-modal-body" id="drill-body"></div>
+    <div class="drill-pagination" id="drill-pagination" style="display:none;padding:12px 28px;border-top:1px solid var(--border)">
+      <span id="drill-page-info"></span>
+      <div class="drill-pagination-btns">
+        <button class="page-btn" onclick="drillChangePage(-1)">← Prev</button>
+        <span class="page-num" id="drill-page-num"></span>
+        <button class="page-btn" onclick="drillChangePage(1)">Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon">B</div>
+    <div class="brand-text"><h1>BucAIDE</h1><p>ETSU AI Assistant</p></div>
+  </div>
+  <button class="sidebar-new-btn">
+    <span class="material-symbols-outlined" style="font-size:16px">bar_chart</span>
+    Metrics Dashboard
+  </button>
+  <div class="sidebar-nav">
+    <div class="sidebar-label">Analytics</div>
+    <button class="nav-item active" onclick="showSection('overview')"><span class="material-symbols-outlined">dashboard</span>Overview</button>
+    <button class="nav-item" onclick="showSection('conversations')"><span class="material-symbols-outlined">forum</span>Full Conversations</button>
+    <button class="nav-item" onclick="showSection('retrieval')"><span class="material-symbols-outlined">search</span>Retrieval Log</button>
+    <button class="nav-item" onclick="showSection('feedback')"><span class="material-symbols-outlined">thumb_up</span>User Feedback</button>
+    <button class="nav-item" onclick="showSection('guests')"><span class="material-symbols-outlined">person_outline</span>Guest Sessions</button>
+  </div>
+  <div class="sidebar-footer">
+    <div style="background:#f5f7fb;border-radius:12px;padding:14px 12px;margin-bottom:10px;border:1px solid #edf1f5;">
+      <div style="font-size:10px;font-weight:700;color:#98a2b3;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px;">Pilot Status</div>
+      <div style="font-size:22px;font-weight:800;color:#071d49;letter-spacing:-0.02em;" id="sb-queries">—</div>
+      <div style="font-size:11px;color:#98a2b3;margin-top:2px;">total queries logged</div>
+      <div style="font-size:11px;color:#98a2b3;margin-top:4px;" id="sb-convos">— sessions · — users</div>
+    </div>
+    <div class="pilot-card">
+      <div class="pilot-avatar">A</div>
+      <div><div class="pilot-stat">BucAIDE Admin</div><div class="pilot-sub">Institutional Lead</div></div>
+    </div>
+  </div>
+</aside>
+
+<!-- Main -->
+<div class="main">
+  <div class="topbar">
+    <div class="search-box">
+      <span class="material-symbols-outlined">search</span>
+      <input id="searchInput" type="text" placeholder="Search queries…" oninput="filterTable()"/>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-secondary" onclick="exportCSV('queries')"><span class="material-symbols-outlined" style="font-size:14px">download</span>Export Queries</button>
+      <button class="btn btn-primary" onclick="exportCSV('full')"><span class="material-symbols-outlined" style="font-size:14px">cloud_download</span>Export Full Metrics</button>
+      <div class="admin-chip">
+        <div class="avatar">B</div>
+        <div class="info"><p>BucAIDE Admin</p><span>Pilot Dashboard</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ══ OVERVIEW ══ -->
+    <div id="section-overview" class="section active">
+      <div class="page-header">
+        <h2><span class="online-dot"></span>BucAIDE Institutional Analytics</h2>
+        <p>Monitoring academic intelligence performance across ETSU campus systems. Click any card to see the full data and calculation behind it.</p>
+      </div>
+
+      <div class="section-label">Supervisor-Specified Metrics — click any card to verify</div>
+      <div class="kpi-grid">
+        <div class="kpi-card" onclick="drillLatency()">
+          <div class="kpi-top"><div class="kpi-label">Per-Prompt Response Latency</div><div class="kpi-icon"><span class="material-symbols-outlined">timer</span></div></div>
+          <div class="kpi-value" id="kpi-latency">—</div>
+          <div class="kpi-sub" id="kpi-latency-sub">avg across timed prompts</div>
+        </div>
+        <div class="kpi-card" onclick="drillLanding()">
+          <div class="kpi-top"><div class="kpi-label">Citation / Answer Landing Rate</div><div class="kpi-icon"><span class="material-symbols-outlined">verified</span></div></div>
+          <div class="kpi-value" id="kpi-landing">—</div>
+          <div class="kpi-sub" id="kpi-landing-sub">prompts that returned an answer</div>
+        </div>
+        <div class="kpi-card" onclick="drillConsent()">
+          <div class="kpi-top"><div class="kpi-label">User Consent Rate</div><div class="kpi-icon"><span class="material-symbols-outlined">how_to_reg</span></div></div>
+          <div class="kpi-value" id="kpi-consent">N/A</div>
+          <div class="kpi-sub">Tracked via /api/consent on modal choice</div>
+        </div>
+        <div class="kpi-card" onclick="drillCapture()">
+          <div class="kpi-top"><div class="kpi-label">Full Conversation Capture</div><div class="kpi-icon"><span class="material-symbols-outlined">chat</span></div></div>
+          <div class="kpi-value" id="kpi-capture">—</div>
+          <div class="kpi-sub" id="kpi-capture-sub">total prompts + responses logged</div>
+        </div>
+      </div>
+
+      <div class="section-label">Original Status Report Metrics — click any card to verify</div>
+      <div class="kpi-grid-2">
+        <div class="kpi-card" onclick="drillFeedback()">
+          <div class="kpi-top"><div class="kpi-label">User Feedback Score</div><div class="kpi-icon"><span class="material-symbols-outlined">thumb_up</span></div></div>
+          <div class="kpi-value" id="kpi-feedback">—</div>
+          <div class="kpi-sub" id="kpi-feedback-sub">thumbs up of all rated responses</div>
+        </div>
+        <div class="kpi-card" onclick="drillNoAnswer()">
+          <div class="kpi-top"><div class="kpi-label">No-Answer Rate</div><div class="kpi-icon"><span class="material-symbols-outlined">help_outline</span></div></div>
+          <div class="kpi-value" id="kpi-noanswer">—</div>
+          <div class="kpi-sub" id="kpi-noanswer-sub">responses that couldn't answer</div>
+        </div>
+        <div class="kpi-card" onclick="drillDepth()">
+          <div class="kpi-top"><div class="kpi-label">Session Depth</div><div class="kpi-icon"><span class="material-symbols-outlined">stacked_bar_chart</span></div></div>
+          <div class="kpi-value" id="kpi-depth">—</div>
+          <div class="kpi-sub">avg messages per conversation</div>
+        </div>
+        <div class="kpi-card" onclick="drillRetrieval()">
+          <div class="kpi-top"><div class="kpi-label">Retrieval Accuracy</div><div class="kpi-icon"><span class="material-symbols-outlined">find_in_page</span></div></div>
+          <div class="kpi-value" id="kpi-retrieval">—</div>
+          <div class="kpi-sub" id="kpi-retrieval-sub">queries with docs in top 3</div>
+        </div>
+      </div>
+
+      <div class="section-label">Additional Tracked Metrics — click any card to verify</div>
+      <div class="kpi-grid-2" style="margin-bottom:24px">
+        <div class="kpi-card" onclick="drillReturn()">
+          <div class="kpi-top"><div class="kpi-label">Return Rate</div><div class="kpi-icon"><span class="material-symbols-outlined">replay</span></div></div>
+          <div class="kpi-value" id="kpi-return">—</div>
+          <div class="kpi-sub" id="kpi-return-sub">logged-in users with 2+ sessions</div>
+        </div>
+        <div class="kpi-card" onclick="drillAuthSplit()">
+          <div class="kpi-top"><div class="kpi-label">Authenticated Users</div><div class="kpi-icon"><span class="material-symbols-outlined">login</span></div></div>
+          <div class="kpi-value" id="kpi-auth">—</div>
+          <div class="kpi-sub" id="kpi-auth-sub">queries from logged-in users</div>
+        </div>
+        <div class="kpi-card" onclick="drillAuthSplit()">
+          <div class="kpi-top"><div class="kpi-label">Guest (Unauthenticated)</div><div class="kpi-icon"><span class="material-symbols-outlined">person_outline</span></div></div>
+          <div class="kpi-value" id="kpi-guest">—</div>
+          <div class="kpi-sub" id="kpi-guest-sub">queries without login</div>
+        </div>
+        <div class="kpi-card" onclick="drillComments()">
+          <div class="kpi-top"><div class="kpi-label">Feedback with Comments</div><div class="kpi-icon"><span class="material-symbols-outlined">comment</span></div></div>
+          <div class="kpi-value" id="kpi-comments">—</div>
+          <div class="kpi-sub" id="kpi-comments-sub">written comments submitted</div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-card">
+          <h3>Query Volume Trend</h3>
+          <div class="chart-sub">Session Start / End Timestamps — queries per day (last 30 days)</div>
+          <div class="bar-chart" id="trend-chart"></div>
+          <div class="chart-labels" id="trend-labels"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Most Popular Topics</h3>
+          <div class="chart-sub">Query classification by keyword matching</div>
+          <div class="topic-list" id="intent-bars"><p style="font-size:12px;color:var(--gray)">Loading…</p></div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-header">
+          <div><h3>Recent Queries</h3><p>Full Conversation Capture — every prompt and response logged</p></div>
+          <button class="btn btn-secondary" onclick="showSection('conversations')" style="font-size:11px">View All →</button>
+        </div>
+        <div id="recent-preview"></div>
+      </div>
+    </div>
+
+    <!-- ══ FULL CONVERSATIONS ══ -->
+    <div id="section-conversations" class="section">
+      <div class="page-header">
+        <h2>Full Conversation Capture</h2>
+        <p>Every prompt, every response, every session — as requested by supervisor.</p>
+      </div>
+      <div class="formula-banner">
+        <div class="fb-title">How this is captured</div>
+        <div class="fb-row"><code>Table: chat_history</code></div>
+        <div class="fb-row"><code>Fields: userquery (prompt) · llmresponse (response) · conversationid (session) · useremail (user) · timestamp</code></div>
+        <div class="fb-row"><code>Timing: prompt_received_at → response_generated_at → response_time_ms = difference in ms</code></div>
+        <div class="fb-note">Answer Landed = response does NOT contain "I cannot", "I don't have", "cannot provide", or "No suitable context"</div>
+      </div>
+      <div class="table-card">
+        <div class="table-header">
+          <div><h3>Conversation Log</h3><p>Every prompt + response with timestamps and latency</p></div>
+          <span class="count" id="table-count">Loading…</span>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr>
+              <th>Session</th><th>User</th><th style="width:18%">Prompt (userquery)</th>
+              <th style="width:22%">Response (llmresponse)</th><th>Per-Prompt Latency</th>
+              <th>Prompt Received At</th><th>Response Generated At</th><th>Answer Landed?</th>
+            </tr></thead>
+            <tbody id="query-table-body"><tr><td colspan="8" style="text-align:center;padding:32px;color:var(--gray)">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span id="pagination-info"></span>
+          <div class="pagination-btns">
+            <button class="page-btn" onclick="changePage(-1)">← Prev</button>
+            <span class="page-num" id="page-indicator"></span>
+            <button class="page-btn" onclick="changePage(1)">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ RETRIEVAL LOG ══ -->
+    <div id="section-retrieval" class="section">
+      <div class="page-header">
+        <h2>Retrieval Quality Log</h2>
+        <p>Top 5 retrieved documents (pre-rerank) vs Top 3 re-ranked (passed to LLM) — per prompt.</p>
+      </div>
+      <div class="formula-banner">
+        <div class="fb-title">How retrieval is measured</div>
+        <div class="fb-row"><code>Top 5 Retrieved = documents pulled from ChromaDB before reranking (chat_history.top_5_retrieved)</code></div>
+        <div class="fb-row"><code>Top 3 Re-ranked = documents after cross-encoder reranking, passed to GPT-4o-mini (chat_history.top_n_document)</code></div>
+        <div class="fb-row"><code>Citations Shown = what was actually displayed to the user (chat_history.citation_data)</code></div>
+        <div class="fb-note">Retrieval Accuracy KPI = % of queries where top_n_document is non-empty (i.e. at least 1 doc made it to the LLM)</div>
+      </div>
+      <div class="table-card">
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr>
+              <th style="width:20%">Prompt</th>
+              <th style="width:22%">Top 5 Retrieved (Pre-Rerank)</th>
+              <th style="width:22%">Top 3 Re-ranked (Passed to LLM)</th>
+              <th style="width:18%">Citations Shown to User</th>
+              <th>Latency</th><th>Timestamp</th>
+            </tr></thead>
+            <tbody id="retrieval-table-body"><tr><td colspan="6" style="text-align:center;padding:32px;color:var(--gray)">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span id="ret-pagination-info"></span>
+          <div class="pagination-btns">
+            <button class="page-btn" onclick="retChangePage(-1)">← Prev</button>
+            <span class="page-num" id="ret-page-indicator"></span>
+            <button class="page-btn" onclick="retChangePage(1)">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ FEEDBACK ══ -->
+    <div id="section-feedback" class="section">
+      <div class="page-header">
+        <h2>User Feedback Score</h2>
+        <p>Every thumbs up / down and written comment — tied to the exact query and response.</p>
+      </div>
+      <div class="formula-banner">
+        <div class="fb-title">How feedback score is calculated</div>
+        <div class="fb-row"><code>Feedback Score (%) = Thumbs Up ÷ (Thumbs Up + Thumbs Down) × 100</code></div>
+        <div class="fb-row"><code>Table: chat_feedback · Fields: vote (up/down) · comment · userquery · llmresponse · timestamp</code></div>
+        <div class="fb-note">Every row below is one user rating. You can verify the total by counting the rows and comparing to the KPI on the Overview page.</div>
+      </div>
+      <div class="fb-grid">
+        <div class="kpi-card" style="cursor:default">
+          <div class="kpi-label" style="margin-bottom:10px">Total Feedback Received</div>
+          <div class="kpi-value" id="fb-total">—</div>
+          <div class="kpi-sub">COUNT(*) FROM chat_feedback</div>
+        </div>
+        <div class="kpi-card" style="cursor:default">
+          <div class="kpi-label" style="margin-bottom:10px">👍 Positive (vote = 'up')</div>
+          <div class="kpi-value" style="color:var(--green)" id="fb-up">—</div>
+          <div class="kpi-sub">COUNT WHERE vote = 'up'</div>
+        </div>
+        <div class="kpi-card" style="cursor:default">
+          <div class="kpi-label" style="margin-bottom:10px">👎 Negative (vote = 'down')</div>
+          <div class="kpi-value" style="color:var(--red)" id="fb-down">—</div>
+          <div class="kpi-sub">COUNT WHERE vote = 'down'</div>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-header">
+          <div><h3>All Feedback Records</h3><p>Every rating with the exact query and response it was given for</p></div>
+          <span class="count" id="fb-count">Loading…</span>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Vote</th><th style="width:28%">Query That Was Rated</th><th style="width:28%">Response That Was Rated</th><th>Written Comment</th><th>Timestamp</th></tr></thead>
+            <tbody id="feedback-table-body"><tr><td colspan="5" style="text-align:center;padding:32px;color:var(--gray)">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span id="fb-pagination-info"></span>
+          <div class="pagination-btns">
+            <button class="page-btn" onclick="fbChangePage(-1)">← Prev</button>
+            <span class="page-num" id="fb-page-indicator"></span>
+            <button class="page-btn" onclick="fbChangePage(1)">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ GUEST SESSIONS ══ -->
+    <div id="section-guests" class="section">
+      <div class="page-header">
+        <h2>Guest (Unauthenticated) Sessions</h2>
+        <p>Queries from users who did not log in — tracked separately.</p>
+      </div>
+      <div class="formula-banner">
+        <div class="fb-title">How guest vs auth is determined</div>
+        <div class="fb-row"><code>Guest query = chat_history row where useremail IS NULL</code></div>
+        <div class="fb-row"><code>Auth query  = chat_history row where useremail IS NOT NULL</code></div>
+        <div class="fb-row"><code>Auth % = COUNT(useremail IS NOT NULL) ÷ COUNT(*) × 100</code></div>
+        <div class="fb-row"><code>Unique Guest Sessions = COUNT(DISTINCT guest_session_id) from guest rows</code></div>
+        <div class="fb-row"><code>Returning Guest = same guest_session_id appears in 2+ separate visits</code></div>
+        <div class="fb-note">guest_session_id is generated in the browser (localStorage) and sent with every unauthenticated request — persists across page refreshes until cookies are cleared.</div>
+      </div>
+      <div class="kpi-grid" style="margin-bottom:24px">
+        <div class="kpi-card" style="cursor:default"><div class="kpi-label" style="margin-bottom:10px">Total Guest Queries</div><div class="kpi-value" id="guest-total">—</div><div class="kpi-sub">WHERE useremail IS NULL</div></div>
+        <div class="kpi-card" style="cursor:default"><div class="kpi-label" style="margin-bottom:10px">Unique Guest Sessions</div><div class="kpi-value" id="guest-sessions">—</div><div class="kpi-sub">COUNT(DISTINCT guest_session_id)</div></div>
+        <div class="kpi-card" style="cursor:default"><div class="kpi-label" style="margin-bottom:10px">Returning Guests</div><div class="kpi-value" id="guest-returning">—</div><div class="kpi-sub">same session ID in 2+ visits</div></div>
+        <div class="kpi-card" style="cursor:default"><div class="kpi-label" style="margin-bottom:10px">Auth % of All Queries</div><div class="kpi-value" id="guest-split">—</div><div class="kpi-sub">authenticated ÷ total × 100</div></div>
+      </div>
+      <div class="table-card">
+        <div class="table-header"><div><h3>Guest Session Log</h3><p>Every query made without logging in</p></div></div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Guest Session ID</th><th>Conversation</th><th style="width:28%">Prompt</th><th style="width:28%">Response</th><th>Timestamp</th></tr></thead>
+            <tbody id="guest-table-body"><tr><td colspan="5" style="text-align:center;padding:32px;color:var(--gray)">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span id="guest-pagination-info"></span>
+          <div class="pagination-btns">
+            <button class="page-btn" onclick="guestChangePage(-1)">← Prev</button>
+            <span class="page-num" id="guest-page-indicator"></span>
+            <button class="page-btn" onclick="guestChangePage(1)">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:8000';
+let allRows=[], filteredRows=[], feedbackRows=[], guestData={records:[]};
+let _sum={}, currentPage=1, retPage=1, fbPage=1, guestPage=1;
+const PAGE=25;
+
+// ── Drill-down state ──────────────────────────────────────────────────────
+let drillRows=[], drillPage=1, drillPageSize=20;
+
+function openDrill(title, sub, formulaHTML, statsHTML, columns, rows) {
+  document.getElementById('drill-title').textContent = title;
+  document.getElementById('drill-sub').textContent = sub;
+  drillRows = rows;
+  drillPage = 1;
+
+  const body = document.getElementById('drill-body');
+  body.innerHTML = formulaHTML + statsHTML + `
+    <div>
+      <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px">
+        Full Data — ${rows.length} rows (every record used in this calculation)
+      </div>
+      <div class="drill-table-wrap">
+        <table class="drill-table">
+          <thead><tr>${columns.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+          <tbody id="drill-table-body"></tbody>
+        </table>
+      </div>
+    </div>`;
+
+  renderDrillTable();
+  document.getElementById('drill-overlay').style.display='flex';
+}
+
+function renderDrillTable() {
+  const start=(drillPage-1)*drillPageSize;
+  const page=drillRows.slice(start,start+drillPageSize);
+  document.getElementById('drill-table-body').innerHTML = page.map(r=>r).join('');
+  const total=drillRows.length;
+  const pages=Math.ceil(total/drillPageSize)||1;
+  const pag=document.getElementById('drill-pagination');
+  pag.style.display=total>drillPageSize?'flex':'none';
+  document.getElementById('drill-page-info').textContent=`Showing ${start+1}–${Math.min(start+drillPageSize,total)} of ${total}`;
+  document.getElementById('drill-page-num').textContent=`${drillPage}/${pages}`;
+}
+
+function drillChangePage(dir) {
+  const pages=Math.ceil(drillRows.length/drillPageSize)||1;
+  drillPage=Math.max(1,Math.min(pages,drillPage+dir));
+  renderDrillTable();
+}
+
+function closeDrill() { document.getElementById('drill-overlay').style.display='none'; }
+
+// ── Nav ───────────────────────────────────────────────────────────────────
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('section-'+name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  const map={overview:0,conversations:1,retrieval:2,feedback:3,guests:4};
+  document.querySelectorAll('.nav-item')[map[name]].classList.add('active');
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────
+function latencyBadge(ms) {
+  if(ms==null) return '<span style="color:var(--gray);font-size:11px">—</span>';
+  const s=(ms/1000).toFixed(1);
+  const cls=ms<5000?'badge-green':ms<10000?'badge-yellow':'badge-red';
+  return `<span class="badge ${cls}">${s}s</span>`;
+}
+function landedBadge(r) {
+  const no=/i cannot|i don.t have|not have enough|cannot provide|no suitable context/i.test(r||'');
+  return no?'<span class="badge badge-red">✗ No Answer</span>':'<span class="badge badge-green">✓ Answered</span>';
+}
+function docList(docs,gold) {
+  if(!docs||!docs.length) return '<span style="color:var(--gray);font-size:11px">—</span>';
+  const lim=gold?3:5;
+  const label=gold?`🏆 ${docs.length} reranked`:`📄 ${docs.length} docs`;
+  const items=docs.slice(0,lim).map((d,i)=>{
+    const name=d.document_name||d.name||'Doc';
+    const link=d.document_link||d.link||'#';
+    return `<li><a href="${link}" target="_blank" style="color:${gold?'var(--yellow-text,#92400e)':'var(--navy)'};">${i+1}. ${name}</a></li>`;
+  }).join('');
+  return `<details><summary>${label} ▸</summary><ul style="margin-top:4px;padding-left:12px">${items}</ul></details>`;
+}
+function fmt(ts) {
+  if(!ts) return '—';
+  const d=new Date(ts);
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+}
+function formulaBox(lines, note='') {
+  return `<div class="drill-formula">
+    <div class="df-title">Formula & Data Source</div>
+    ${lines.map(l=>`<code>${l}</code>`).join('')}
+    ${note?`<div class="df-note">${note}</div>`:''}
+  </div>`;
+}
+function statsBox(stats) {
+  return `<div class="drill-stats">${stats.map(s=>`<div class="drill-stat"><div class="ds-label">${s.label}</div><div class="ds-value" style="${s.color?'color:'+s.color:''}">${s.value}</div></div>`).join('')}</div>`;
+}
+function toast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.style.opacity='1';
+  setTimeout(()=>t.style.opacity='0',2500);
+}
+
+// ── KPI build ─────────────────────────────────────────────────────────────
+function buildKPIs(s,rows) {
+  _sum=s; 
+
+  // Latency
+  if(s.avg_response_ms!=null) {
+    document.getElementById('kpi-latency').textContent=(s.avg_response_ms/1000).toFixed(1)+'s';
+    const cls=s.avg_response_ms<5000?'good':s.avg_response_ms<10000?'warn':'bad';
+    document.getElementById('kpi-latency-sub').className=`kpi-sub ${cls}`;
+    document.getElementById('kpi-latency-sub').textContent=`${s.avg_response_ms<5000?'Optimal':'Needs improvement'} · ${s.timing_coverage} timed prompts`;
+  } else {
+    document.getElementById('kpi-latency').textContent='N/A';
+    document.getElementById('kpi-latency-sub').textContent='No timing data yet';
+  }
+
+  // Landing
+  const landed=s.total_queries-s.no_answer_count;
+  const landPct=s.total_queries?Math.round((landed/s.total_queries)*100):0;
+  document.getElementById('kpi-landing').textContent=landPct+'%';
+  document.getElementById('kpi-landing-sub').textContent=`${landed} answered · ${s.no_answer_count} not answered`;
+
+  // Capture
+  document.getElementById('kpi-capture').textContent=s.total_queries.toLocaleString();
+  document.getElementById('kpi-capture-sub').textContent=`${s.total_conversations} sessions · ${s.unique_users} users`;
+
+  // Feedback
+  if(s.feedback_total>0) {
+    document.getElementById('kpi-feedback').textContent=s.feedback_score_pct+'%';
+    document.getElementById('kpi-feedback-sub').textContent=`${s.feedback_up} 👍  ${s.feedback_down} 👎  (${s.feedback_total} rated)`;
+  } else {
+    document.getElementById('kpi-feedback').textContent='N/A';
+    document.getElementById('kpi-feedback-sub').textContent='No feedback yet';
+  }
+
+  // No-answer
+  document.getElementById('kpi-noanswer').textContent=s.no_answer_rate+'%';
+  const noEl=document.getElementById('kpi-noanswer-sub');
+  noEl.textContent=`${s.no_answer_count} fallback of ${s.total_queries} total`;
+  noEl.className=`kpi-sub ${s.no_answer_rate>20?'bad':s.no_answer_rate>10?'warn':'good'}`;
+
+  // Session depth
+  document.getElementById('kpi-depth').textContent=s.avg_session_depth;
+
+  // Retrieval accuracy
+  const withDocs=rows.filter(r=>r.top_n_document&&r.top_n_document.length>0).length;
+  const retPct=rows.length?Math.round((withDocs/rows.length)*100):0;
+  document.getElementById('kpi-retrieval').textContent=retPct+'%';
+  document.getElementById('kpi-retrieval-sub').textContent=`${withDocs} of ${rows.length} queries returned docs`;
+
+  // Sidebar
+  document.getElementById('sb-queries').textContent=s.total_queries.toLocaleString()+' queries';
+  document.getElementById('sb-convos').textContent=s.total_conversations+' sessions · '+s.unique_users+' users';
+
+  // Return rate
+  const emailCounts={};
+  rows.forEach(r=>{ if(r.useremail) emailCounts[r.useremail]=(emailCounts[r.useremail]||0)+1; });
+  const returners=Object.values(emailCounts).filter(c=>c>1).length;
+  const totalAuth=Object.keys(emailCounts).length;
+  document.getElementById('kpi-return').textContent=totalAuth?Math.round((returners/totalAuth)*100)+'%':'N/A';
+  document.getElementById('kpi-return-sub').textContent=`${returners} of ${totalAuth} logged-in users returned`;
+
+  // Auth/guest split
+  const authRows=rows.filter(r=>r.useremail);
+  const guestRows=rows.filter(r=>!r.useremail);
+  const authPct=rows.length?Math.round((authRows.length/rows.length)*100):0;
+  document.getElementById('kpi-auth').textContent=authRows.length.toLocaleString();
+  document.getElementById('kpi-auth-sub').textContent=`${authPct}% of all queries`;
+  document.getElementById('kpi-guest').textContent=guestRows.length.toLocaleString();
+  document.getElementById('kpi-guest-sub').textContent=`${100-authPct}% of all queries`;
+}
+
+// ── Drill-down functions ───────────────────────────────────────────────────
+function drillLatency() {
+  const rows=allRows.filter(r=>r.response_time_ms!=null);
+  const avg=rows.length?rows.reduce((s,r)=>s+r.response_time_ms,0)/rows.length:0;
+  const min=rows.length?Math.min(...rows.map(r=>r.response_time_ms)):0;
+  const max=rows.length?Math.max(...rows.map(r=>r.response_time_ms)):0;
+  const under5=rows.filter(r=>r.response_time_ms<5000).length;
+  openDrill(
+    'Per-Prompt Response Latency',
+    `${rows.length} prompts with timing data out of ${allRows.length} total`,
+    formulaBox([
+      'response_time_ms = (response_generated_at − prompt_received_at) × 1000',
+      'Avg Latency = SUM(response_time_ms) ÷ COUNT(rows with timing data)',
+      'Table: chat_history · Columns: prompt_received_at, response_generated_at, response_time_ms',
+    ],'Only rows where response_time_ms IS NOT NULL are included. Older rows before metrics were added will be NULL.'),
+    statsBox([
+      {label:'Average',value:(avg/1000).toFixed(1)+'s',color:avg<5000?'var(--green)':avg<10000?'var(--yellow)':'var(--red)'},
+      {label:'Fastest',value:(min/1000).toFixed(1)+'s',color:'var(--green)'},
+      {label:'Slowest',value:(max/1000).toFixed(1)+'s',color:'var(--red)'},
+      {label:'Under 5s',value:`${under5} / ${rows.length}`},
+      {label:'Timed Prompts',value:rows.length},
+      {label:'Not Timed (old)',value:allRows.length-rows.length},
+    ]),
+    ['#','Query','response_time_ms','prompt_received_at','response_generated_at','Session'],
+    rows.sort((a,b)=>b.response_time_ms-a.response_time_ms).map((r,i)=>`
+      <tr>
+        <td>${i+1}</td>
+        <td style="max-width:200px"><div class="line-clamp">${r.userquery||'—'}</div></td>
+        <td>${latencyBadge(r.response_time_ms)}</td>
+        <td style="font-size:11px">${fmt(r.prompt_received_at)}</td>
+        <td style="font-size:11px">${fmt(r.response_generated_at)}</td>
+        <td style="font-size:11px">#${r.conversationid}</td>
+      </tr>`)
+  );
+}
+
+function drillLanding() {
+  const noRows=allRows.filter(r=>/i cannot|i don.t have|not have enough|cannot provide|no suitable context/i.test(r.llmresponse||''));
+  const yesRows=allRows.filter(r=>!/i cannot|i don.t have|not have enough|cannot provide|no suitable context/i.test(r.llmresponse||''));
+  const pct=allRows.length?Math.round((yesRows.length/allRows.length)*100):0;
+  openDrill(
+    'Citation / Answer Landing Rate',
+    `${yesRows.length} answered · ${noRows.length} not answered out of ${allRows.length} total`,
+    formulaBox([
+      'Landing Rate (%) = Answered queries ÷ Total queries × 100',
+      'Not Answered = llmresponse CONTAINS any of: "I cannot", "I don\'t have", "cannot provide", "No suitable context"',
+      'Table: chat_history · Column: llmresponse',
+    ],'All rows are shown below — answered rows first, then unanswered rows.'),
+    statsBox([
+      {label:'Total Queries',value:allRows.length},
+      {label:'✓ Answered',value:yesRows.length,color:'var(--green)'},
+      {label:'✗ Not Answered',value:noRows.length,color:'var(--red)'},
+      {label:'Landing Rate',value:pct+'%',color:pct>80?'var(--green)':pct>60?'var(--yellow)':'var(--red)'},
+    ]),
+    ['#','Query','Answer Landed?','Response Preview','Session'],
+    [...yesRows,...noRows].map((r,i)=>`
+      <tr>
+        <td>${i+1}</td>
+        <td style="max-width:180px"><div class="line-clamp">${r.userquery||'—'}</div></td>
+        <td>${landedBadge(r.llmresponse)}</td>
+        <td style="max-width:220px;font-size:11px;color:var(--text-sub)"><div class="line-clamp">${(r.llmresponse||'').replace(/\*\*/g,'').substring(0,100)}…</div></td>
+        <td style="font-size:11px">#${r.conversationid}</td>
+      </tr>`)
+  );
+}
+
+function drillConsent() {
+  openDrill(
+    'User Consent Rate',
+    'Tracked via consent modal on first visit',
+    formulaBox([
+      'Consent Rate = Users who clicked "Yes, I agree" ÷ Total users who saw modal × 100',
+      'Frontend: localStorage.getItem("bucaide_consent") → "true" or "false"',
+      'Backend: POST /api/consent → logged in Flask server logs',
+    ],'The consent modal fires once per browser. The rate will be calculable after the pilot with real users using server log analysis.'),
+    statsBox([
+      {label:'Status',value:'Pilot Phase'},
+      {label:'Modal',value:'Active'},
+      {label:'Endpoint',value:'/api/consent'},
+    ]),
+    ['How consent is tracked','Detail'],
+    [
+      '<tr><td>Modal trigger</td><td>localStorage "bucaide_consent" is NULL → modal shown</td></tr>',
+      '<tr><td>Yes, I agree</td><td>localStorage set to "true" · POST /api/consent {user_consent: true}</td></tr>',
+      '<tr><td>No thanks</td><td>localStorage set to "false" · POST /api/consent {user_consent: false}</td></tr>',
+      '<tr><td>Subsequent visits</td><td>Modal not shown again · value stays in localStorage</td></tr>',
+    ]
+  );
+}
+
+function drillCapture() {
+  const authRows=allRows.filter(r=>r.useremail);
+  const guestRows=allRows.filter(r=>!r.useremail);
+  openDrill(
+    'Full Conversation Capture',
+    `${allRows.length} total prompts across ${_sum.total_conversations} sessions`,
+    formulaBox([
+      'Total = COUNT(*) FROM chat_history',
+      'Every row = one user prompt + one bot response',
+      'Fields captured per row: userquery, llmresponse, conversationid, useremail, timestamp, response_time_ms, top_5_retrieved, top_n_document, citation_data, token_count, user_consent',
+    ],'All rows in the table below are stored in chat_history. Each row is one complete prompt-response pair.'),
+    statsBox([
+      {label:'Total Prompts',value:allRows.length},
+      {label:'Sessions',value:_sum.total_conversations},
+      {label:'Unique Users',value:_sum.unique_users},
+      {label:'Auth Queries',value:authRows.length},
+      {label:'Guest Queries',value:guestRows.length},
+      {label:'Avg Depth',value:_sum.avg_session_depth+' msgs/session'},
+    ]),
+    ['#','Session','User','Query','Response Preview','Latency','Timestamp'],
+    allRows.map((r,i)=>`
+      <tr>
+        <td>${i+1}</td>
+        <td style="font-size:11px">#${r.conversationid}</td>
+        <td style="font-size:11px">${r.useremail||'<em>guest</em>'}</td>
+        <td style="max-width:180px"><div class="line-clamp">${r.userquery||'—'}</div></td>
+        <td style="max-width:200px;font-size:11px;color:var(--text-sub)"><div class="line-clamp">${(r.llmresponse||'').replace(/\*\*/g,'').substring(0,100)}…</div></td>
+        <td>${latencyBadge(r.response_time_ms)}</td>
+        <td style="font-size:11px">${fmt(r.timestamp)}</td>
+      </tr>`)
+  );
+}
+
+function drillFeedback() {
+  const s=_sum;
+  openDrill(
+    'User Feedback Score',
+    `${s.feedback_total} ratings · ${s.feedback_score_pct||0}% positive`,
+    formulaBox([
+      'Feedback Score (%) = Thumbs Up ÷ (Thumbs Up + Thumbs Down) × 100',
+      `= ${s.feedback_up} ÷ (${s.feedback_up} + ${s.feedback_down}) × 100 = ${s.feedback_score_pct||0}%`,
+      'Table: chat_feedback · Column: vote ("up" or "down")',
+    ],'All feedback rows are shown below. The score is calculated only from rows with a vote — written comments are optional.'),
+    statsBox([
+      {label:'Total Rated',value:s.feedback_total},
+      {label:'👍 Up',value:s.feedback_up,color:'var(--green)'},
+      {label:'👎 Down',value:s.feedback_down,color:'var(--red)'},
+      {label:'Score',value:(s.feedback_score_pct||0)+'%',color:s.feedback_score_pct>70?'var(--green)':s.feedback_score_pct>40?'var(--yellow)':'var(--red)'},
+    ]),
+    ['#','Vote','Query','Comment','Timestamp'],
+    feedbackRows.map((r,i)=>`
+      <tr>
+        <td>${i+1}</td>
+        <td>${r.vote==='up'?'<span class="badge badge-green">👍</span>':'<span class="badge badge-red">👎</span>'}</td>
+        <td style="max-width:200px"><div class="line-clamp">${r.userquery||'—'}</div></td>
+        <td style="font-size:11px">${r.comment||'<em style="color:var(--gray)">No comment</em>'}</td>
+        <td style="font-size:11px">${fmt(r.timestamp)}</td>
+      </tr>`)
+  );
+}
+
+function drillNoAnswer() {
+  const noRows=allRows.filter(r=>/i cannot|i don.t have|not have enough|cannot provide|no suitable context/i.test(r.llmresponse||''));
+  const pct=allRows.length?((noRows.length/allRows.length)*100).toFixed(1):0;
+  openDrill(
+    'No-Answer Rate',
+    `${noRows.length} unanswered out of ${allRows.length} total (${pct}%)`,
+    formulaBox([
+      'No-Answer Rate (%) = No-answer rows ÷ Total rows × 100',
+      `= ${noRows.length} ÷ ${allRows.length} × 100 = ${pct}%`,
+      'Detected by: llmresponse ILIKE any of: "%I cannot%", "%I don\'t have%", "%not have enough%", "%cannot provide%", "%No suitable context%"',
+    ],'Only rows that match the no-answer pattern are shown below.'),
+    statsBox([
+      {label:'Total Queries',value:allRows.length},
+      {label:'No Answer',value:noRows.length,color:'var(--red)'},
+      {label:'Rate',value:pct+'%',color:parseFloat(pct)>20?'var(--red)':parseFloat(pct)>10?'var(--yellow)':'var(--green)'},
+      {label:'Answered',value:allRows.length-noRows.length,color:'var(--green)'},
+    ]),
+    ['#','Query','Response (first 120 chars)','Session','Timestamp'],
+    noRows.map((r,i)=>`
+      <tr>
+        <td>${i+1}</td>
+        <td style="max-width:200px"><div class="line-clamp">${r.userquery||'—'}</div></td>
+        <td style="max-width:250px;font-size:11px;color:var(--red)"><div class="line-clamp">${(r.llmresponse||'').replace(/\*\*/g,'').substring(0,120)}…</div></td>
+        <td style="font-size:11px">#${r.conversationid}</td>
+        <td style="font-size:11px">${fmt(r.timestamp)}</td>
+      </tr>`)
+  );
+}
+
+function drillDepth() {
+  const byCon={};
+  allRows.forEach(r=>{ byCon[r.conversationid]=(byCon[r.conversationid]||0)+1; });
+  const entries=Object.entries(byCon).sort((a,b)=>b[1]-a[1]);
+  const depths=Object.values(byCon);
+  const avg=depths.length?depths.reduce((s,v)=>s+v,0)/depths.length:0;
+  openDrill(
+    'Session Depth',
+    `${entries.length} conversations · avg ${avg.toFixed(1)} messages each`,
+    formulaBox([
+      'Avg Session Depth = SUM(messages per conversation) ÷ total conversations',
+      `= ${depths.reduce((s,v)=>s+v,0)} total messages ÷ ${entries.length} conversations = ${avg.toFixed(1)}`,
+      'Calculated from: COUNT(historyid) GROUP BY conversationid in chat_history',
+    ],'Every conversation is shown below sorted by depth. You can verify by counting messages per session in the Full Conversations tab.'),
+    statsBox([
+      {label:'Conversations',value:entries.length},
+      {label:'Total Messages',value:depths.reduce((s,v)=>s+v,0)},
+      {label:'Avg Depth',value:avg.toFixed(1)},
+      {label:'Deepest',value:depths[0]||0},
+      {label:'Shallowest',value:depths.length?Math.min(...depths):0},
+    ]),
+    ['Rank','Session ID','Message Count','Depth vs Avg'],
+    entries.map(([id,cnt],i)=>{
+      const diff=cnt-avg;
+      const badge=diff>0?`<span class="badge badge-green">+${diff.toFixed(1)} above avg</span>`
+                       :diff<0?`<span class="badge badge-red">${diff.toFixed(1)} below avg</span>`
+                       :'<span class="badge" style="background:var(--light-gray)">= avg</span>';
+      return `<tr><td>${i+1}</td><td>#${id}</td><td>${cnt}</td><td>${badge}</td></tr>`;
+    })
+  );
+}
+
+function drillRetrieval() {
+  const withDocs=allRows.filter(r=>r.top_n_document&&r.top_n_document.length>0);
+  const without=allRows.filter(r=>!r.top_n_document||r.top_n_document.length===0);
+  const pct=allRows.length?Math.round((withDocs.length/allRows.length)*100):0;
+  openDrill(
+    'Retrieval Accuracy',
+    `${withDocs.length} queries retrieved docs · ${without.length} did not`,
+    formulaBox([
+      'Retrieval Accuracy (%) = Queries where top_n_document IS NOT NULL AND length > 0 ÷ Total queries × 100',
+      `= ${withDocs.length} ÷ ${allRows.length} × 100 = ${pct}%`,
+      'top_n_document = top 3 re-ranked docs that were passed to GPT-4o-mini',
+      'top_5_retrieved = initial top 5 from ChromaDB before reranking',
+    ],'Rows without docs either had no ChromaDB matches or failed retrieval. Shown below: no-doc rows first, then rows with docs.'),
+    statsBox([
+      {label:'Total Queries',value:allRows.length},
+      {label:'With Docs',value:withDocs.length,color:'var(--green)'},
+      {label:'Without Docs',value:without.length,color:'var(--red)'},
+      {label:'Accuracy',value:pct+'%',color:pct>80?'var(--green)':pct>60?'var(--yellow)':'var(--red)'},
+    ]),
+    ['#','Query','top_5_retrieved count','top_3_reranked count','Citations Shown','Latency'],
+    [...without,...withDocs].map((r,i)=>`
+      <tr>
+        <td>${i+1}</td>
+        <td style="max-width:180px"><div class="line-clamp">${r.userquery||'—'}</div></td>
+        <td style="text-align:center">${r.top_5_retrieved?r.top_5_retrieved.length:0}</td>
+        <td style="text-align:center">${r.top_n_document?r.top_n_document.length:0}</td>
+        <td style="text-align:center">${r.citation_data?r.citation_data.length:0}</td>
+        <td>${latencyBadge(r.response_time_ms)}</td>
+      </tr>`)
+  );
+}
+
+function drillReturn() {
+  const emailCounts={};
+  allRows.forEach(r=>{ if(r.useremail) emailCounts[r.useremail]=(emailCounts[r.useremail]||0)+1; });
+  const all=Object.entries(emailCounts).sort((a,b)=>b[1]-a[1]);
+  const returners=all.filter(([,c])=>c>1);
+  const pct=all.length?Math.round((returners.length/all.length)*100):0;
+  openDrill(
+    'Return Rate',
+    `${returners.length} of ${all.length} logged-in users sent more than one query`,
+    formulaBox([
+      'Return Rate (%) = Users with 2+ queries ÷ Total logged-in users × 100',
+      `= ${returners.length} ÷ ${all.length} × 100 = ${pct}%`,
+      'Calculated from: useremail frequency in chat_history WHERE useremail IS NOT NULL',
+    ],'All logged-in users are shown below sorted by query count. Users with only 1 query did not return.'),
+    statsBox([
+      {label:'Logged-in Users',value:all.length},
+      {label:'Returned (2+)',value:returners.length,color:'var(--green)'},
+      {label:'Did Not Return',value:all.length-returners.length},
+      {label:'Return Rate',value:pct+'%',color:pct>50?'var(--green)':pct>25?'var(--yellow)':'var(--red)'},
+    ]),
+    ['Rank','User','Total Queries','Returned?'],
+    all.map(([email,cnt],i)=>`
+      <tr>
+        <td>${i+1}</td>
+        <td style="font-size:11px">${email}</td>
+        <td>${cnt}</td>
+        <td>${cnt>1?'<span class="badge badge-green">✓ Yes</span>':'<span class="badge badge-red">✗ No</span>'}</td>
+      </tr>`)
+  );
+}
+
+function drillAuthSplit() {
+  const authRows=allRows.filter(r=>r.useremail);
+  const guestRows=allRows.filter(r=>!r.useremail);
+  const authPct=allRows.length?Math.round((authRows.length/allRows.length)*100):0;
+  openDrill(
+    'Authenticated vs Guest Split',
+    `${authRows.length} auth queries · ${guestRows.length} guest queries`,
+    formulaBox([
+      'Auth query   = chat_history row WHERE useremail IS NOT NULL',
+      'Guest query  = chat_history row WHERE useremail IS NULL',
+      'Auth %       = Auth queries ÷ Total queries × 100',
+      `             = ${authRows.length} ÷ ${allRows.length} × 100 = ${authPct}%`,
+    ],'All rows shown below. Auth rows have a user identifier, guest rows show "guest".'),
+    statsBox([
+      {label:'Total Queries',value:allRows.length},
+      {label:'Authenticated',value:authRows.length,color:'var(--green)'},
+      {label:'Guest',value:guestRows.length,color:'var(--yellow)'},
+      {label:'Auth %',value:authPct+'%'},
+      {label:'Guest %',value:(100-authPct)+'%'},
+    ]),
+    ['#','User','Type','Query','Session','Timestamp'],
+    allRows.map((r,i)=>`
+      <tr>
+        <td>${i+1}</td>
+        <td style="font-size:11px">${r.useremail||'—'}</td>
+        <td>${r.useremail?'<span class="badge badge-green">Auth</span>':'<span class="badge badge-yellow" style="background:var(--yellow-bg);color:var(--yellow)">Guest</span>'}</td>
+        <td style="max-width:180px"><div class="line-clamp">${r.userquery||'—'}</div></td>
+        <td style="font-size:11px">#${r.conversationid}</td>
+        <td style="font-size:11px">${fmt(r.timestamp)}</td>
+      </tr>`)
+  );
+}
+
+function drillComments() {
+  const withComments=feedbackRows.filter(r=>r.comment&&r.comment.trim());
+  openDrill(
+    'Feedback with Written Comments',
+    `${withComments.length} of ${feedbackRows.length} feedback submissions included a written comment`,
+    formulaBox([
+      'Comment Count = COUNT(*) FROM chat_feedback WHERE comment IS NOT NULL AND comment != ""',
+      `= ${withComments.length} of ${feedbackRows.length} total feedback submissions`,
+      'Table: chat_feedback · Column: comment',
+    ],'All feedback rows with written comments are shown below.'),
+    statsBox([
+      {label:'Total Feedback',value:feedbackRows.length},
+      {label:'With Comment',value:withComments.length,color:'var(--green)'},
+      {label:'No Comment',value:feedbackRows.length-withComments.length},
+      {label:'Comment Rate',value:feedbackRows.length?Math.round((withComments.length/feedbackRows.length)*100)+'%':'N/A'},
+    ]),
+    ['#','Vote','Query','Written Comment','Timestamp'],
+    withComments.map((r,i)=>`
+      <tr>
+        <td>${i+1}</td>
+        <td>${r.vote==='up'?'<span class="badge badge-green">👍</span>':'<span class="badge badge-red">👎</span>'}</td>
+        <td style="max-width:180px"><div class="line-clamp">${r.userquery||'—'}</div></td>
+        <td style="font-size:12px;font-style:italic">"${r.comment}"</td>
+        <td style="font-size:11px">${fmt(r.timestamp)}</td>
+      </tr>`)
+  );
+}
+
+// ── Charts ────────────────────────────────────────────────────────────────
+function buildTrend(daily) {
+  if(!daily.length) return;
+  const max=Math.max(...daily.map(d=>d.count));
+  document.getElementById('trend-chart').innerHTML=daily.map(d=>{
+    const h=Math.max(4,Math.round((d.count/max)*100));
+    return `<div class="bar-col"><div class="tooltip">${d.count} queries</div><div class="bar" style="height:${h}%"></div></div>`;
+  }).join('');
+  const show=[0,Math.floor(daily.length/2),daily.length-1];
+  document.getElementById('trend-labels').innerHTML=daily.map((d,i)=>
+    `<span style="${show.includes(i)?'':'visibility:hidden'}">${d.day.slice(5)}</span>`
+  ).join('');
+}
+
+function buildTopics(rows) {
+  const cats={'Admissions':['admission','apply','application','enroll','transfer'],'Financial Aid':['financial','fafsa','scholarship','tuition','fee'],'Campus Life':['library','dining','housing','dorm','event','campus','parking'],'Academic':['gpa','grade','class','course','major','degree','register','withdraw'],'Other':[]};
+  const counts=Object.fromEntries(Object.keys(cats).map(k=>[k,0]));
+  rows.forEach(r=>{
+    const q=(r.userquery||'').toLowerCase(); let hit=false;
+    for(const [cat,words] of Object.entries(cats)) {
+      if(cat==='Other') continue;
+      if(words.some(w=>q.includes(w))) { counts[cat]++; hit=true; break; }
+    }
+    if(!hit) counts['Other']++;
+  });
+  const total=rows.length||1;
+  document.getElementById('intent-bars').innerHTML=Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(([cat,cnt],i)=>{
+    const pct=Math.round((cnt/total)*100);
+    return `<div class="topic-item"><div class="topic-row"><span class="topic-name">${cat}</span><span class="topic-pct">${pct}% (${cnt})</span></div><div class="topic-bar-bg"><div class="topic-bar-fill${i<2?' gold':''}" style="width:${pct}%"></div></div></div>`;
+  }).join('');
+}
+
+// ── Recent preview ────────────────────────────────────────────────────────
+function buildPreview(rows) {
+  document.getElementById('recent-preview').innerHTML=rows.slice(0,6).map(r=>`
+    <div style="padding:14px 24px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:16px">
+      <div style="flex:1;min-width:0">
+        <p style="font-size:13px;font-weight:600;color:var(--navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.userquery||'—'}</p>
+        <p style="font-size:11px;color:var(--text-sub);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.llmresponse||'').replace(/\*\*/g,'').substring(0,120)}…</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+        ${landedBadge(r.llmresponse)}
+        ${latencyBadge(r.response_time_ms)}
+        <span style="font-size:11px;color:var(--gray);white-space:nowrap">${fmt(r.timestamp)}</span>
+      </div>
+    </div>`).join('');
+}
+
+// ── Main conversation table ───────────────────────────────────────────────
+function renderTable() {
+  const tbody=document.getElementById('query-table-body');
+  const start=(currentPage-1)*PAGE;
+  const page=filteredRows.slice(start,start+PAGE);
+  const total=filteredRows.length;
+  const pages=Math.ceil(total/PAGE)||1;
+  document.getElementById('table-count').textContent=`${start+1}–${Math.min(start+PAGE,total)} of ${total}`;
+  document.getElementById('pagination-info').textContent=`Page ${currentPage} of ${pages}`;
+  document.getElementById('page-indicator').textContent=`${currentPage}/${pages}`;
+  if(!page.length) { tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:32px;color:var(--gray)">No results.</td></tr>'; return; }
+  tbody.innerHTML=page.map(r=>`
+    <tr>
+      <td class="td-small">#${r.conversationid}</td>
+      <td class="td-small">${r.useremail||'<em>guest</em>'}</td>
+      <td class="td-query"><div class="line-clamp">${r.userquery||'—'}</div></td>
+      <td class="td-resp"><div class="line-clamp">${(r.llmresponse||'').replace(/\*\*/g,'').substring(0,160)}…</div></td>
+      <td>${latencyBadge(r.response_time_ms)}</td>
+      <td class="td-small">${fmt(r.prompt_received_at)}</td>
+      <td class="td-small">${fmt(r.response_generated_at)}</td>
+      <td>${landedBadge(r.llmresponse)}</td>
+    </tr>`).join('');
+}
+function changePage(dir) { currentPage=Math.max(1,Math.min(Math.ceil(filteredRows.length/PAGE),currentPage+dir)); renderTable(); }
+function filterTable() {
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  filteredRows=q?allRows.filter(r=>(r.userquery||'').toLowerCase().includes(q)||(r.llmresponse||'').toLowerCase().includes(q)):[...allRows];
+  currentPage=1; renderTable();
+}
+
+// ── Retrieval table ───────────────────────────────────────────────────────
+let retRows=[];
+function renderRetrieval() {
+  const tbody=document.getElementById('retrieval-table-body');
+  const start=(retPage-1)*PAGE;
+  const page=retRows.slice(start,start+PAGE);
+  const total=retRows.length; const pages=Math.ceil(total/PAGE)||1;
+  document.getElementById('ret-pagination-info').textContent=`${start+1}–${Math.min(start+PAGE,total)} of ${total}`;
+  document.getElementById('ret-page-indicator').textContent=`${retPage}/${pages}`;
+  tbody.innerHTML=page.map(r=>`
+    <tr>
+      <td class="td-query"><div class="line-clamp">${r.userquery||'—'}</div></td>
+      <td>${docList(r.top_5_retrieved,false)}</td>
+      <td>${docList(r.top_n_document,true)}</td>
+      <td>${docList(r.citation_data,false)}</td>
+      <td>${latencyBadge(r.response_time_ms)}</td>
+      <td class="td-small">${fmt(r.timestamp)}</td>
+    </tr>`).join('');
+}
+function retChangePage(dir) { retPage=Math.max(1,Math.min(Math.ceil(retRows.length/PAGE),retPage+dir)); renderRetrieval(); }
+
+// ── Feedback table ────────────────────────────────────────────────────────
+function renderFeedback(data) {
+  document.getElementById('fb-total').textContent=data.total;
+  document.getElementById('fb-up').textContent=data.up;
+  document.getElementById('fb-down').textContent=data.down;
+  feedbackRows=data.records||[];
+  renderFbTable();
+}
+function renderFbTable() {
+  const tbody=document.getElementById('feedback-table-body');
+  const start=(fbPage-1)*PAGE;
+  const page=feedbackRows.slice(start,start+PAGE);
+  const total=feedbackRows.length; const pages=Math.ceil(total/PAGE)||1;
+  document.getElementById('fb-count').textContent=`${total} records`;
+  document.getElementById('fb-pagination-info').textContent=`${start+1}–${Math.min(start+PAGE,total)} of ${total}`;
+  document.getElementById('fb-page-indicator').textContent=`${fbPage}/${pages}`;
+  if(!page.length) { tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:32px;color:var(--gray)">No feedback yet.</td></tr>'; return; }
+  tbody.innerHTML=page.map(r=>`
+    <tr>
+      <td>${r.vote==='up'?'<span class="badge badge-green">👍 Positive</span>':'<span class="badge badge-red">👎 Negative</span>'}</td>
+      <td class="td-query"><div class="line-clamp">${r.userquery||'—'}</div></td>
+      <td class="td-resp"><div class="line-clamp">${(r.llmresponse||'').replace(/\*\*/g,'').substring(0,120)}…</div></td>
+      <td style="font-size:12px">${r.comment||'<em style="color:var(--gray)">No comment</em>'}</td>
+      <td class="td-small">${fmt(r.timestamp)}</td>
+    </tr>`).join('');
+}
+function fbChangePage(dir) { fbPage=Math.max(1,Math.min(Math.ceil(feedbackRows.length/PAGE),fbPage+dir)); renderFbTable(); }
+
+// ── Guest table ───────────────────────────────────────────────────────────
+let guestRows2=[];
+function renderGuests(gData,allR) {
+  const guestQ=allR.filter(r=>!r.useremail);
+  const authQ=allR.filter(r=>r.useremail);
+  const authPct=allR.length?Math.round((authQ.length/allR.length)*100):0;
+  document.getElementById('guest-total').textContent=(gData.total||guestQ.length).toLocaleString();
+  // Count unique guest sessions using guest_session_id if available, else count rows
+  const uniqueSessionIds=[...new Set(guestQ.map(r=>r.guest_session_id).filter(Boolean))];
+  const returningGuests=uniqueSessionIds.filter(id=>guestQ.filter(r=>r.guest_session_id===id).length>1).length;
+  document.getElementById('guest-sessions').textContent=uniqueSessionIds.length||guestQ.length;
+  document.getElementById('guest-returning').textContent = returningGuests;
+  document.getElementById('guest-split').textContent=authPct+'%';
+  guestRows2=guestQ.length>0 ? guestQ : (gData.records||[]);
+  renderGuestTable();
+}
+function renderGuestTable() {
+  const tbody=document.getElementById('guest-table-body');
+  const start=(guestPage-1)*PAGE;
+  const page=guestRows2.slice(start,start+PAGE);
+  const total=guestRows2.length; const pages=Math.ceil(total/PAGE)||1;
+  document.getElementById('guest-pagination-info').textContent=`${start+1}–${Math.min(start+PAGE,total)} of ${total}`;
+  document.getElementById('guest-page-indicator').textContent=`${guestPage}/${pages}`;
+  if(!page.length) { tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:32px;color:var(--gray)">No guest sessions yet.</td></tr>'; return; }
+  tbody.innerHTML=page.map(r=>`
+    <tr>
+      <td class="td-small">${r.guest_session_id||r.session_id||'<em>no ID yet</em>'}</td>
+      <td class="td-small">#${r.conversation_id||r.conversationid||'—'}</td>
+      <td class="td-query"><div class="line-clamp">${r.userquery||'—'}</div></td>
+      <td class="td-resp"><div class="line-clamp">${(r.llmresponse||'').replace(/\*\*/g,'').substring(0,160)}…</div></td>
+      <td class="td-small">${fmt(r.timestamp)}</td>
+    </tr>`).join('');
+}
+function guestChangePage(dir) { guestPage=Math.max(1,Math.min(Math.ceil(guestRows2.length/PAGE),guestPage+dir)); renderGuestTable(); }
+
+// ── CSV export ─────────────────────────────────────────────────────────────
+function exportCSV(type) {
+  let headers,rows,filename;
+  if(type==='queries') {
+    headers=['Session ID','User','Prompt','Response','Answer Landed','Latency (ms)','Timestamp'];
+    rows=allRows.map(r=>[r.conversationid,r.useremail||'guest',`"${(r.userquery||'').replace(/"/g,'""')}"`,`"${(r.llmresponse||'').replace(/\*\*/g,'').replace(/"/g,'""').substring(0,300)}"`,/i cannot|i don.t have|not have enough|cannot provide|no suitable context/i.test(r.llmresponse||'')?'No':'Yes',r.response_time_ms||'',r.timestamp||'']);
+    filename='bucaide_queries.csv';
+  } else {
+    headers=['Session ID','User','Prompt','Response','Answer Landed','Latency (ms)','Prompt Received','Response Generated','Top 5 Retrieved','Top 3 Reranked','Citations','Token Count','User Consent','Timestamp'];
+    rows=allRows.map(r=>[r.conversationid,r.useremail||'guest',`"${(r.userquery||'').replace(/"/g,'""')}"`,`"${(r.llmresponse||'').replace(/\*\*/g,'').replace(/"/g,'""').substring(0,300)}"`,/i cannot|i don.t have|not have enough|cannot provide|no suitable context/i.test(r.llmresponse||'')?'No':'Yes',r.response_time_ms||'',r.prompt_received_at||'',r.response_generated_at||'',`"${JSON.stringify(r.top_5_retrieved||[]).replace(/"/g,'""')}"`,`"${JSON.stringify(r.top_n_document||[]).replace(/"/g,'""')}"`,`"${JSON.stringify(r.citation_data||[]).replace(/"/g,'""')}"`,r.token_count||'',r.user_consent!=null?r.user_consent:'',r.timestamp||'']);
+    filename='bucaide_full_metrics.csv';
+  }
+  const csv=[headers.join(','),...rows.map(r=>r.join(','))].join('\n');
+  const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([csv],{type:'text/csv'})),download:filename});
+  a.click(); toast(filename+' downloaded!');
+}
+
+// ── Load all data ──────────────────────────────────────────────────────────
+async function loadAll() {
+  try {
+    const [sRes,dRes,fRes,gRes]=await Promise.all([
+      fetch(`${API}/metrics/summary`),
+      fetch(`${API}/metrics/data`),
+      fetch(`${API}/metrics/feedback`),
+      fetch(`${API}/metrics/unauthenticated`)
+    ]);
+    if(dRes.ok) {
+      const d=await dRes.json();
+      allRows=(d.records||[]).sort((a,b)=>new Date(b.timestamp)-new Date(a.timestamp));
+      filteredRows=[...allRows];
+      retRows=[...allRows];
+      buildPreview(allRows);
+      renderTable();
+      renderRetrieval();
+    }
+    if(sRes.ok) {
+      const s=await sRes.json();
+      buildKPIs(s,allRows);
+      buildTrend(s.daily_query_counts||[]);
+      buildTopics(allRows);
+    }
+    if(fRes.ok) renderFeedback(await fRes.json());
+    const gd=gRes.ok?await gRes.json():{total:0,records:[]};
+    renderGuests(gd,allRows);
+  } catch(err) {
+    console.error(err);
+    document.getElementById('query-table-body').innerHTML=`<tr><td colspan="8" style="text-align:center;padding:32px;color:var(--red)">Failed to load. Make sure Flask is running.<br><span style="font-size:11px;color:var(--gray)">${err.message}</span></td></tr>`;
+  }
+}
+loadAll();
+</script>
+</body>
+</html>

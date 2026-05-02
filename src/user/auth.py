@@ -11,6 +11,8 @@ from urllib.parse import quote
 from dotenv import load_dotenv
 from datetime import timedelta
 
+# FIX: Only disable HTTPS requirement in development, not production
+# On AWS with HTTPS this will NOT be set so OAuth runs securely
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 load_dotenv()
@@ -19,8 +21,17 @@ auth_bp = Blueprint('auth', __name__)
 
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
 GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
-REDIRECT_URI = "http://localhost:8000/api/auth/callback"
-FRONTEND_REDIRECT_URI = "http://localhost:3000/signin"
+
+# FIX: REDIRECT_URI now read from .env instead of hardcoded to localhost
+# For local dev: REDIRECT_URI=http://localhost:8000/api/auth/callback
+# For AWS:       REDIRECT_URI=http://your-aws-ip:8000/api/auth/callback
+REDIRECT_URI = os.getenv('REDIRECT_URI', 'http://localhost:8000/api/auth/callback')
+
+# FIX: FRONTEND_REDIRECT_URI also read from .env
+# For local dev: FRONTEND_REDIRECT_URI=http://localhost:3000/signin
+# For AWS:       FRONTEND_REDIRECT_URI=http://your-aws-ip:3000/signin
+FRONTEND_REDIRECT_URI = os.getenv('FRONTEND_REDIRECT_URI', 'http://localhost:3000/signin')
+
 SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']
 
 CLIENT_CONFIG = {

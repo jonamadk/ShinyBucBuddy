@@ -1,4 +1,5 @@
 from extensions import db
+from datetime import datetime
 
 
 class User(db.Model):
@@ -12,6 +13,10 @@ class User(db.Model):
     signinstatus = db.Column(db.Boolean, default=False, nullable=True)
     auth_provider = db.Column(db.String(50), nullable=False, default='email')  # Track auth method
 
+    # FIX: Added for account lockout after failed login attempts
+    failed_attempts = db.Column(db.Integer, default=0, nullable=True)
+    locked_until = db.Column(db.DateTime, nullable=True)
+
     def to_dict(self):
         return {
             "email": self.email,
@@ -19,4 +24,3 @@ class User(db.Model):
             "lastname": self.lastname,
             "signinstatus": self.signinstatus
         }
-    

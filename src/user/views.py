@@ -2,14 +2,14 @@ from flask import Blueprint, request, jsonify
 from .models import User
 from extensions import db, limiter
 from marshmallow import Schema, fields, ValidationError, validates
-import hashlib
+import bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from datetime import timedelta
+from datetime import timedelta, datetime
 from ragapp.models import ChatConversation
 import json
 import re
 import logging
-from .serializers   import UserSchema
+from .serializers import UserSchema
 
 user_bp = Blueprint('user', __name__)
 
@@ -19,16 +19,20 @@ logger = logging.getLogger(__name__)
 
 user_schema = UserSchema()
 
-def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
 
+# FIX: Replaced SHA-256 with bcrypt — bcrypt is deliberately slow
+# making brute-force attacks much harder
+def hash_password(password):
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+def check_password(password, hashed):
+    return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
 
 
 @user_bp.route('/register', methods=['POST'])
 @limiter.limit("5 per minute")
 def create_user():
     data = request.get_json()
-    # Set context for confirm_password validation
     schema = user_schema
     schema.context = {'password': data.get('password')}
     errors = schema.validate(data)
@@ -48,6 +52,7 @@ def create_user():
     logger.info(f"User created: {data['email']}")
     return jsonify({'message': 'User created successfully'}), 201
 
+
 @user_bp.route('/login', methods=['POST'])
 @limiter.limit("5 per minute")
 def login_user():
@@ -64,11 +69,27 @@ def login_user():
         logger.error(f"Login failed for {email}: Invalid email or Google auth required")
         return jsonify({'error': 'Invalid email or password. Use Google login if registered with Google.'}), 401
 
-    hashed_password = hash_password(password)
-    if user.password != hashed_password:
+    # FIX: Account lockout — block after 5 failed attempts for 15 minutes
+    if user.locked_until and user.locked_until > datetime.utcnow():
+        logger.warning(f"Locked account login attempt: {email}")
+        return jsonify({'error': 'Account temporarily locked. Please try again later.'}), 429
+
+    # FIX: Use bcrypt check instead of SHA-256 comparison
+    if not check_password(password, user.password):
         logger.error(f"Login failed for {email}: Invalid password")
+
+        # FIX: Track failed attempts
+        user.failed_attempts = (user.failed_attempts or 0) + 1
+        if user.failed_attempts >= 5:
+            user.locked_until = datetime.utcnow() + timedelta(minutes=15)
+            logger.warning(f"Account locked after 5 failed attempts: {email}")
+        db.session.commit()
+
         return jsonify({'error': 'Invalid email or password'}), 401
 
+    # FIX: Reset failed attempts on successful login
+    user.failed_attempts = 0
+    user.locked_until = None
     user.signinstatus = True
     db.session.commit()
 
@@ -91,6 +112,7 @@ def login_user():
         'user': user_data,
         'message': 'Login successful'
     }), 200
+
 
 @user_bp.route('/auth/conversations', methods=['GET'])
 @jwt_required()
